@@ -1,0 +1,81 @@
+<div class="row mt-4 pt-4 border-top">
+    <div class="col-sm-12 text-sm-left text-center mb-3">
+        <h1 class="text-primary text-uppercase font-weight-bold fs-24">
+            {{screenLangInfo.lbl_Titulo_SeccionDesglose}}
+        </h1>
+    </div>
+    <div class="col-sm-4">
+        <img src="{{urlDesg}}" alt="" class="img-fluid mb-3 w-100">
+    </div>
+    <div class="col-sm-8">
+        <table *ngFor="let pass of cotResume.bloquesPasajeros; let i=index" class="table table-sm table-borderless mb-4">
+            <thead [class]="GetClass(pass)">
+                <tr>
+                    <th scope="col" class="col-4" *ngIf="pass.total.valorPrincipal && pass.total.valorPrincipal != 0">{{pass.titulo}}</th>
+                    <th scope="col" class="col-3" style="text-align: right;" *ngIf="pass.total.posMoneda == 0 && pass.total.valorPrincipal && pass.total.valorPrincipal != 0"> {{pass.total.valorPrincipalString}}</th>
+                    <th scope="col" class="col-1" style="text-align: right;" *ngIf="pass.total.posMoneda == 0 && pass.total.valorPrincipal && pass.total.valorPrincipal != 0"> {{pass.total.monedaP}}</th>
+                    <th scope="col" class="col-2" style="text-align: right;" *ngIf="pass.total.posMoneda == 0 && itinerary.mostrarMonedaLocal && pass.total.valorPrincipal && pass.total.valorPrincipal != 0"> {{pass.total.valorLocalString}}</th>
+                    <th scope="col" class="col-1" style="text-align: right;" *ngIf="pass.total.posMoneda == 0 && itinerary.mostrarMonedaLocal && pass.total.valorPrincipal && pass.total.valorPrincipal != 0"> {{pass.total.monedaL}}</th>
+                    <th scope="col" class="col-1" style="text-align: right;" *ngIf="pass.total.posMoneda == 1 && pass.total.valorPrincipal && pass.total.valorPrincipal != 0"> {{pass.total.monedaP}}</th>
+                    <th scope="col" class="col-2" style="text-align: right;" *ngIf="pass.total.posMoneda == 1 && pass.total.valorPrincipal && pass.total.valorPrincipal != 0"> {{pass.total.valorPrincipalString}}</th>
+                    <th scope="col" class="col-1" style="text-align: right;" *ngIf="pass.total.posMoneda == 1 && itinerary.mostrarMonedaLocal && pass.total.valorPrincipal && pass.total.valorPrincipal != 0"> {{pass.total.monedaL}}</th>
+                    <th scope="col" class="col-3" style="text-align: right;" *ngIf="pass.total.posMoneda == 1 && itinerary.mostrarMonedaLocal && pass.total.valorPrincipal && pass.total.valorPrincipal != 0"> {{pass.total.valorLocalString}}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let element of pass.precios;" [class]="GetClass(element)">
+                    <th *ngIf="element.precio.valorPrincipal && element.precio.valorPrincipal != 0" class="col-4">{{element.titulo}}</th>
+                    <td class="col-3" style="text-align: right;" *ngIf="element.precio.valorPrincipal && element.precio.valorPrincipal != 0 && element.precio.posMoneda == 0"> {{element.precio.valorPrincipalString}}</td>
+                    <td class="col-1" style="text-align: right;" *ngIf="element.precio.valorPrincipal && element.precio.valorPrincipal != 0 && element.precio.posMoneda == 0"> {{element.precio.monedaP}}</td>
+                    <td class="col-2" style="text-align: right;" *ngIf="element.precio.valorPrincipal && element.precio.valorPrincipal != 0 && element.precio.posMoneda == 0 && itinerary.mostrarMonedaLocal"> {{element.precio.valorLocalString}}</td>
+                    <td class="col-1" style="text-align: right;" *ngIf="element.precio.valorPrincipal && element.precio.valorPrincipal != 0 && element.precio.posMoneda == 0 && itinerary.mostrarMonedaLocal"> {{element.precio.monedaL}}</td>
+                    <td class="col-1" style="text-align: right;" *ngIf="element.precio.valorPrincipal && element.precio.valorPrincipal != 0 && element.precio.posMoneda == 1"> {{element.precio.monedaP}}</td>
+                    <td class="col-2" style="text-align: right;" *ngIf="element.precio.valorPrincipal && element.precio.valorPrincipal != 0 && element.precio.posMoneda == 1"> {{element.precio.valorPrincipalString}}</td>
+                    <td class="col-1" style="text-align: right;" *ngIf="element.precio.valorPrincipal && element.precio.valorPrincipal != 0 && element.precio.posMoneda == 1 && itinerary.mostrarMonedaLocal"> {{element.precio.monedaL}}</td>
+                    <td class="col-2" style="text-align: right;" *ngIf="element.precio.valorPrincipal && element.precio.valorPrincipal != 0 && element.precio.posMoneda == 1 && itinerary.mostrarMonedaLocal"> {{element.precio.valorLocalString}}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- TOTAL -->
+        <table class="table table-sm table-borderless mb-4">
+            <thead [class]="GetClass(cotResume.total)">
+                <tr *ngIf="cotResume.total">
+                    <th *ngIf="cotResume.total.precio.valorPrincipal && cotResume.total.precio.valorPrincipal != 0" scope="col" class="col-4">{{cotResume.total.titulo}}</th>
+                    <th class="col-3" style="text-align: right;" *ngIf="cotResume.total.precio.valorPrincipal && cotResume.total.precio.valorPrincipal != 0 && cotResume.total.precio.posMoneda == 0"> {{cotResume.total.precio.valorPrincipalString}}</th>
+                    <th class="col-1" style="text-align: right;" *ngIf="cotResume.total.precio.valorPrincipal && cotResume.total.precio.valorPrincipal != 0 && cotResume.total.precio.posMoneda == 0"> {{cotResume.total.precio.monedaP}}</th>
+                    <th class="col-2" style="text-align: right;" *ngIf="cotResume.total.precio.valorPrincipal && cotResume.total.precio.valorPrincipal != 0 && cotResume.total.precio.posMoneda == 0 && itinerary.mostrarMonedaLocal"> {{cotResume.total.precio.valorLocalString}}</th>
+                    <th class="col-1" style="text-align: right;" *ngIf="cotResume.total.precio.valorPrincipal && cotResume.total.precio.valorPrincipal != 0 && cotResume.total.precio.posMoneda == 0 && itinerary.mostrarMonedaLocal"> {{cotResume.total.precio.monedaL}}</th>
+                    <th class="col-1" style="text-align: right;" *ngIf="cotResume.total.precio.valorPrincipal && cotResume.total.precio.valorPrincipal != 0 && cotResume.total.precio.posMoneda == 1"> {{cotResume.total.precio.monedaP}}</th>
+                    <th class="col-2" style="text-align: right;" *ngIf="cotResume.total.precio.valorPrincipal && cotResume.total.precio.valorPrincipal != 0 && cotResume.total.precio.posMoneda == 1">{{cotResume.total.precio.valorPrincipalString}}</th>
+                    <th class="col-1" style="text-align: right;" *ngIf="cotResume.total.precio.valorPrincipal && cotResume.total.precio.valorPrincipal != 0 && cotResume.total.precio.posMoneda == 1 && itinerary.mostrarMonedaLocal"> {{cotResume.total.precio.monedaL}}</th>
+                    <th class="col-3" style="text-align: right;" *ngIf="cotResume.total.precio.valorPrincipal && cotResume.total.precio.valorPrincipal != 0 && cotResume.total.precio.posMoneda == 1 && itinerary.mostrarMonedaLocal"> {{cotResume.total.precio.valorLocalString}}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngIf="cotResume.gastosReserva" [class]="GetClass(cotResume.gastosReserva)">
+                    <th *ngIf="cotResume.gastosReserva.precio.valorPrincipal && cotResume.gastosReserva.precio.valorPrincipal != 0" class="col-4">{{cotResume.gastosReserva.titulo}}</th>
+                    <td class="col-3" style="text-align: right;" *ngIf="cotResume.gastosReserva.precio.valorPrincipal && cotResume.gastosReserva.precio.valorPrincipal != 0 && cotResume.gastosReserva.precio.posMoneda == 0"> {{cotResume.gastosReserva.precio.valorPrincipalString}}</td>
+                    <td class="col-1" style="text-align: right;" *ngIf="cotResume.gastosReserva.precio.valorPrincipal && cotResume.gastosReserva.precio.valorPrincipal != 0 && cotResume.gastosReserva.precio.posMoneda == 0"> {{cotResume.gastosReserva.precio.monedaP}}</td>
+                    <td class="col-2" style="text-align: right;" *ngIf="cotResume.gastosReserva.precio.valorPrincipal && cotResume.gastosReserva.precio.valorPrincipal != 0 && cotResume.gastosReserva.precio.posMoneda == 0 && itinerary.mostrarMonedaLocal"> {{cotResume.gastosReserva.precio.valorLocalString}}</td>
+                    <td class="col-1" style="text-align: right;" *ngIf="cotResume.gastosReserva.precio.valorPrincipal && cotResume.gastosReserva.precio.valorPrincipal != 0 && cotResume.gastosReserva.precio.posMoneda == 0 && itinerary.mostrarMonedaLocal"> {{cotResume.gastosReserva.precio.monedaL}}</td>
+                    <td class="col-1" style="text-align: right;" *ngIf="cotResume.gastosReserva.precio.valorPrincipal && cotResume.gastosReserva.precio.valorPrincipal != 0 && cotResume.gastosReserva.precio.posMoneda == 1"> {{cotResume.gastosReserva.precio.monedaP}}</td>
+                    <td class="col-2" style="text-align: right;" *ngIf="cotResume.gastosReserva.precio.valorPrincipal && cotResume.gastosReserva.precio.valorPrincipal != 0 && cotResume.gastosReserva.precio.posMoneda == 1"> {{cotResume.gastosReserva.precio.valorPrincipalString}}</td>
+                    <td class="col-1" style="text-align: right;" *ngIf="cotResume.gastosReserva.precio.valorPrincipal && cotResume.gastosReserva.precio.valorPrincipal != 0 && cotResume.gastosReserva.precio.posMoneda == 1 && itinerary.mostrarMonedaLocal"> {{cotResume.gastosReserva.precio.monedaL}}</td>
+                    <td class="col-3" style="text-align: right;" *ngIf="cotResume.gastosReserva.precio.valorPrincipal && cotResume.gastosReserva.precio.valorPrincipal != 0 && cotResume.gastosReserva.precio.posMoneda == 1 && itinerary.mostrarMonedaLocal"> {{cotResume.gastosReserva.precio.valorLocalString}}</td>
+                </tr>
+                <tr *ngIf="cotResume.totalReserva" [class]="GetClass(cotResume.totalReserva)">
+                    <th *ngIf="cotResume.totalReserva.precio.valorPrincipal && cotResume.totalReserva.precio.valorPrincipal != 0" class="col-4">{{cotResume.totalReserva.titulo}}</th>
+                    <td class="col-3" style="text-align: right;" *ngIf="cotResume.totalReserva.precio.valorPrincipal && cotResume.totalReserva.precio.valorPrincipal != 0 && cotResume.totalReserva.precio.posMoneda == 0" scope="col"> {{cotResume.totalReserva.precio.valorPrincipalString}}</td>
+                    <td class="col-1" style="text-align: right;" *ngIf="cotResume.totalReserva.precio.valorPrincipal && cotResume.totalReserva.precio.valorPrincipal != 0 && cotResume.totalReserva.precio.posMoneda == 0" scope="col"> {{cotResume.totalReserva.precio.monedaP}}</td>
+                    <td class="col-2" style="text-align: right;" *ngIf="cotResume.totalReserva.precio.valorPrincipal && cotResume.totalReserva.precio.valorPrincipal != 0 && cotResume.totalReserva.precio.posMoneda == 0 && itinerary.mostrarMonedaLocal" scope="col"> {{cotResume.totalReserva.precio.valorLocalString}}</td>
+                    <td class="col-1" style="text-align: right;" *ngIf="cotResume.totalReserva.precio.valorPrincipal && cotResume.totalReserva.precio.valorPrincipal != 0 && cotResume.totalReserva.precio.posMoneda == 0 && itinerary.mostrarMonedaLocal" scope="col"> {{cotResume.totalReserva.precio.monedaL}}</td>
+                    <td class="col-1" style="text-align: right;" *ngIf="cotResume.totalReserva.precio.valorPrincipal && cotResume.totalReserva.precio.valorPrincipal != 0 && cotResume.totalReserva.precio.posMoneda == 1" scope="col"> {{cotResume.totalReserva.precio.monedaP}}</td>
+                    <td class="col-2" style="text-align: right;" *ngIf="cotResume.totalReserva.precio.valorPrincipal && cotResume.totalReserva.precio.valorPrincipal != 0 && cotResume.totalReserva.precio.posMoneda == 1" scope="col"> {{cotResume.totalReserva.precio.valorPrincipalString}}</td>
+                    <td class="col-1" style="text-align: right;" *ngIf="cotResume.totalReserva.precio.valorPrincipal && cotResume.totalReserva.precio.valorPrincipal != 0 && cotResume.totalReserva.precio.posMoneda == 1 && itinerary.mostrarMonedaLocal" scope="col"> {{cotResume.totalReserva.precio.monedaL}}</td>
+                    <td class="col-3" style="text-align: right;" *ngIf="cotResume.totalReserva.precio.valorPrincipal && cotResume.totalReserva.precio.valorPrincipal != 0 && cotResume.totalReserva.precio.posMoneda == 1 && itinerary.mostrarMonedaLocal" scope="col"> {{cotResume.totalReserva.precio.valorLocalString}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

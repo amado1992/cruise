@@ -1,0 +1,552 @@
+<!--Para mobil o celular-->
+<div *ngIf="loadingLabels && getScreenWidth < 768" class="text-center" style="margin: auto;">
+  <!-- <div class="spinner-border text-primary"></div> -->
+  <img src="./assets/images/cargando.gif" style="width: 200px; height: 120px;">
+</div>
+<div *ngIf="!loadingLabels && !errorLoadingLabels && getScreenWidth < 768">
+  <div class="modal-content">
+    <div class="modal-header border-0 align-items-center">
+      <h6 class="modal-title m-auto">
+        <ul class="nav nav-pills text-uppercase" id="pills-tab" role="tablist">
+          <li *ngIf="itinerary.mostrarBarco" class="nav-item" role="presentation">
+            <a *ngIf="!tabItinerary" class="nav-link rounded-0 active" id="pills-profile-tab" data-toggle="pill"
+              (click)="changeItinerary(false)" role="tab" aria-controls="pills-profile" aria-selected="false"
+              style="cursor: pointer; ">{{screenLangInfo.lbl_button_VerBarco}}</a>
+            <a *ngIf="tabItinerary" class="nav-link rounded-0" id="pills-profile-tab" data-toggle="pill"
+              (click)="changeItinerary(false)" role="tab" aria-controls="pills-profile" aria-selected="false"
+              style="cursor: pointer; ">{{screenLangInfo.lbl_button_VerBarco}}</a>
+          </li>
+          <li *ngIf="itinerary.mostrarItinerario" class="nav-item" role="presentation">
+            <a *ngIf="tabItinerary" class="nav-link rounded-0 active" id="pills-home-tab" data-toggle="pill"
+              (click)="changeItinerary(true)" role="tab" aria-controls="pills-home" aria-selected="true"
+              style="cursor: pointer; ">{{screenLangInfo.lbl_button_VerItinerario}}</a>
+            <a *ngIf="!tabItinerary" class="nav-link rounded-0" id="pills-home-tab" data-toggle="pill"
+              (click)="changeItinerary(true)" role="tab" aria-controls="pills-home" aria-selected="true"
+              style="cursor: pointer; ">{{screenLangInfo.lbl_button_VerItinerario}}</a>
+          </li>
+        </ul>
+      </h6>
+      <button type="button" class="close m-0" data-dismiss="modal" aria-label="Close" (click)="close()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body p-4">
+      <div class="row mb-2">
+        <div class="d-flex order-1 order-sm-0 flex-column col-12 col-sm-9 text-center">
+          <h1 class="text-primary font-weight-bold font-size-20 mb-1">
+            {{itinerary.destino}}
+          </h1>
+          <h3 class="text-primary font-weight-normal font-size-16">
+            {{itinerary.nnoches}} {{screenLangInfo.lbl_NochesEnEl}} {{itinerary.shipName}}
+          </h3>
+        </div>
+        <div class="d-flex order-0 order-sm-1 col-12 col-sm-3 justify-content-center justify-content-sm-end mb-2">
+          <div>
+              <img src="{{itinerary.urlImageMeduim}}" style="max-height: 80px; min-width: 50px;">
+          </div>
+        </div>
+        <div class="d-flex order-0 order-sm-1 col-12 col-sm-3 justify-content-center justify-content-sm-end mb-2">
+          <div>
+            
+          </div>
+        </div>
+      </div>
+      
+      <div class="tab-content" id="myTabContent">
+        <div *ngIf="itinerary.mostrarItinerario && tabItinerary" class="tab-pane fade show active" id="home"
+          role="tabpanel" aria-labelledby="home-tab">
+          <div class="row">
+            <div class="col-12 col-sm-5">
+              <agm-map [latitude]="lat" [longitude]="lng" [zoom]="zoom" [disableDefaultUI]="false" [zoomControl]="false">
+
+                <agm-marker *ngFor="let m of markers; let i = index" (markerClick)="clickedMarker(m.label, i)"
+                  [latitude]="m.lat" [longitude]="m.lng" [label]="m.label" [iconUrl]="m.iconUrl">
+
+                  <agm-info-window>
+                    <strong>{{m.info}}</strong>
+                  </agm-info-window>
+
+                </agm-marker>
+
+              </agm-map>
+            </div>
+            <div id="stylebar" *ngIf="selectedDate" class="col-12 col-sm-7 table-responsive pl-sm-3 pr-sm-3 scrollbar" style="max-height: 380px; bottom: 20px; padding-top: 40px;"   [ngStyle]="{'overflow-y': showScroll == true ? 'scroll' : 'hidden' }" >
+           
+              <!--<button (click)="showScrollBar()" *ngIf="showArrow"   style="border-radius: 50%; width: 30px;height: 30px; position: absolute;bottom: 5px;right: 5px; background-color: transparent;border: 1px solid #2a5c96;color:#2a5c96;" >
+                <svg style="position: absolute; top: 10%; left:10%;" xmlns="http://www.w3.org/2000/svg" width="80%" height="80%" fill="currentColor" class="bi bi-arrow-down" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1z"/>
+                  </svg>
+                </button>-->
+              <table class="table table text-center text-center">
+                <thead class="text-primary">
+                  <tr>
+                    <th scope="col">{{screenLangInfo.lbl_tabla_Dia}}</th>
+                    <th scope="col">{{screenLangInfo.lbl_tabla_Fecha}}</th>
+                    <th scope="col">{{screenLangInfo.lbl_tabla_Puerto}}</th>
+                    <th scope="col">{{screenLangInfo.lbl_tabla_Llegada}}</th>
+                    <th scope="col">{{screenLangInfo.lbl_tabla_Salida}}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let dia of selectedDate.recorrido; let i=index">
+                    <th scope="row">{{i + 1}}</th>
+                    <td class="text-nowrap">{{dia.diaActividadString}}</td>
+                    <td>{{dia.nombre}}</td>
+                    <td>{{dia.horaLlegada}}</td>
+                    <td>{{dia.horaSalida}}</td>
+                  </tr>
+                </tbody>
+              </table>
+             
+            </div>
+            <div class="col-sm-12 text-center small">
+              {{screenLangInfo.lbl_note_VariacionDatosSalida}}
+            </div>
+          </div>
+        </div>
+        <div *ngIf="itinerary.mostrarBarco && !tabItinerary" class="tab-pane fade show active" id="profile"
+          role="tabpanel" aria-labelledby="profile-tab">
+          <div *ngIf="loadingBarcoInfo" class="text-center" style="margin: auto;">
+            <!-- <div class="spinner-border text-primary"></div> -->
+            <img src="./assets/images/cargando.gif" style="width: 200px; height: 120px;">
+          </div>
+          <div *ngIf="!loadingBarcoInfo && !errorLoadingBarcoInfo" class="row">
+            <div class="col-sm-10" style="margin-top: 10px;">
+              <!-- carousel -->
+              <ngb-carousel *ngIf="selectedCategoryImages" [showNavigationArrows]="true" [showNavigationIndicators]="true"
+              (slide)="ChangeSlide($event)" #myCarousel="ngbCarousel">
+                <ng-template ngbSlide *ngFor="let imageCategory of selectedCategoryImages; let i=index"
+                id="{{i}}">
+                  <div class="itinerary-img-wrapper2">
+                    <div class="first-layer" [ngStyle]="{'background-image':'url('+imageCategory.url+')'}"></div>
+                    <div class="last-layer" [ngStyle]="{'background-image':'url('+imageCategory.url+')'}"></div>
+                  </div>                  
+                </ng-template>
+              </ngb-carousel>
+              <div *ngIf="slideInfo" class="text-center" style="margin-top: 15px;">
+                <h3 style="color: #2a5c96;">{{slideInfo.titulo}}</h3>
+                <p style="color: #6c757d;">{{slideInfo.descripcion}}</p>
+              </div>
+            </div>
+            
+            <div class="col-6 col-sm-6 text-center">
+              <a [class]="selectedCategoryName == 'servicios' ? 'nav-link active' : 'nav-link'" data-toggle="pill"
+              style="padding-left: 8px;padding-right: 8px;margin-bottom: 8px;">
+                <img src="{{barcosImagesInfo.serviciosList[0].url}}" class="user-avatar"
+                  style="min-width: 50px; height: 60px;" (click)="ChangeCategory('servicios'); myCarousel.select('0')">
+              </a>
+              <p class="text-nowrap" (click)="ChangeCategory('servicios'); myCarousel.select('0')" style="cursor: pointer; margin-bottom: 8px; padding-left: 0px; padding-right: 0px;">{{screenLangInfo.lbl_tabla_Servicios}}</p>
+            </div>
+            <div class="col-6 col-sm-6 text-center">
+              <a [class]="selectedCategoryName == 'restaurantes' ? 'nav-link active' : 'nav-link'" data-toggle="pill"
+              style="padding-left: 8px;padding-right: 8px;margin-bottom: 8px;">
+                <img src="{{barcosImagesInfo.restaurantesList[0].url}}" class="user-avatar"
+                  style="min-width: 50px; height: 60px;" (click)="ChangeCategory('restaurantes'); myCarousel.select('0')">
+              </a>
+              <p class="text-nowrap" (click)="ChangeCategory('restaurantes'); myCarousel.select('0')" style="cursor: pointer; margin-bottom: 8px; padding-left: 0px; padding-right: 0px;">{{screenLangInfo.lbl_tabla_Restaurantes}}</p>
+            </div>
+            <div class="col-6 col-sm-6 text-center">
+              <a [class]="selectedCategoryName == 'deportes' ? 'nav-link active' : 'nav-link'" data-toggle="pill"
+              style="padding-left: 8px;padding-right: 8px;margin-bottom: 8px;">
+                <img src="{{barcosImagesInfo.listaDeportes[0].url}}" class="user-avatar"
+                  style="min-width: 50px; height: 60px;" (click)="ChangeCategory('deportes'); myCarousel.select('0')">
+              </a>
+              <p class="text-nowrap" (click)="ChangeCategory('deportes'); myCarousel.select('0')" style="cursor: pointer; margin-bottom: 8px; padding-left: 0px; padding-right: 0px;">{{screenLangInfo.lbl_tabla_Deportes}}</p>
+            </div>
+            <div class="col-6 col-sm-6 text-center">
+              <a [class]="selectedCategoryName == 'ocio' ? 'nav-link active' : 'nav-link'" data-toggle="pill"
+              style="padding-left: 8px;padding-right: 8px;margin-bottom: 8px;">                  
+                <img src="{{barcosImagesInfo.listaOcio[0].url}}" class="user-avatar"
+                  style="min-width: 50px; height: 60px;" (click)="ChangeCategory('ocio'); myCarousel.select('0')">
+              </a>
+              <p class="text-nowrap" (click)="ChangeCategory('ocio'); myCarousel.select('0')" style="cursor: pointer; margin-bottom: 8px; padding-left: 0px; padding-right: 0px;">{{screenLangInfo.lbl_tabla_Ocio}}</p>
+            </div>
+
+            <!--<div class="col-sm-2">-->
+              <!-- tablist -->
+              <!--<nav class="text-center nav nav-pills justify-content-between">
+                <p class="col-6 text-nowrap" (click)="ChangeCategory('servicios'); myCarousel.select('0')" style="cursor: pointer; margin-bottom: 8px; padding-left: 0px; padding-right: 0px;">{{screenLangInfo.lbl_tabla_Servicios}}</p>
+                <a [class]="selectedCategoryName == 'servicios' ? 'nav-link active' : 'nav-link'" data-toggle="pill"
+                style="padding-left: 8px;padding-right: 8px;margin-bottom: 8px;">
+                  <img src="{{barcosImagesInfo.serviciosList[0].url}}" class="user-avatar"
+                    style="min-width: 50px; height: 60px;" (click)="ChangeCategory('servicios'); myCarousel.select('0')">
+                </a>
+                <p class="col-6 text-nowrap" (click)="ChangeCategory('restaurantes'); myCarousel.select('0')" style="cursor: pointer; margin-bottom: 8px; padding-left: 0px; padding-right: 0px;">{{screenLangInfo.lbl_tabla_Restaurantes}}</p>
+                <a [class]="selectedCategoryName == 'restaurantes' ? 'nav-link active' : 'nav-link'" data-toggle="pill"
+                style="padding-left: 8px;padding-right: 8px;margin-bottom: 8px;">
+                  <img src="{{barcosImagesInfo.restaurantesList[0].url}}" class="user-avatar"
+                    style="min-width: 50px; height: 60px;" (click)="ChangeCategory('restaurantes'); myCarousel.select('0')">
+                </a>
+                <p class="col-6 text-nowrap" (click)="ChangeCategory('deportes'); myCarousel.select('0')" style="cursor: pointer; margin-bottom: 8px; padding-left: 0px; padding-right: 0px;">{{screenLangInfo.lbl_tabla_Deportes}}</p>
+                <a [class]="selectedCategoryName == 'deportes' ? 'nav-link active' : 'nav-link'" data-toggle="pill"
+                style="padding-left: 8px;padding-right: 8px;margin-bottom: 8px;">
+                  <img src="{{barcosImagesInfo.listaDeportes[0].url}}" class="user-avatar"
+                    style="min-width: 50px; height: 60px;" (click)="ChangeCategory('deportes'); myCarousel.select('0')">
+                </a>
+                <p class="col-6 text-nowrap" (click)="ChangeCategory('ocio'); myCarousel.select('0')" style="cursor: pointer; margin-bottom: 8px; padding-left: 0px; padding-right: 0px;">{{screenLangInfo.lbl_tabla_Ocio}}</p>                
+                <a [class]="selectedCategoryName == 'ocio' ? 'nav-link active' : 'nav-link'" data-toggle="pill"
+                style="padding-left: 8px;padding-right: 8px;margin-bottom: 8px;">                  
+                  <img src="{{barcosImagesInfo.listaOcio[0].url}}" class="user-avatar"
+                    style="min-width: 50px; height: 60px;" (click)="ChangeCategory('ocio'); myCarousel.select('0')">
+                </a>
+              </nav>-->
+            <!--</div>-->
+
+            <!--<div class="col-sm-10" style="margin-top: 10px;">-->
+              <!-- carousel -->
+              <!--<ngb-carousel *ngIf="selectedCategoryImages" [showNavigationArrows]="true" [showNavigationIndicators]="true"
+              (slide)="ChangeSlide($event)" #myCarousel="ngbCarousel">
+                <ng-template ngbSlide *ngFor="let imageCategory of selectedCategoryImages; let i=index"
+                id="{{i}}">
+                  <div class="itinerary-img-wrapper2">
+                    <div class="first-layer" [ngStyle]="{'background-image':'url('+imageCategory.url+')'}"></div>
+                    <div class="last-layer" [ngStyle]="{'background-image':'url('+imageCategory.url+')'}"></div>
+                  </div>                  
+                </ng-template>
+              </ngb-carousel>
+              <div *ngIf="slideInfo" class="text-center" style="margin-top: 15px;">
+                <h3 style="color: #2a5c96;">{{slideInfo.titulo}}</h3>
+                <p style="color: #6c757d;">{{slideInfo.descripcion}}</p>
+              </div>
+            </div>-->
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--Fin para mobil o celular-->
+
+<!--Table MD-->
+
+<div *ngIf="loadingLabels && getScreenWidth > 767 && getScreenWidth < 992" class="text-center" style="margin: auto;">
+  <!-- <div class="spinner-border text-primary"></div> -->
+  <img src="./assets/images/cargando.gif" style="width: 200px; height: 120px;">
+</div>
+<div *ngIf="!loadingLabels && !errorLoadingLabels && getScreenWidth > 767 && getScreenWidth < 992">
+  <div class="modal-content">
+    <div class="modal-header border-0 align-items-center">
+      <h6 class="modal-title m-auto">
+        <ul class="nav nav-pills text-uppercase" id="pills-tab" role="tablist">
+          <li *ngIf="itinerary.mostrarBarco" class="nav-item" role="presentation">
+            <a *ngIf="!tabItinerary" class="nav-link rounded-0 active" id="pills-profile-tab" data-toggle="pill"
+              (click)="changeItinerary(false)" role="tab" aria-controls="pills-profile" aria-selected="false"
+              style="cursor: pointer; ">{{screenLangInfo.lbl_button_VerBarco}}</a>
+            <a *ngIf="tabItinerary" class="nav-link rounded-0" id="pills-profile-tab" data-toggle="pill"
+              (click)="changeItinerary(false)" role="tab" aria-controls="pills-profile" aria-selected="false"
+              style="cursor: pointer; ">{{screenLangInfo.lbl_button_VerBarco}}</a>
+          </li>
+          <li *ngIf="itinerary.mostrarItinerario" class="nav-item" role="presentation">
+            <a *ngIf="tabItinerary" class="nav-link rounded-0 active" id="pills-home-tab" data-toggle="pill"
+              (click)="changeItinerary(true)" role="tab" aria-controls="pills-home" aria-selected="true"
+              style="cursor: pointer; ">{{screenLangInfo.lbl_button_VerItinerario}}</a>
+            <a *ngIf="!tabItinerary" class="nav-link rounded-0" id="pills-home-tab" data-toggle="pill"
+              (click)="changeItinerary(true)" role="tab" aria-controls="pills-home" aria-selected="true"
+              style="cursor: pointer; ">{{screenLangInfo.lbl_button_VerItinerario}}</a>
+          </li>
+        </ul>
+      </h6>
+      <button type="button" class="close m-0" data-dismiss="modal" aria-label="Close" (click)="close()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body p-4">
+      <div class="row mb-2">
+        <div class="d-flex order-1 order-sm-0 flex-column col-12 col-sm-9">
+          <h1 class="text-primary font-weight-bold font-size-20 mb-1">
+            {{itinerary.destino}}
+          </h1>
+          <h3 class="text-primary font-weight-normal font-size-16">
+            {{itinerary.nnoches}} {{screenLangInfo.lbl_NochesEnEl}} {{itinerary.shipName}}
+          </h3>
+        </div>
+        <div class="d-flex order-0 order-sm-1 col-12 col-sm-3 justify-content-center justify-content-sm-end mb-2">
+          <div>
+              <img src="{{itinerary.urlImageMeduim}}" style="max-height: 80px; min-width: 50px;">
+          </div>
+        </div>
+        <div class="d-flex order-0 order-sm-1 col-12 col-sm-3 justify-content-center justify-content-sm-end mb-2">
+          <div>
+            
+          </div>
+        </div>
+      </div>
+      
+      <div class="tab-content" id="myTabContent">
+        <div *ngIf="itinerary.mostrarItinerario && tabItinerary" class="tab-pane fade show active" id="home"
+          role="tabpanel" aria-labelledby="home-tab">
+          <div class="row">
+            <div class="col-12 col-sm-5">
+              <agm-map [latitude]="lat" [longitude]="lng" [zoom]="zoom" [disableDefaultUI]="false" [zoomControl]="false">
+
+                <agm-marker *ngFor="let m of markers; let i = index" (markerClick)="clickedMarker(m.label, i)"
+                  [latitude]="m.lat" [longitude]="m.lng" [label]="m.label" [iconUrl]="m.iconUrl">
+
+                  <agm-info-window>
+                    <strong>{{m.info}}</strong>
+                  </agm-info-window>
+
+                </agm-marker>
+
+              </agm-map>
+            </div>
+            <div id="stylebar" *ngIf="selectedDate" class="col-12 col-sm-7 table-responsive pl-sm-3 pr-sm-3 scrollbar" style="max-height: 380px; bottom: 20px; "   [ngStyle]="{'overflow-y': showScroll == true ? 'scroll' : 'hidden' }" >
+           
+              <!--<button (click)="showScrollBar()" *ngIf="showArrow"   style="border-radius: 50%; width: 30px;height: 30px; position: absolute;bottom: 5px;right: 5px; background-color: transparent;border: 1px solid #2a5c96;color:#2a5c96;" >
+                <svg style="position: absolute; top: 10%; left:10%;" xmlns="http://www.w3.org/2000/svg" width="80%" height="80%" fill="currentColor" class="bi bi-arrow-down" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1z"/>
+                  </svg>
+                </button>-->
+              <table class="table table text-center text-center">
+                <thead class="text-primary">
+                  <tr>
+                    <th scope="col">{{screenLangInfo.lbl_tabla_Dia}}</th>
+                    <th scope="col">{{screenLangInfo.lbl_tabla_Fecha}}</th>
+                    <th scope="col">{{screenLangInfo.lbl_tabla_Puerto}}</th>
+                    <th scope="col">{{screenLangInfo.lbl_tabla_Llegada}}</th>
+                    <th scope="col">{{screenLangInfo.lbl_tabla_Salida}}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let dia of selectedDate.recorrido; let i=index">
+                    <th scope="row">{{i + 1}}</th>
+                    <td class="text-nowrap">{{dia.diaActividadString}}</td>
+                    <td>{{dia.nombre}}</td>
+                    <td>{{dia.horaLlegada}}</td>
+                    <td>{{dia.horaSalida}}</td>
+                  </tr>
+                </tbody>
+              </table>
+             
+            </div>
+            <div class="col-sm-12 text-center small">
+              {{screenLangInfo.lbl_note_VariacionDatosSalida}}
+            </div>
+          </div>
+        </div>
+        <div *ngIf="itinerary.mostrarBarco && !tabItinerary" class="tab-pane fade show active" id="profile"
+          role="tabpanel" aria-labelledby="profile-tab">
+          <div *ngIf="loadingBarcoInfo" class="text-center" style="margin: auto;">
+            <!-- <div class="spinner-border text-primary"></div> -->
+            <img src="./assets/images/cargando.gif" style="width: 200px; height: 120px;">
+          </div>
+          <div *ngIf="!loadingBarcoInfo && !errorLoadingBarcoInfo" class="row">
+            <div class="col-sm-2">
+              <!-- tablist -->
+              <nav class="text-center nav nav-pills justify-content-between">
+                <p class="col-6 text-nowrap" (click)="ChangeCategory('servicios'); myCarousel.select('0')" style="cursor: pointer; margin-bottom: 8px; padding-left: 0px; padding-right: 0px;">{{screenLangInfo.lbl_tabla_Servicios}}</p>
+                <a [class]="selectedCategoryName == 'servicios' ? 'nav-link active' : 'nav-link'" data-toggle="pill"
+                style="padding-left: 8px;padding-right: 8px;margin-bottom: 8px;">
+                  <img src="{{barcosImagesInfo.serviciosList[0].url}}" class="user-avatar"
+                    style="min-width: 50px; height: 60px;" (click)="ChangeCategory('servicios'); myCarousel.select('0')">
+                </a>
+                <p class="col-6 text-nowrap" (click)="ChangeCategory('restaurantes'); myCarousel.select('0')" style="cursor: pointer; margin-bottom: 8px; padding-left: 0px; padding-right: 0px;">{{screenLangInfo.lbl_tabla_Restaurantes}}</p>
+                <a [class]="selectedCategoryName == 'restaurantes' ? 'nav-link active' : 'nav-link'" data-toggle="pill"
+                style="padding-left: 8px;padding-right: 8px;margin-bottom: 8px;">
+                  <img src="{{barcosImagesInfo.restaurantesList[0].url}}" class="user-avatar"
+                    style="min-width: 50px; height: 60px;" (click)="ChangeCategory('restaurantes'); myCarousel.select('0')">
+                </a>
+                <p class="col-6 text-nowrap" (click)="ChangeCategory('deportes'); myCarousel.select('0')" style="cursor: pointer; margin-bottom: 8px; padding-left: 0px; padding-right: 0px;">{{screenLangInfo.lbl_tabla_Deportes}}</p>
+                <a [class]="selectedCategoryName == 'deportes' ? 'nav-link active' : 'nav-link'" data-toggle="pill"
+                style="padding-left: 8px;padding-right: 8px;margin-bottom: 8px;">
+                  <img src="{{barcosImagesInfo.listaDeportes[0].url}}" class="user-avatar"
+                    style="min-width: 50px; height: 60px;" (click)="ChangeCategory('deportes'); myCarousel.select('0')">
+                </a>
+                <p class="col-6 text-nowrap" (click)="ChangeCategory('ocio'); myCarousel.select('0')" style="cursor: pointer; margin-bottom: 8px; padding-left: 0px; padding-right: 0px;">{{screenLangInfo.lbl_tabla_Ocio}}</p>                
+                <a [class]="selectedCategoryName == 'ocio' ? 'nav-link active' : 'nav-link'" data-toggle="pill"
+                style="padding-left: 8px;padding-right: 8px;margin-bottom: 8px;">                  
+                  <img src="{{barcosImagesInfo.listaOcio[0].url}}" class="user-avatar"
+                    style="min-width: 50px; height: 60px;" (click)="ChangeCategory('ocio'); myCarousel.select('0')">
+                </a>
+              </nav>
+            </div>
+            <div class="col-sm-10" style="margin-top: 10px;">
+              <!-- carousel -->
+              <ngb-carousel *ngIf="selectedCategoryImages" [showNavigationArrows]="true" [showNavigationIndicators]="true"
+              (slide)="ChangeSlide($event)" #myCarousel="ngbCarousel">
+                <ng-template ngbSlide *ngFor="let imageCategory of selectedCategoryImages; let i=index"
+                id="{{i}}">
+                  <div class="itinerary-img-wrapper2">
+                    <div class="first-layer" [ngStyle]="{'background-image':'url('+imageCategory.url+')'}"></div>
+                    <div class="last-layer" [ngStyle]="{'background-image':'url('+imageCategory.url+')'}"></div>
+                  </div>                  
+                </ng-template>
+              </ngb-carousel>
+              <div *ngIf="slideInfo" class="text-center" style="margin-top: 15px;">
+                <h3 style="color: #2a5c96;">{{slideInfo.titulo}}</h3>
+                <p style="color: #6c757d;">{{slideInfo.descripcion}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--Fin table MD-->
+
+<div *ngIf="loadingLabels && getScreenWidth > 991" class="text-center" style="margin: auto;">
+  <!-- <div class="spinner-border text-primary"></div> -->
+  <img src="./assets/images/cargando.gif" style="width: 200px; height: 120px;">
+</div>
+<div *ngIf="!loadingLabels && !errorLoadingLabels && getScreenWidth > 991">
+  <div class="modal-content">
+    <div class="modal-header border-0 align-items-center">
+      <h6 class="modal-title m-auto">
+        <ul class="nav nav-pills text-uppercase" id="pills-tab" role="tablist">
+          <li *ngIf="itinerary.mostrarBarco" class="nav-item" role="presentation">
+            <a *ngIf="!tabItinerary" class="nav-link rounded-0 active" id="pills-profile-tab" data-toggle="pill"
+              (click)="changeItinerary(false)" role="tab" aria-controls="pills-profile" aria-selected="false"
+              style="cursor: pointer; ">{{screenLangInfo.lbl_button_VerBarco}}</a>
+            <a *ngIf="tabItinerary" class="nav-link rounded-0" id="pills-profile-tab" data-toggle="pill"
+              (click)="changeItinerary(false)" role="tab" aria-controls="pills-profile" aria-selected="false"
+              style="cursor: pointer; ">{{screenLangInfo.lbl_button_VerBarco}}</a>
+          </li>
+          <li *ngIf="itinerary.mostrarItinerario" class="nav-item" role="presentation">
+            <a *ngIf="tabItinerary" class="nav-link rounded-0 active" id="pills-home-tab" data-toggle="pill"
+              (click)="changeItinerary(true)" role="tab" aria-controls="pills-home" aria-selected="true"
+              style="cursor: pointer; ">{{screenLangInfo.lbl_button_VerItinerario}}</a>
+            <a *ngIf="!tabItinerary" class="nav-link rounded-0" id="pills-home-tab" data-toggle="pill"
+              (click)="changeItinerary(true)" role="tab" aria-controls="pills-home" aria-selected="true"
+              style="cursor: pointer; ">{{screenLangInfo.lbl_button_VerItinerario}}</a>
+          </li>
+        </ul>
+      </h6>
+      <button type="button" class="close m-0" data-dismiss="modal" aria-label="Close" (click)="close()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body p-4">
+      <div class="row mb-2">
+        <div class="d-flex order-1 order-sm-0 flex-column col-12 col-sm-9">
+          <h1 class="text-primary font-weight-bold font-size-20 mb-1">
+            {{itinerary.destino}}
+          </h1>
+          <h3 class="text-primary font-weight-normal font-size-16">
+            {{itinerary.nnoches}} {{screenLangInfo.lbl_NochesEnEl}} {{itinerary.shipName}}
+          </h3>
+        </div>
+        <div class="d-flex order-0 order-sm-1 col-12 col-sm-3 justify-content-center justify-content-sm-end mb-2">
+          <div>
+              <img src="{{itinerary.urlImageMeduim}}" style="max-height: 80px; min-width: 50px;">
+          </div>
+        </div>
+        <div class="d-flex order-0 order-sm-1 col-12 col-sm-3 justify-content-center justify-content-sm-end mb-2">
+          <div>
+            
+          </div>
+        </div>
+      </div>
+      
+      <div class="tab-content" id="myTabContent">
+        <div *ngIf="itinerary.mostrarItinerario && tabItinerary" class="tab-pane fade show active" id="home"
+          role="tabpanel" aria-labelledby="home-tab">
+          <div class="row">
+            <div class="col-12 col-sm-5">
+              <agm-map [latitude]="lat" [longitude]="lng" [zoom]="zoom" [disableDefaultUI]="false" [zoomControl]="false">
+
+                <agm-marker *ngFor="let m of markers; let i = index" (markerClick)="clickedMarker(m.label, i)"
+                  [latitude]="m.lat" [longitude]="m.lng" [label]="m.label" [iconUrl]="m.iconUrl">
+
+                  <agm-info-window>
+                    <strong>{{m.info}}</strong>
+                  </agm-info-window>
+
+                </agm-marker>
+
+              </agm-map>
+            </div>
+            <div id="stylebar" *ngIf="selectedDate" class="col-12 col-sm-7 table-responsive pl-sm-3 pr-sm-3 scrollbar" style="max-height: 380px; bottom: 20px; "   [ngStyle]="{'overflow-y': showScroll == true ? 'scroll' : 'hidden' }" >
+           
+              <!--<button (click)="showScrollBar()" *ngIf="showArrow"   style="border-radius: 50%; width: 30px;height: 30px; position: absolute;bottom: 5px;right: 5px; background-color: transparent;border: 1px solid #2a5c96;color:#2a5c96;" >
+                <svg style="position: absolute; top: 10%; left:10%;" xmlns="http://www.w3.org/2000/svg" width="80%" height="80%" fill="currentColor" class="bi bi-arrow-down" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1z"/>
+                  </svg>
+                </button>-->
+              <table class="table table text-center text-center">
+                <thead class="text-primary">
+                  <tr>
+                    <th scope="col">{{screenLangInfo.lbl_tabla_Dia}}</th>
+                    <th scope="col">{{screenLangInfo.lbl_tabla_Fecha}}</th>
+                    <th scope="col">{{screenLangInfo.lbl_tabla_Puerto}}</th>
+                    <th scope="col">{{screenLangInfo.lbl_tabla_Llegada}}</th>
+                    <th scope="col">{{screenLangInfo.lbl_tabla_Salida}}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let dia of selectedDate.recorrido; let i=index">
+                    <th scope="row">{{i + 1}}</th>
+                    <td class="text-nowrap">{{dia.diaActividadString}}</td>
+                    <td>{{dia.nombre}}</td>
+                    <td>{{dia.horaLlegada}}</td>
+                    <td>{{dia.horaSalida}}</td>
+                  </tr>
+                </tbody>
+              </table>
+             
+            </div>
+            <div class="col-sm-12 text-center small">
+              {{screenLangInfo.lbl_note_VariacionDatosSalida}}
+            </div>
+          </div>
+        </div>
+        <div *ngIf="itinerary.mostrarBarco && !tabItinerary" class="tab-pane fade show active" id="profile"
+          role="tabpanel" aria-labelledby="profile-tab">
+          <div *ngIf="loadingBarcoInfo" class="text-center" style="margin: auto;">
+            <!-- <div class="spinner-border text-primary"></div> -->
+            <img src="./assets/images/cargando.gif" style="width: 200px; height: 120px;">
+          </div>
+          <div *ngIf="!loadingBarcoInfo && !errorLoadingBarcoInfo" class="row">
+            <div class="col-sm-2">
+              <!-- tablist -->
+              <nav class="text-center nav nav-pills justify-content-between">
+                <p class="col-6 text-nowrap" (click)="ChangeCategory('servicios'); myCarousel.select('0')" style="cursor: pointer; margin-bottom: 8px; padding-left: 0px; padding-right: 0px;">{{screenLangInfo.lbl_tabla_Servicios}}</p>
+                <a [class]="selectedCategoryName == 'servicios' ? 'nav-link active' : 'nav-link'" data-toggle="pill"
+                style="padding-left: 8px;padding-right: 8px;margin-bottom: 8px;">
+                  <img src="{{barcosImagesInfo.serviciosList[0].url}}" class="user-avatar"
+                    style="min-width: 50px; height: 60px;" (click)="ChangeCategory('servicios'); myCarousel.select('0')">
+                </a>
+                <p class="col-6 text-nowrap" (click)="ChangeCategory('restaurantes'); myCarousel.select('0')" style="cursor: pointer; margin-bottom: 8px; padding-left: 0px; padding-right: 0px;">{{screenLangInfo.lbl_tabla_Restaurantes}}</p>
+                <a [class]="selectedCategoryName == 'restaurantes' ? 'nav-link active' : 'nav-link'" data-toggle="pill"
+                style="padding-left: 8px;padding-right: 8px;margin-bottom: 8px;">
+                  <img src="{{barcosImagesInfo.restaurantesList[0].url}}" class="user-avatar"
+                    style="min-width: 50px; height: 60px;" (click)="ChangeCategory('restaurantes'); myCarousel.select('0')">
+                </a>
+                <p class="col-6 text-nowrap" (click)="ChangeCategory('deportes'); myCarousel.select('0')" style="cursor: pointer; margin-bottom: 8px; padding-left: 0px; padding-right: 0px;">{{screenLangInfo.lbl_tabla_Deportes}}</p>
+                <a [class]="selectedCategoryName == 'deportes' ? 'nav-link active' : 'nav-link'" data-toggle="pill"
+                style="padding-left: 8px;padding-right: 8px;margin-bottom: 8px;">
+                  <img src="{{barcosImagesInfo.listaDeportes[0].url}}" class="user-avatar"
+                    style="min-width: 50px; height: 60px;" (click)="ChangeCategory('deportes'); myCarousel.select('0')">
+                </a>
+                <p class="col-6 text-nowrap" (click)="ChangeCategory('ocio'); myCarousel.select('0')" style="cursor: pointer; margin-bottom: 8px; padding-left: 0px; padding-right: 0px;">{{screenLangInfo.lbl_tabla_Ocio}}</p>                
+                <a [class]="selectedCategoryName == 'ocio' ? 'nav-link active' : 'nav-link'" data-toggle="pill"
+                style="padding-left: 8px;padding-right: 8px;margin-bottom: 8px;">                  
+                  <img src="{{barcosImagesInfo.listaOcio[0].url}}" class="user-avatar"
+                    style="min-width: 50px; height: 60px;" (click)="ChangeCategory('ocio'); myCarousel.select('0')">
+                </a>
+              </nav>
+            </div>
+            <div class="col-sm-10" style="margin-top: 10px;">
+              <!-- carousel -->
+              <ngb-carousel *ngIf="selectedCategoryImages" [showNavigationArrows]="true" [showNavigationIndicators]="true"
+              (slide)="ChangeSlide($event)" #myCarousel="ngbCarousel">
+                <ng-template ngbSlide *ngFor="let imageCategory of selectedCategoryImages; let i=index"
+                id="{{i}}">
+                  <div class="itinerary-img-wrapper2">
+                    <div class="first-layer" [ngStyle]="{'background-image':'url('+imageCategory.url+')'}"></div>
+                    <div class="last-layer" [ngStyle]="{'background-image':'url('+imageCategory.url+')'}"></div>
+                  </div>                  
+                </ng-template>
+              </ngb-carousel>
+              <div *ngIf="slideInfo" class="text-center" style="margin-top: 15px;">
+                <h3 style="color: #2a5c96;">{{slideInfo.titulo}}</h3>
+                <p style="color: #6c757d;">{{slideInfo.descripcion}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

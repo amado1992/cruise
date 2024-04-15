@@ -1,0 +1,500 @@
+<div *ngIf="loadingLabels" class="text-center" style="margin: auto;">
+    <!-- <div class="spinner-border text-primary"></div> -->
+    <img src="./assets/images/cargando.gif" style="width: 200px; height: 120px;">
+</div>
+<div *ngIf="!loadingLabels && !errorLoadingLabels">
+    <header class="steps__header container-fluid">
+        <div class="wrapper row flex-column flex-nowrap bg-light p-3 p-sm-5">
+            <div class="row align-items-center">
+                <div class="col-12 col-sm-9 order-1 order-sm-0">
+                    <h1 class="text-primary mb-1 fs-24">{{itinerary.destino}}</h1>
+                    <p class="mb-2 text-primary">{{itinerary.nnoches}} {{screenLangInfo.lbl_nochesEnEl}} {{itinerary.shipName}}
+                    </p>
+                </div>
+                <div class="col-12 col-sm-3 order-0 order-sm-0 text-center">
+                    <img src="{{itinerary.urlImageMeduim}}" style="max-height: 80px; min-width: 50px;">
+
+                </div>
+            </div>
+            <div class="row align-items-center">
+                <div class="col-6 col-sm-9">
+                    <ul class="list-unstyled list-inline font-weight-bold mb-3 text-nowrap">
+                        <li *ngIf="itinerary.mostrarBarco" class="list-inline-item">
+                            <u><a class="text-secondary" data-toggle="modal" data-target="#modal_launch"
+                                    data-show-tab="boat" (click)="ShowItinerary(false)"
+                                    role="button">{{screenLangInfo.lbl_Button_VerBarco}}</a></u>
+                        </li>
+                        <li *ngIf="itinerary.mostrarItinerario" class="list-inline-item">
+                            <u><a class="text-secondary" data-toggle="modal" data-target="#modal_launch"
+                                    data-show-tab="itinerary" (click)="ShowItinerary(true)"
+                                    role="button">{{screenLangInfo.lbl_Button_VerItinerario}}</a></u>
+                        </li>
+                    </ul>
+                    <ul class="list-unstyled text-muted mb-3 text-nowrap">
+                        <li class="mb-1"><strong>{{screenLangInfo.lbl_fecha}}</strong> {{selectedDate.dateOut.dia}} {{selectedDate.dateOut.mes}} {{selectedDate.dateOut.anno}}</li>
+                        <li class="mb-1"><strong>Pasajeros:</strong> {{pasajeros.length}}</li>
+                        <li class="mb-1"><strong> {{screenLangInfo.lbl_tarifa}}:</strong>
+                            <span class="mb-1 pl-1" [innerHtml]="cleanTitleRate"></span>
+                            <img *ngIf="reservation.rate.icon" src={{reservation.rate.icon}} style="max-height: 35px; min-width: 5px;">
+                        </li>
+                        <!--<li class="mb-1"  [innerHtml]="cleanTitleRate" >
+                        </li>-->
+                        <li class="mb-1 italic-class" [innerHtml]="cleanDescriptionRate">
+                        </li>
+
+                        <li *ngIf="selectedDate && selectedDate.addons && selectedDate.addons[1].valor == true" class="mb-1 col">
+
+                            <span *ngIf="(selectedDate.addons[1] && selectedDate.addons[1].valor == true) || (selectedCabin && selectedCabin.aeropuertoName && selectedCabin.aeropuertoName.trim() != '')" [innerHtml]="showHTML(selectedDate.addons[1].descripcion)" class="pr-2"></span>
+
+
+                            <svg xmlns="http://www.w3.org/2000/svg" width="31.905" height="31.905" viewBox="0 0 31.905 31.905">
+                                <path
+                                  d="M10.413,1.735a1.792,1.792,0,0,1,1.157.578,2.856,2.856,0,0,1,.578,1.735V8.677l6.942,5.206v1.735l-7.52-2.892V19.09L14.462,21.4v1.157L10.413,21.4,6.363,22.561V21.4L9.256,19.09V12.726l-7.52,2.892V13.883L8.677,8.677V4.049a2.856,2.856,0,0,1,.578-1.735,1.792,1.792,0,0,1,1.157-.578m0-1.735A3.529,3.529,0,0,0,8.029,1.088,4.456,4.456,0,0,0,6.942,4.049v3.76L.694,12.5A1.734,1.734,0,0,0,0,13.883v1.735a1.738,1.738,0,0,0,1.735,1.735,1.808,1.808,0,0,0,.625-.116l5.16-1.99v3L5.281,20.044A1.733,1.733,0,0,0,4.628,21.4v1.157a1.745,1.745,0,0,0,.688,1.388,1.725,1.725,0,0,0,1.047.347,1.652,1.652,0,0,0,.474-.069l3.575-1.018,3.575,1.018a1.681,1.681,0,0,0,.474.069,1.776,1.776,0,0,0,1.047-.347,1.737,1.737,0,0,0,.688-1.388V21.4a1.722,1.722,0,0,0-.654-1.354l-2.239-1.8v-3l5.16,1.984a1.784,1.784,0,0,0,.625.116,1.738,1.738,0,0,0,1.735-1.735V13.878a1.734,1.734,0,0,0-.694-1.388l-6.248-4.68V4.049A4.465,4.465,0,0,0,12.8,1.088,3.529,3.529,0,0,0,10.413,0Z"
+                                  transform="translate(17.18) rotate(45)" fill="#2a5c96" />
+                              </svg>
+
+                        </li>
+                        <li *ngIf="selectedDate && selectedDate.addons && selectedDate.addons[2].valor == true" class="mb-1">
+                            <span *ngIf="(selectedDate.addons[2] && selectedDate.addons[2].valor == true) || (selectedCabin && selectedCabin.aeropuertoName && selectedCabin.aeropuertoName.trim() != '')" [innerHtml]="showHTML(selectedDate.addons[2].descripcion)" class="pr-2"></span>
+
+
+
+                            <svg xmlns="http://www.w3.org/2000/svg" width="6.768" height="27.102" viewBox="0 0 6.768 27.102">
+                                <g transform="translate(0)">
+                                  <path
+                                    d="M142.684,41.914a3.387,3.387,0,1,0-2.395-.995A3.366,3.366,0,0,0,142.684,41.914Zm-1.163-4.553a1.634,1.634,0,0,1,2.325,0,1.651,1.651,0,0,1,0,2.331,1.634,1.634,0,0,1-2.325,0A1.651,1.651,0,0,1,141.521,37.361Z"
+                                    transform="translate(-139.3 -14.812)" fill="#2a5c96" />
+                                  <path
+                                    d="M144.2,0h-2.314a1.733,1.733,0,0,0-1.735,1.735V17.354a1.733,1.733,0,0,0,1.735,1.735H144.2a1.733,1.733,0,0,0,1.735-1.735V1.735A1.733,1.733,0,0,0,144.2,0Zm0,17.354h-2.314V1.735H144.2Z"
+                                    transform="translate(-139.658)" fill="#2a5c96" />
+                                </g>
+                              </svg>
+
+                        </li>
+                        <li *ngIf="selectedDate && selectedDate.addons && selectedDate.addons[3].valor == true" class="mb-1">
+                            <span *ngIf="(selectedDate.addons[3] && selectedDate.addons[3].valor == true) || (selectedCabin && selectedCabin.aeropuertoName && selectedCabin.aeropuertoName.trim() != '')" [innerHtml]="showHTML(selectedDate.addons[3].descripcion)" class="pr-2"></span>
+
+
+
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24.874" height="24.296" viewBox="0 0 24.874 24.296">
+                                <path
+                                  d="M24.743,12.59a1.733,1.733,0,0,0-1.6-1.07h-6.41L13.723,5.007a1.733,1.733,0,0,0-3.147,0L7.568,11.52H1.737A1.735,1.735,0,0,0,.51,14.482l4.535,4.535L3.5,26.19A1.734,1.734,0,0,0,4.23,28a1.7,1.7,0,0,0,.972.3,1.722,1.722,0,0,0,.978-.3l5.97-4.067,5.958,4.061A1.737,1.737,0,0,0,20,28.03a1.744,1.744,0,0,0,.8-1.718l-1.03-7.243,4.593-4.593A1.717,1.717,0,0,0,24.743,12.59Zm-6.809,5.872,1.151,8.1-6.936-4.732L5.2,26.561l1.741-8.1L1.737,13.256H8.678l3.471-7.52,3.471,7.52h7.52Z"
+                                  transform="translate(-0.003 -4)" fill="#2a5c96" />
+                              </svg>
+
+                        </li>
+
+
+
+                        <li class="mb-1"><strong>{{screenLangInfo.lbl_Categoria}}</strong> {{GetCatTranslate()}} / ( {{screenLangInfo.lbl_CategoriaTipoCabina}} {{selectedCabin.categoria}})
+                        </li>
+                        <li *ngIf="(selectedCabin && selectedCabin.aeropuertoName && selectedCabin.aeropuertoName.trim() != '')">
+
+                            <strong>{{screenLangInfo.lbl_cmb_AeropuertoTitle}}:</strong>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="31.905" height="31.905" viewBox="0 0 31.905 31.905">
+                                        <path
+                                            d="M10.413,1.735a1.792,1.792,0,0,1,1.157.578,2.856,2.856,0,0,1,.578,1.735V8.677l6.942,5.206v1.735l-7.52-2.892V19.09L14.462,21.4v1.157L10.413,21.4,6.363,22.561V21.4L9.256,19.09V12.726l-7.52,2.892V13.883L8.677,8.677V4.049a2.856,2.856,0,0,1,.578-1.735,1.792,1.792,0,0,1,1.157-.578m0-1.735A3.529,3.529,0,0,0,8.029,1.088,4.456,4.456,0,0,0,6.942,4.049v3.76L.694,12.5A1.734,1.734,0,0,0,0,13.883v1.735a1.738,1.738,0,0,0,1.735,1.735,1.808,1.808,0,0,0,.625-.116l5.16-1.99v3L5.281,20.044A1.733,1.733,0,0,0,4.628,21.4v1.157a1.745,1.745,0,0,0,.688,1.388,1.725,1.725,0,0,0,1.047.347,1.652,1.652,0,0,0,.474-.069l3.575-1.018,3.575,1.018a1.681,1.681,0,0,0,.474.069,1.776,1.776,0,0,0,1.047-.347,1.737,1.737,0,0,0,.688-1.388V21.4a1.722,1.722,0,0,0-.654-1.354l-2.239-1.8v-3l5.16,1.984a1.784,1.784,0,0,0,.625.116,1.738,1.738,0,0,0,1.735-1.735V13.878a1.734,1.734,0,0,0-.694-1.388l-6.248-4.68V4.049A4.465,4.465,0,0,0,12.8,1.088,3.529,3.529,0,0,0,10.413,0Z"
+                                            transform="translate(17.18) rotate(45)" fill="#2a5c96" />
+                                    </svg> {{selectedCabin.aeropuertoName}}
+                        </li>
+
+                        <li class="mb-1" *ngIf="selectedCabin.deckCode && selectedCabin.cabinNumber && selectedCabin.deckCode!=''"><strong>{{screenLangInfo.lbl_Cubierta}}</strong>{{selectedCabin.deckCode}}</li>
+                        <li class="mb-1" *ngIf="selectedCabin.deckCode && selectedCabin.cabinNumber && selectedCabin.deckCode!=''"><strong>{{screenLangInfo.lbl_Camarote}}</strong>{{selectedCabin.cabinNumber}}</li>
+
+                        <!--  <li class="mt-3">
+                            <a (click)="ShowSelectionRates()" class="text-white text-secondary font-weight-bold"
+                                style="cursor: pointer; ">
+                                {{screenLangInfo.lbl_button_Cambiar}}
+                            </a>
+                        </li> -->
+                    </ul>
+                </div>
+
+
+                <div class="col-6 col-sm-3 text-center pb-0">
+                    <span *ngIf="reservation.mode != 'Online'" class="small">{{screenLangInfo.lbl_PorPersona}}</span>
+                    <span *ngIf="reservation.mode == 'Online'" class="small">{{xcabinaxpasajero}}</span>
+
+                    <h1 *ngIf="selectedCabin.precioCabinaPax.posMoneda == 0" class="text-primary price mb-0 text-nowrap">
+                        {{selectedCabin.precioCabina.valorPrincipalString}}
+                        <span>{{selectedCabin.precioCabina.monedaP}}</span>
+                    </h1>
+                    <small *ngIf="selectedCabin.precioCabina.posMoneda == 0 && itinerary.mostrarMonedaLocal" class="text-primary text-nowrap">{{selectedCabin.precioCabina.valorLocalString}}
+                        {{selectedCabin.precioCabina.monedaL}}</small>
+
+                    <h1 *ngIf="selectedCabin.precioCabinaPax.posMoneda == 1" class="text-primary price mb-0 text-nowrap">
+                        <span>{{selectedCabin.precioCabina.monedaP}}
+                        </span>{{selectedCabin.precioCabina.valorPrincipalString}}
+                    </h1>
+                    <small *ngIf="selectedCabin.precioCabina.posMoneda == 1 && itinerary.mostrarMonedaLocal" class="text-primary text-nowrap">{{selectedCabin.precioCabina.monedaL}}
+                        {{selectedCabin.precioCabina.valorLocalString}}</small>
+                    <div class="container text-center pt-4">
+                        <a (click)="ShowSumaryQuotation()" class="btn btn-primary text-uppercase font-weight-bold rounded-0 pr-3 pl-3 pr-sm-4 pl-sm-4">
+                                {{screenLangInfo.lbl_button_Reservar}}
+                            </a>
+                    </div>
+                </div>
+
+
+                <div class="row mt-0 mt-sm-2 align-items-center">
+                    <div class="d-flex justify-content-center d-sm-block col-sm-9 p-0 p-sm-3">
+                        <a (click)="ShowSelectionRates()" class="steps__header-button m-2 m-sm-0 btn btn-primary text-white text-uppercase font-weight-bold rounded-0 pr-3 pl-3 pr-sm-4 pl-sm-4">
+                    Cancelar
+                </a>
+                        <!-- <a (click)="ShowPassengerDataReservation()"  
+                    class="steps__header-button d-block d-sm-none m-2 btn btn-primary text-white text-uppercase font-weight-bold rounded-0 pr-3 pl-3 pr-sm-4 pl-sm-4">
+                    {{screenLangInfo.lbl_button_Reservar}}
+                </a>-->
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </header>
+    <nav *ngIf="reservation.mode == 'Online'" class="nav nav-pills flex-row bg-secondary nav-pills--steps">
+        <a class="flex-fill text-white rounded-0 text-center nav-link completed" style="cursor: pointer; " (click)="PassengersNumber()">
+            <span class="angle"></span> {{screenLangInfo.lbl_tirillaNavegacion_Paso1}}
+        </a>
+        <a class="flex-fill text-white rounded-0 text-center nav-link completed" style="cursor: pointer; " (click)="ShowSelectionRates()">
+            <span class="angle"></span> {{screenLangInfo.lbl_tirillaNavegacion_Paso2}}
+        </a>
+        <a class="flex-fill text-white rounded-0 text-center nav-link active">
+            <span class="angle"></span> {{screenLangInfo.lbl_tirillaNavegacion_Paso3}}
+        </a>
+    </nav>
+    <nav *ngIf="reservation.mode == 'Offline'" class="nav nav-pills flex-row bg-secondary nav-pills--steps">
+        <a class="flex-fill text-white rounded-0 text-center nav-link completed" style="cursor: pointer; " (click)="ShowSelectionRates()">
+            <span class="angle"></span> {{screenLangInfo.lbl_tirillaNavegacion_Paso4}}
+        </a>
+        <a class="flex-fill text-white rounded-0 text-center nav-link active">
+            <span class="angle"></span> {{screenLangInfo.lbl_tirillaNavegacion_Paso5}}
+        </a>
+    </nav>
+    <main class="container container pt-5 pb-5">
+
+        <div *ngIf="cotizaronline==false" class="row">
+            <div class="col-sm-12 text-right">
+                <h6 class="text-secondary  font-weight-bold">
+                    {{screenLangInfo.lbl_Msg_HoldCabin}}
+                </h6>
+            </div>
+        </div>
+
+        <!-- <app-enter-passenger-data></app-enter-passenger-data> -->
+        <div class="row">
+            <div class="col-sm-12 pt-4">
+                <h1 class="text-primary text-uppercase font-weight-bold fs-24">
+                    {{screenLangInfo.lbl_Title_PaxData}}
+                </h1>
+            </div>
+        </div>
+        <div class="row mt-4 pt-2 pl-6">
+
+            <div class="col-sm-12 col-md-3 text-sm-left text-center mb-3">
+                <h6 class="text-primary  font-weight-bold fs-16">Quiere pagar propinas</h6>
+            </div>
+            <div class="col-sm-12 col-md-9 text-sm-left text-center mb-3">
+                <div class="custom-control custom-radio custom-control-inline">
+                    <input type="radio" id="customRadioInline3" name="customRadioInlineM" class="custom-control-input" (change)=ChangePropina(true)>
+                    <label class="custom-control-label" for="customRadioInline3">{{screenLangInfoPax.lbl_check_Si}}</label>
+
+
+                </div>
+                <div class="custom-control custom-radio custom-control-inline">
+                    <input type="radio" id="customRadioInline4" name="customRadioInlineM" class="custom-control-input" (change)=ChangePropina(false)>
+                    <label class="custom-control-label" for="customRadioInline4">{{screenLangInfoPax.lbl_check_No}}</label>
+
+
+                </div>
+
+            </div>
+
+        </div>
+        <div class="row">
+
+            <div class="col-sm-12 col-md-3 text-sm-left text-center mb-3">
+                <h6 class="text-primary  font-weight-bold fs-16">Quiere pagar seguros</h6>
+            </div>
+            <div class="col-sm-12 col-md-9 text-sm-left text-center mb-3">
+                <div class="custom-control custom-radio custom-control-inline">
+                    <input type="radio" id="customRadioInline51" name="customRadioInlineS" class="custom-control-input" (change)=ChangeSeguro(true)>
+                    <label class="custom-control-label" for="customRadioInline51">{{screenLangInfoPax.lbl_check_Si}}</label>
+
+
+                </div>
+                <div class="custom-control custom-radio custom-control-inline">
+
+                    <input type="radio" id="customRadioInline52" name="customRadioInlineS" class="custom-control-input" (change)=ChangeSeguro(false)>
+                    <label class="custom-control-label" for="customRadioInline52">{{screenLangInfoPax.lbl_check_No}}</label>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="row mt-4 pt-4">
+
+
+            <div class="col-sm-12 col-md-`1  mb-3">
+                <!--  <div *ngFor="let dato of resumenPasajero.bloquesPasajeros">
+                <div class='d-flex flex-row w-80 align-items-center justify-content-center'>
+                  <div class="w-50">
+                      <br>
+                    <h3>{{dato.titulo}}</h3>
+                     <br>
+                  </div>
+                  
+
+                  <div class="w-50">
+                
+
+                  </div>
+                  </div>
+                  <div *ngFor="let precio of dato.precios" class='d-flex flex-row w-80 align-items-center justify-content-center'>
+                 
+                  <div class="w-50">
+                    <p class="mb-0">{{precio.titulo}}</p>
+
+                  </div>  
+                  <div class="w-25">
+                   <span class="small">{{precio.precio.monedaP}}</span>
+                   <span class="small"> {{precio.precio.valorPrincipalString}}</span>
+                  </div>  
+                  <div class="w-25">
+                    <span class="small">{{precio.precio.monedaL}}</span>
+                    <span class="small"> {{precio.precio.valorLocalString}}</span>
+                   </div>  
+ 
+
+
+                </div>
+                
+              
+        
+            </div>-->
+                <!--<div  class='d-flex flex-row w-80 align-items-center justify-content-center'>
+                 
+                <div class="w-50"><br>
+                    <p class="mb-0">{{resumenPasajero.total.titulo}}</p>
+
+                </div>  
+                <div class="w-25">
+                 <span class="small">{{resumenPasajero.total.precio.monedaP}}</span>
+                 <span class="small font-weight-bold mb-0"> {{resumenPasajero.total.precio.valorPrincipalString}}</span>
+                </div>  
+                <div class="w-25">
+                  <span class="small">{{resumenPasajero.total.precio.monedaL}}</span>
+                  <span class="small font-weight-bold mb-0"> {{resumenPasajero.total.precio.valorLocalString}}</span>
+                 </div>  
+
+
+
+              </div>-->
+
+
+                <!--<div  class='d-flex flex-row w-80 align-items-center justify-content-center'>
+                 
+                <div class="w-50">
+                    <p class="mb-0">{{resumenPasajero.gastosReserva.titulo}}</p>
+
+                </div>  
+                <div class="w-25">
+                 <span class="small">{{resumenPasajero.gastosReserva.precio.monedaP}}</span>
+                 <span class="small font-weight-bold mb-0"> {{resumenPasajero.gastosReserva.precio.valorPrincipalString}}</span>
+                </div>  
+                <div class="w-25">
+                  <span class="small">{{resumenPasajero.gastosReserva.precio.monedaL}}</span>
+                  <span class="small font-weight-bold mb-0"> {{resumenPasajero.gastosReserva.precio.valorLocalString}}</span>
+                 </div>  
+
+
+
+              </div>-->
+
+
+                <!--<div  class='d-flex flex-row w-80 align-items-center justify-content-center'>
+                 
+                <div class="w-50">
+                    <p class="mb-0">{{resumenPasajero.totalReserva.titulo}}</p>
+
+                </div>  
+                <div class="w-25">
+                 <span class="small">{{resumenPasajero.totalReserva.precio.monedaP}}</span>
+                 <span class="small font-weight-bold mb-0"> {{resumenPasajero.totalReserva.precio.valorPrincipalString}}</span>
+                </div>  
+                <div class="w-25">
+                  <span class="small">{{resumenPasajero.totalReserva.precio.monedaL}}</span>
+                  <span class="small font-weight-bold mb-0"> {{resumenPasajero.totalReserva.precio.valorLocalString}}</span>
+                 </div>  
+
+
+
+              </div>-->
+
+
+
+                <!--<div  class='d-flex flex-column  align-items-start justify-content-start w-100 mt-4 pt-1 border-top'>
+                 
+                <div *ngFor="let notas of resumenPasajero.listaNotasAlPie">
+
+                
+                   <div class='w-100'>
+                    <p class="mb-0" [innerHtml]="showHTML(notas)"></p>
+            
+                    </div>
+                    
+  
+                   
+                    
+
+                </div>  
+                
+
+
+
+              </div>-->
+
+
+
+
+                <div class="row mt-4 pt-4 border-top">
+                    <div class="col-sm-12 text-sm-left  mb-3">
+                        <h1 class="text-primary text-uppercase font-weight-bold fs-24">
+                            {{screenLangInfo.lbl_Titulo_SeccionDesglose}}
+                        </h1>
+                    </div>
+                    <div class="col-sm-8 ">
+                        <table *ngFor="let pass of resumenPasajero.bloquesPasajeros; let i=index" class="table table-sm table-borderless mb-4">
+                            <thead [class]="GetClass(pass)">
+                                <tr>
+                                    <th scope="col" class="col-4">{{pass.titulo}}</th>
+                                    <th scope="col" class="col-3" style="text-align: right;" *ngIf="pass.total.posMoneda == 0"> {{pass.total.valorPrincipalString}}</th>
+                                    <th scope="col" class="col-1" style="text-align: right;" *ngIf="pass.total.posMoneda == 0"> {{pass.total.monedaP}}</th>
+                                    <th scope="col" class="col-2" style="text-align: right;" *ngIf="pass.total.posMoneda == 0 && itinerary.mostrarMonedaLocal"> {{pass.total.valorLocalString}}</th>
+                                    <th scope="col" class="col-1" style="text-align: right;" *ngIf="pass.total.posMoneda == 0 && itinerary.mostrarMonedaLocal"> {{pass.total.monedaL}}</th>
+                                    <th scope="col" class="col-1" style="text-align: right;" *ngIf="pass.total.posMoneda == 1"> {{pass.total.monedaP}}</th>
+                                    <th scope="col" class="col-2" style="text-align: right;" *ngIf="pass.total.posMoneda == 1"> {{pass.total.valorPrincipalString}}</th>
+                                    <th scope="col" class="col-1" style="text-align: right;" *ngIf="pass.total.posMoneda == 1 && itinerary.mostrarMonedaLocal"> {{pass.total.monedaL}}</th>
+                                    <th scope="col" class="col-3" style="text-align: right;" *ngIf="pass.total.posMoneda == 1 && itinerary.mostrarMonedaLocal"> {{pass.total.valorLocalString}}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let element of pass.precios;" [class]="GetClass(element)">
+                                    <th *ngIf="element.precio.valorPrincipal && element.precio.valorPrincipal != 0" class="col-4">{{element.titulo}}</th>
+                                    <td class="col-3" style="text-align: right;" *ngIf="element.precio.valorPrincipal && element.precio.valorPrincipal != 0 && element.precio.posMoneda == 0"> {{element.precio.valorPrincipalString}}</td>
+                                    <td class="col-1" style="text-align: right;" *ngIf="element.precio.valorPrincipal && element.precio.valorPrincipal != 0 && element.precio.posMoneda == 0"> {{element.precio.monedaP}}</td>
+                                    <td class="col-2" style="text-align: right;" *ngIf="element.precio.valorPrincipal && element.precio.valorPrincipal != 0 && element.precio.posMoneda == 0 && itinerary.mostrarMonedaLocal"> {{element.precio.valorLocalString}}</td>
+                                    <td class="col-1" style="text-align: right;" *ngIf="element.precio.valorPrincipal && element.precio.valorPrincipal != 0 && element.precio.posMoneda == 0 && itinerary.mostrarMonedaLocal"> {{element.precio.monedaL}}</td>
+                                    <td class="col-1" style="text-align: right;" *ngIf="element.precio.valorPrincipal && element.precio.valorPrincipal != 0 && element.precio.posMoneda == 1"> {{element.precio.monedaP}}</td>
+                                    <td class="col-2" style="text-align: right;" *ngIf="element.precio.valorPrincipal && element.precio.valorPrincipal != 0 && element.precio.posMoneda == 1"> {{element.precio.valorPrincipalString}}</td>
+                                    <td class="col-1" style="text-align: right;" *ngIf="element.precio.valorPrincipal && element.precio.valorPrincipal != 0 && element.precio.posMoneda == 1 && itinerary.mostrarMonedaLocal"> {{element.precio.monedaL}}</td>
+                                    <td class="col-2" style="text-align: right;" *ngIf="element.precio.valorPrincipal && element.precio.valorPrincipal != 0 && element.precio.posMoneda == 1 && itinerary.mostrarMonedaLocal"> {{element.precio.valorLocalString}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <!-- TOTAL -->
+                        <table class="table table-sm table-borderless mb-4">
+                            <thead [class]="GetClass(cotResume.total)">
+                                <tr *ngIf="cotResume.total">
+                                    <th *ngIf="cotResume.total.precio.valorPrincipal && cotResume.total.precio.valorPrincipal != 0" scope="col" class="col-4">{{cotResume.total.titulo}}</th>
+                                    <th class="col-3" style="text-align: right;" *ngIf="cotResume.total.precio.valorPrincipal && cotResume.total.precio.valorPrincipal != 0 && cotResume.total.precio.posMoneda == 0"> {{cotResume.total.precio.valorPrincipalString}}</th>
+                                    <th class="col-1" style="text-align: right;" *ngIf="cotResume.total.precio.valorPrincipal && cotResume.total.precio.valorPrincipal != 0 && cotResume.total.precio.posMoneda == 0"> {{cotResume.total.precio.monedaP}}</th>
+                                    <th class="col-2" style="text-align: right;" *ngIf="cotResume.total.precio.valorPrincipal && cotResume.total.precio.valorPrincipal != 0 && cotResume.total.precio.posMoneda == 0 && itinerary.mostrarMonedaLocal"> {{cotResume.total.precio.valorLocalString}}</th>
+                                    <th class="col-1" style="text-align: right;" *ngIf="cotResume.total.precio.valorPrincipal && cotResume.total.precio.valorPrincipal != 0 && cotResume.total.precio.posMoneda == 0 && itinerary.mostrarMonedaLocal"> {{cotResume.total.precio.monedaL}}</th>
+                                    <th class="col-1" style="text-align: right;" *ngIf="cotResume.total.precio.valorPrincipal && cotResume.total.precio.valorPrincipal != 0 && cotResume.total.precio.posMoneda == 1"> {{cotResume.total.precio.monedaP}}</th>
+                                    <th class="col-2" style="text-align: right;" *ngIf="cotResume.total.precio.valorPrincipal && cotResume.total.precio.valorPrincipal != 0 && cotResume.total.precio.posMoneda == 1">{{cotResume.total.precio.valorPrincipalString}}</th>
+                                    <th class="col-1" style="text-align: right;" *ngIf="cotResume.total.precio.valorPrincipal && cotResume.total.precio.valorPrincipal != 0 && cotResume.total.precio.posMoneda == 1 && itinerary.mostrarMonedaLocal"> {{cotResume.total.precio.monedaL}}</th>
+                                    <th class="col-3" style="text-align: right;" *ngIf="cotResume.total.precio.valorPrincipal && cotResume.total.precio.valorPrincipal != 0 && cotResume.total.precio.posMoneda == 1 && itinerary.mostrarMonedaLocal"> {{cotResume.total.precio.valorLocalString}}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngIf="cotResume.gastosReserva" [class]="GetClass(cotResume.gastosReserva)">
+                                    <th *ngIf="cotResume.gastosReserva.precio.valorPrincipal && cotResume.gastosReserva.precio.valorPrincipal != 0" class="col-4">{{cotResume.gastosReserva.titulo}}</th>
+                                    <td class="col-3" style="text-align: right;" *ngIf="cotResume.gastosReserva.precio.valorPrincipal && cotResume.gastosReserva.precio.valorPrincipal != 0 && cotResume.gastosReserva.precio.posMoneda == 0"> {{cotResume.gastosReserva.precio.valorPrincipalString}}</td>
+                                    <td class="col-1" style="text-align: right;" *ngIf="cotResume.gastosReserva.precio.valorPrincipal && cotResume.gastosReserva.precio.valorPrincipal != 0 && cotResume.gastosReserva.precio.posMoneda == 0"> {{cotResume.gastosReserva.precio.monedaP}}</td>
+                                    <td class="col-2" style="text-align: right;" *ngIf="cotResume.gastosReserva.precio.valorPrincipal && cotResume.gastosReserva.precio.valorPrincipal != 0 && cotResume.gastosReserva.precio.posMoneda == 0 && itinerary.mostrarMonedaLocal"> {{cotResume.gastosReserva.precio.valorLocalString}}</td>
+                                    <td class="col-1" style="text-align: right;" *ngIf="cotResume.gastosReserva.precio.valorPrincipal && cotResume.gastosReserva.precio.valorPrincipal != 0 && cotResume.gastosReserva.precio.posMoneda == 0 && itinerary.mostrarMonedaLocal"> {{cotResume.gastosReserva.precio.monedaL}}</td>
+                                    <td class="col-1" style="text-align: right;" *ngIf="cotResume.gastosReserva.precio.valorPrincipal && cotResume.gastosReserva.precio.valorPrincipal != 0 && cotResume.gastosReserva.precio.posMoneda == 1"> {{cotResume.gastosReserva.precio.monedaP}}</td>
+                                    <td class="col-2" style="text-align: right;" *ngIf="cotResume.gastosReserva.precio.valorPrincipal && cotResume.gastosReserva.precio.valorPrincipal != 0 && cotResume.gastosReserva.precio.posMoneda == 1"> {{cotResume.gastosReserva.precio.valorPrincipalString}}</td>
+                                    <td class="col-1" style="text-align: right;" *ngIf="cotResume.gastosReserva.precio.valorPrincipal && cotResume.gastosReserva.precio.valorPrincipal != 0 && cotResume.gastosReserva.precio.posMoneda == 1 && itinerary.mostrarMonedaLocal"> {{cotResume.gastosReserva.precio.monedaL}}</td>
+                                    <td class="col-3" style="text-align: right;" *ngIf="cotResume.gastosReserva.precio.valorPrincipal && cotResume.gastosReserva.precio.valorPrincipal != 0 && cotResume.gastosReserva.precio.posMoneda == 1 && itinerary.mostrarMonedaLocal"> {{cotResume.gastosReserva.precio.valorLocalString}}</td>
+                                </tr>
+                                <tr *ngIf="cotResume.totalReserva" [class]="GetClass(cotResume.totalReserva)">
+                                    <th *ngIf="cotResume.totalReserva.precio.valorPrincipal && cotResume.totalReserva.precio.valorPrincipal != 0" class="col-4">{{cotResume.totalReserva.titulo}}</th>
+                                    <td class="col-3" style="text-align: right;" *ngIf="cotResume.totalReserva.precio.valorPrincipal && cotResume.totalReserva.precio.valorPrincipal != 0 && cotResume.totalReserva.precio.posMoneda == 0" scope="col"> {{cotResume.totalReserva.precio.valorPrincipalString}}</td>
+                                    <td class="col-1" style="text-align: right;" *ngIf="cotResume.totalReserva.precio.valorPrincipal && cotResume.totalReserva.precio.valorPrincipal != 0 && cotResume.totalReserva.precio.posMoneda == 0" scope="col"> {{cotResume.totalReserva.precio.monedaP}}</td>
+                                    <td class="col-2" style="text-align: right;" *ngIf="cotResume.totalReserva.precio.valorPrincipal && cotResume.totalReserva.precio.valorPrincipal != 0 && cotResume.totalReserva.precio.posMoneda == 0 && itinerary.mostrarMonedaLocal" scope="col"> {{cotResume.totalReserva.precio.valorLocalString}}</td>
+                                    <td class="col-1" style="text-align: right;" *ngIf="cotResume.totalReserva.precio.valorPrincipal && cotResume.totalReserva.precio.valorPrincipal != 0 && cotResume.totalReserva.precio.posMoneda == 0 && itinerary.mostrarMonedaLocal" scope="col"> {{cotResume.totalReserva.precio.monedaL}}</td>
+                                    <td class="col-1" style="text-align: right;" *ngIf="cotResume.totalReserva.precio.valorPrincipal && cotResume.totalReserva.precio.valorPrincipal != 0 && cotResume.totalReserva.precio.posMoneda == 1" scope="col"> {{cotResume.totalReserva.precio.monedaP}}</td>
+                                    <td class="col-2" style="text-align: right;" *ngIf="cotResume.totalReserva.precio.valorPrincipal && cotResume.totalReserva.precio.valorPrincipal != 0 && cotResume.totalReserva.precio.posMoneda == 1" scope="col"> {{cotResume.totalReserva.precio.valorPrincipalString}}</td>
+                                    <td class="col-1" style="text-align: right;" *ngIf="cotResume.totalReserva.precio.valorPrincipal && cotResume.totalReserva.precio.valorPrincipal != 0 && cotResume.totalReserva.precio.posMoneda == 1 && itinerary.mostrarMonedaLocal" scope="col"> {{cotResume.totalReserva.precio.monedaL}}</td>
+                                    <td class="col-3" style="text-align: right;" *ngIf="cotResume.totalReserva.precio.valorPrincipal && cotResume.totalReserva.precio.valorPrincipal != 0 && cotResume.totalReserva.precio.posMoneda == 1 && itinerary.mostrarMonedaLocal" scope="col"> {{cotResume.totalReserva.precio.valorLocalString}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+
+                <div *ngIf="resumenPasajero.listaNotasAlPie" style="margin-top: 30px;">
+                    <p *ngFor="let nota of resumenPasajero.listaNotasAlPie;" class="col-12 fs-12" style="margin-bottom: 3px; padding-left: 0px;" [innerHtml]="transformStyle(nota)">
+
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="row mt-4 pt-4">
+
+            <div class="col-sm-12 col-md-12 text-sm-left text-center mb-3">
+                <!--<div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      value=""
+                      id="flexCheckChecked"
+                      checked
+                    />
+                    <label class="form-check-label text-primary  font-weight-bold fs-16" for="flexCheckChecked">
+                        Deseo suscribirme a las e-news
+                    </label>
+                  </div>-->
+
+            </div>
+
+            <div class="col-sm-12 col-md-12 text-sm-left text-center mb-3">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked1" (change)=ChangeTermAndConditions($event) />
+                    <label class="form-check-label text-primary  font-weight-bold fs-16" for="flexCheckChecked1">
+                      He leido y acepto lo <a href="{{terminoscondiciones}}">terminos y condiciones</a> de la reserva
+                    </label>
+                </div>
+
+            </div>
+        </div>
+
+
+
+
+
+    </main>
+    <footer class="steps__footer bg-light p-4">
+        <div *ngIf="acceptTermConditions == true" class="container text-right">
+            <a (click)="ShowSumaryQuotation()" class="btn btn-primary text-uppercase font-weight-bold rounded-0 pr-3 pl-3 pr-sm-4 pl-sm-4">
+                {{screenLangInfo.lbl_button_Reservar}}
+            </a>
+        </div>
+        <div *ngIf="acceptTermConditions == false" class="container text-right">
+            <a (click)="ShowSumaryQuotation()" class="btn btn-primary text-uppercase font-weight-bold rounded-0 pr-3 pl-3 pr-sm-4 pl-sm-4 disabled">
+                {{screenLangInfo.lbl_button_Reservar}}
+            </a>
+        </div>
+    </footer>
+</div>

@@ -1,0 +1,155 @@
+/*custom style*/
+/*
+.btn-primary {
+
+  color: #fff;
+  background-color: #FEBD11;
+  border-color: #FFB500;
+}
+
+.btn-primary:hover {
+
+  color: #fff;
+  background-color: #0073BB;
+  border-color: #5461C8;
+}
+
+.bg-secondary,
+.cruise__lists .card__options div.active,
+.nav-pills--steps {
+  background-color: #0073BB !important;
+}
+
+.nav-pills .nav-link.active,
+.nav-pills .show>.nav-link {
+  color: #fff;
+  background-color: #0073BB;
+}
+
+.custom-range-wrapper h5,
+.text-primary {
+  color: #0073BB !important;
+}
+
+.plusless[_ngcontent-c12] {
+  color: #FEBD11;
+}
+
+.cruise_search .input-label {
+  color: #0073BB !important
+}
+
+.btn-primary:hover {
+  background-color: #0073BB;
+  border-color: #ABCAE9;
+}
+
+.btn-primary.disabled,
+.btn-primary:disabled {
+
+  background-color: #F2C75C;
+
+  border-color: #F2C75C;
+
+}
+
+.btn-primary:not(:disabled):not(.disabled).active,
+.btn-primary:not(:disabled):not(.disabled):active,
+.show>.btn-primary.dropdown-toggle {
+
+  background-color: #FFB500;
+
+  border-color: #F5E1A4;
+
+}
+
+.btn-primary:not(:disabled):not(.disabled).active:focus,
+.btn-primary:not(:disabled):not(.disabled):active:focus,
+.show>.btn-primary.dropdown-toggle:focus {
+
+  box-shadow: 0 0 0 0.1rem rgba(74, 116, 166, .5);
+
+}
+
+.show-scrollTop[_ngcontent-c4] {
+
+  background-color: #ABCAE9;
+}
+
+.page-item.active .page-link {
+
+  background-color: #2a5c96;
+
+}
+
+.page-item.active .page-link {
+
+  background-color: #061556;
+}
+
+.bg-secondary,
+.cruise__lists .card__options div.active,
+.nav-pills--steps {
+
+  background-color: #0073bb !important;
+
+}
+
+.nav-pills--steps .nav-link:not(:last-child).completed {
+
+  background-color: #061556;
+
+}
+
+.nav-pills .nav-link.active,
+.nav-pills .show>.nav-link {
+
+  background-color: #061556;
+
+}
+
+.nav-pills--steps .nav-link:not(:last-child).active .angle::after,
+.nav-pills--steps .nav-link:not(:last-child).completed .angle::after {
+
+  border-left-color: #061556 !important;
+
+}
+
+.table[_ngcontent-c22] {
+
+  background-color: #0073bb;
+
+}
+
+.badge-primary {
+
+  color: #fff;
+
+  background-color: #0073bb;
+
+}
+
+.steps__header p {
+
+  font-size: 18px;
+
+}
+
+
+
+.font-size-12 {
+
+  font-size: 11px;
+
+}
+
+
+
+.h1,
+h1 {
+
+  font-size: 2.2rem;
+
+}*/
+
+@import url(http://cb20ingenius.istinfor.com/css/naveo/dinamic.css);

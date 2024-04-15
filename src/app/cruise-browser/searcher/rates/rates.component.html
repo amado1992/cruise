@@ -1,0 +1,1205 @@
+<div *ngIf="loadingLabels" class="text-center" style="margin: auto;">
+    <!-- <div class="spinner-border text-primary"></div> -->
+    <img src="./assets/images/cargando.gif" style="width: 200px; height: 120px;">
+</div>
+<div *ngIf="!loadingLabels && mostrarcallcenter=='True'">
+    <a (click)="showVentana()" class="float" title="Call center" style="z-index: 1000;">
+
+        <img class="my-float" src="./assets/images/call-center-svgrepo-com.svg" alt="*">
+
+    </a>
+</div>
+<div *ngIf="!loadingLabels && !errorLoadingLabels">
+
+    <!--Para mobil ocelular pequenno-->
+    <header *ngIf="loadingLabels==false && getScreenWidth < 576" class=" steps__header container-fluid fixed my_header" style="position: absolute !important;">
+
+        <div class="wrapper row flex-column flex-nowrap bg-light p-3 p-sm-3">
+
+            <div class="row align-items-center">
+                <div class="col-12 col-sm-9 order-1 order-sm-0">
+                    <h1 class="text-primary mb-1">{{itinerary.destino}}</h1>
+                    <p class="mb-2 text-primary">{{itinerary.nnoches}} {{screenLangInfo.lbl_nochesEnEl}} {{itinerary.shipName}}
+                    </p>
+                </div>
+
+                <div class="col-12 col-sm-3 order-0 order-sm-0 text-center">
+                    <img src="{{itinerary.urlImageMeduim}}" style="max-height: 80px; min-width: 50px;max-width: 180px;">
+                    <ng-template #popContent>
+                        <app-popover [screenLangInfo]="screenLangInfo"></app-popover>
+                    </ng-template>
+                    <ng-template #popoverTitle>
+                        <div class="popover-header p-1 text-center bg-white border-0">
+                            <div class="popover shadow p-2" role="tooltip">
+                                <div class="arrow"></div>
+                                <h3>
+                                </h3>
+                            </div>
+                        </div>
+                    </ng-template>
+                    <button class="btn shadow-none" [ngbPopover]="popContent" popoverTitle="{{screenLangInfo.lbl_Compartir}}" placement="bottom" ngbTooltip="{{screenLangInfo.lbl_Compartir}}">
+            <svg xmlns="http://www.w3.org/2000/svg" width="23.276" height="23.876" viewBox="0 0 23.276 23.876">
+              <path
+                d="M18.581,14.984a4.208,4.208,0,0,0-3.261,1.558l-7.061-3.53a4.082,4.082,0,0,0-.036-2.188l7.187-3.89A4.189,4.189,0,1,0,14.385,4.2a4.089,4.089,0,0,0,.168,1.157L7.366,9.242a4.2,4.2,0,1,0,.09,5.382l7.061,3.53a4.141,4.141,0,0,0-.132,1.025,4.2,4.2,0,1,0,4.2-4.2Zm0-13.186a2.4,2.4,0,1,1-2.4,2.4A2.4,2.4,0,0,1,18.581,1.8ZM4.2,14.385a2.4,2.4,0,1,1,2.4-2.4A2.4,2.4,0,0,1,4.2,14.385Zm14.385,7.192a2.4,2.4,0,1,1,2.4-2.4A2.4,2.4,0,0,1,18.581,21.577Z"
+                transform="translate(0.25 0.25)" fill="#666" stroke="#666" stroke-width="0.5">
+              </path>
+            </svg>
+          </button>
+                </div>
+            </div>
+
+            <div class="row align-items-center">
+                <div class="col-6 col-sm-9">
+                    <ul class="list-unstyled list-inline font-weight-bold mb-3">
+                        <li *ngIf="itinerary.mostrarBarco" class="list-inline-item">
+                            <u><a (click)="ShowItinerary(false)" class="text-secondary" data-toggle="modal"
+                  data-target="#modal_launch" data-show-tab="boat" role="button">
+                  {{screenLangInfo.lbl_Button_VerBarco}}</a></u>
+                        </li>
+                        <li *ngIf="itinerary.mostrarItinerario" class="list-inline-item">
+                            <u><a (click)="ShowItinerary(true)" class="text-secondary" data-toggle="modal" data-target="#modal_launch"
+                  data-show-tab="itinerary" role="button">
+                  {{screenLangInfo.lbl_Button_VerItinerario}}</a></u>
+                        </li>
+                    </ul>
+
+
+                    <ul class="list-unstyled text-muted mb-3">
+                        <li class="mb-2"><strong>{{screenLangInfo.lbl_fecha}}</strong> {{selectedDate.dateOut.dia}} {{selectedDate.dateOut.mes}} {{selectedDate.dateOut.anno}}</li>
+                        <li class="mb-2"><strong>{{screenLangInfo.lbl_CantidadPasajeros}}</strong> {{cantidadPasajeros}}</li>
+                        <li class="mb-1"><span [innerHtml]="rateTitle"></span>
+
+                            <ng-template #addons0>
+                                <app-tooltip autofocus [innerHtml]="cleanDescriptionRate">
+                                </app-tooltip>
+                            </ng-template>
+                            <span style="cursor: pointer;" placement="end" [ngbTooltip]="addons0" triggers="click:blur">
+                <svg xmlns="http://www.w3.org/2000/svg" width="25.453" height="25.453" viewBox="0 0 25.453 25.453">
+                  <g transform="translate(0)">
+                    <g transform="translate(9.834 4.339)">
+                      <path
+                        d="M195.894,14a2.87,2.87,0,0,0-2.048.85,2.9,2.9,0,0,0,0,4.09,2.891,2.891,0,0,0,4.1,0,2.9,2.9,0,0,0,0-4.09A2.87,2.87,0,0,0,195.894,14Zm.816,3.714a1.16,1.16,0,1,1,0-1.637A1.153,1.153,0,0,1,196.71,17.714Z"
+                        transform="translate(-193.002 -14)" fill="#2a5c96" />
+                      <path
+                        d="M194.735,35.834h2.314a1.733,1.733,0,0,0,1.735-1.735V27.735A1.733,1.733,0,0,0,197.049,26h-2.314A1.733,1.733,0,0,0,193,27.735V34.1A1.737,1.737,0,0,0,194.735,35.834Zm0-8.1h2.314V34.1h-2.314Z"
+                        transform="translate(-193 -19.058)" fill="#2a5c96" />
+                    </g>
+                    <path
+                      d="M188.726,6.5a12.726,12.726,0,1,0,12.726,12.726A12.741,12.741,0,0,0,188.726,6.5Zm0,23.717a10.991,10.991,0,1,1,10.991-10.991A10.994,10.994,0,0,1,188.726,30.217Z"
+                      transform="translate(-176 -6.5)" fill="#2a5c96" />
+                  </g>
+                </svg>
+              </span>
+                        </li>
+                        <li *ngIf="itinerary.company=='MSC' && experienciatitle" class="mb-1">
+                            Experiencia: {{experienciatitle}}
+                            <ng-template #addonse0>
+                                <app-tooltip autofocus [innerHtml]="experienciadescription">
+                                </app-tooltip>
+                            </ng-template>
+                            <span placement="bottom" [ngbTooltip]="addonse0">
+                <img src="{{experienciaicon}}" title="{{experienciadescription}}">
+
+              </span>
+                        </li>
+                        <li class="mb-1 italic-class">
+
+                        </li>
+
+                        <li *ngIf="selectedDate && activeaddons && activeaddons[0].valor == true" class="mb-1 col">
+
+                            <span *ngIf="(activeaddons[0] && activeaddons[0].valor == true) || (selectedCabin && selectedCabin.aeropuertoName && selectedCabin.aeropuertoName.trim() != '')" [innerHtml]="showHTML(activeaddons[0].descripcion)" class="pr-2"></span>
+
+
+                            <svg xmlns="http://www.w3.org/2000/svg" width="31.905" height="31.905" viewBox="0 0 31.905 31.905">
+                <path
+                  d="M10.413,1.735a1.792,1.792,0,0,1,1.157.578,2.856,2.856,0,0,1,.578,1.735V8.677l6.942,5.206v1.735l-7.52-2.892V19.09L14.462,21.4v1.157L10.413,21.4,6.363,22.561V21.4L9.256,19.09V12.726l-7.52,2.892V13.883L8.677,8.677V4.049a2.856,2.856,0,0,1,.578-1.735,1.792,1.792,0,0,1,1.157-.578m0-1.735A3.529,3.529,0,0,0,8.029,1.088,4.456,4.456,0,0,0,6.942,4.049v3.76L.694,12.5A1.734,1.734,0,0,0,0,13.883v1.735a1.738,1.738,0,0,0,1.735,1.735,1.808,1.808,0,0,0,.625-.116l5.16-1.99v3L5.281,20.044A1.733,1.733,0,0,0,4.628,21.4v1.157a1.745,1.745,0,0,0,.688,1.388,1.725,1.725,0,0,0,1.047.347,1.652,1.652,0,0,0,.474-.069l3.575-1.018,3.575,1.018a1.681,1.681,0,0,0,.474.069,1.776,1.776,0,0,0,1.047-.347,1.737,1.737,0,0,0,.688-1.388V21.4a1.722,1.722,0,0,0-.654-1.354l-2.239-1.8v-3l5.16,1.984a1.784,1.784,0,0,0,.625.116,1.738,1.738,0,0,0,1.735-1.735V13.878a1.734,1.734,0,0,0-.694-1.388l-6.248-4.68V4.049A4.465,4.465,0,0,0,12.8,1.088,3.529,3.529,0,0,0,10.413,0Z"
+                  transform="translate(17.18) rotate(45)" fill="#2a5c96" />
+              </svg>
+
+                        </li>
+                        <li *ngIf="selectedDate && activeaddons && activeaddons[1].valor == true && selectedCabin?.esNRF" class="mb-1">
+                            <span *ngIf="(activeaddons[1] && activeaddons[1].valor == true) || (selectedCabin && selectedCabin.aeropuertoName && selectedCabin.aeropuertoName.trim() != '')" [innerHtml]="showHTML(activeaddons[1].descripcion)" class="pr-2"></span>
+
+
+
+                            <svg xmlns="http://www.w3.org/2000/svg" width="6.768" height="27.102" viewBox="0 0 6.768 27.102">
+                <g transform="translate(0)">
+                  <path
+                    d="M142.684,41.914a3.387,3.387,0,1,0-2.395-.995A3.366,3.366,0,0,0,142.684,41.914Zm-1.163-4.553a1.634,1.634,0,0,1,2.325,0,1.651,1.651,0,0,1,0,2.331,1.634,1.634,0,0,1-2.325,0A1.651,1.651,0,0,1,141.521,37.361Z"
+                    transform="translate(-139.3 -14.812)" fill="#2a5c96" />
+                  <path
+                    d="M144.2,0h-2.314a1.733,1.733,0,0,0-1.735,1.735V17.354a1.733,1.733,0,0,0,1.735,1.735H144.2a1.733,1.733,0,0,0,1.735-1.735V1.735A1.733,1.733,0,0,0,144.2,0Zm0,17.354h-2.314V1.735H144.2Z"
+                    transform="translate(-139.658)" fill="#2a5c96" />
+                </g>
+              </svg>
+
+                        </li>
+
+                        <li class="mb-2"><strong>{{screenLangInfo.lbl_Categoria}}</strong> {{GetCatTranslate()}}</li>
+                    </ul>
+                </div>
+
+                <div *ngIf="preciofinal" class="col-6 col-sm-3 text-center">
+                    <span *ngIf="reservation.mode != 'Online'" class="small">{{screenLangInfo.lbl_PorPersona}}</span>
+                    <span *ngIf="reservation.mode == 'Online'" class="small">{{xcabinaxpasajero}}</span>
+
+                    <h1 *ngIf="selectedDateCategoryData.posMoneda == 0" class="text-primary price mb-0 text-nowrap">
+                        {{selectedDateCategoryData.valorPrincipalString}} <span>{{selectedDateCategoryData.monedaP}}</span>
+                    </h1>
+                    <small *ngIf="selectedDateCategoryData.posMoneda == 0 && itinerary.mostrarMonedaLocal" class="text-primary text-nowrap">{{selectedDateCategoryData.valorLocalString}}
+            {{selectedDateCategoryData.monedaL}}</small>
+
+                    <h1 *ngIf="selectedDateCategoryData.posMoneda == 1" class="text-primary price mb-0 text-nowrap">
+                        <span>{{selectedDateCategoryData.monedaP}} </span>{{selectedDateCategoryData.valorPrincipalString}}
+                    </h1>
+                    <small *ngIf="selectedDateCategoryData.posMoneda == 1 && itinerary.mostrarMonedaLocal" class="text-primary text-nowrap">{{selectedDateCategoryData.monedaL}}
+            {{selectedDateCategoryData.valorLocalString}}</small>
+
+                </div>
+
+            </div>
+
+            <!--<div *ngIf="reservation.mode == 'Offline'" class="row mt-0 mt-sm-2 align-items-center">
+        <div class="d-flex justify-content-center d-sm-block col-sm-9 p-0 p-sm-3">
+
+          <a (click)="ShowSearch()"
+            class="steps__header-button d-block d-sm-none m-2 btn btn-primary text-uppercase font-weight-bold rounded-0 pr-3 pl-3 pr-sm-4 pl-sm-4">
+            {{screenLangInfo.lbl_button_Cambiar}}
+          </a>
+
+          <a (click)="ShowPassengerQuote()" data-toggle="modal" data-target="#modal_cabin_selection"
+            class="steps__header-button d-block d-sm-none m-2 btn btn-primary text-uppercase font-weight-bold rounded-0 pr-3 pl-3 pr-sm-4 pl-sm-4">
+            {{screenLangInfo.lbl_button_Cotizar}}
+          </a>
+        </div>
+
+        <div class="col-6 col-sm-3 d-none d-sm-block text-center">
+          <div class="d-flex justify-content-center">
+            <a (click)="ShowSearch()"
+              class="m-2 btn btn-primary text-uppercase font-weight-bold rounded-0 pr-4 pl-4">
+              {{screenLangInfo.lbl_button_Cambiar}}
+            </a>
+
+            <a  (click)="ShowPassengerQuote()" data-toggle="modal" data-target="#modal_cabin_selection"
+              class="m-2 btn btn-primary text-uppercase font-weight-bold rounded-0 pr-4 pl-4">
+              {{screenLangInfo.lbl_button_Cotizar}}
+            </a>
+          </div>
+        </div>
+      </div>-->
+
+            <div class="flex d-flex flex-row flex-nowrap bg-light w-100" style="margin: 0px !important;padding: 0px !important;">
+                <div style="width: 100%; margin-top: 0px !important;">
+                    <!--<div *ngIf="reservation.mode == 'Online'"
+            class="flex d-flex flex-row mt-0 mt-sm-0 pr-10 pb-10 align-items-center w-100"
+            style="margin-bottom:10px !important; padding-left: 50px !important; padding-right:60px !important;">
+            <div class="flex d-flex flex-column justify-content-start align-items-start w-50">
+              <a (click)="ShowSearch()"
+                class="steps__header-button m-2 m-sm-0 btn btn-primary text-white text-uppercase font-weight-bold rounded-0 pr-3 pl-3 pr-sm-4 pl-sm-4">
+                {{screenLangInfo.lbl_button_Cambiar}}
+              </a>
+            </div>
+            <div class="flex d-flex flex-column justify-content-end align-items-end mr-10 mb-10 w-50 disabled">
+              <div *ngIf="enableProcess" class="d-flex justify-content-center">
+                <a (click)="ShowPassengerQuote()"
+                  class="m-2 btn btn-primary text-white text-uppercase font-weight-bold rounded-0 pr-4 pl-4">
+                  {{screenLangInfo.lbl_button_Cotizar}}
+                </a>
+
+                <a *ngIf="reservation.mode == 'Online'" data-toggle="modal" data-target="#modal_cabin_selection"
+                  class="m-2 btn btn-primary text-white text-uppercase font-weight-bold rounded-0 pr-4 pl-4"
+                  (click)="CabinChoice()">
+                  {{screenLangInfo.lbl_button_Reservar}}
+                </a>
+              </div>
+            </div>
+
+          </div>-->
+                    <div class="d-flex flex-row" *ngIf="reservation.mode == 'Online'">
+                        <div *ngIf="reservation.mode == 'Online'" class="d-flex flex-column justify-content-start align-items-start w-100">
+                            <a *ngIf="reservation.mode == 'Online'" (click)="ShowSearch()" class="steps__header-button m-2 m-sm-0 btn btn-primary text-white text-uppercase font-weight-bold rounded-0 pr-3 pl-3 pr-sm-4 pl-sm-4" style="font-size: 15px;">
+                {{screenLangInfo.lbl_button_Cambiar}}
+              </a>
+                        </div>
+                        <div *ngIf="reservation.mode == 'Online'" class="d-flex flex-column justify-content-end" style="margin-top: -2%;">
+
+                            <div *ngIf="reservation.mode == 'Online'">
+                                <a *ngIf="reservation.mode == 'Online'" (click)="ShowPassengerQuote()" class="m-2 btn btn-primary text-white text-uppercase font-weight-bold rounded-0 pr-4 pl-4">
+                  {{screenLangInfo.lbl_button_Cotizar}}
+                </a>
+                            </div>
+
+                            <div *ngIf="reservation.mode == 'Online' && !soloCotizacionOnline && !!ValidateDiasValidosReserva()">
+                                <a *ngIf="reservation.mode == 'Online'" data-toggle="modal" data-target="#modal_cabin_selection" class="m-2 btn btn-primary text-white text-uppercase font-weight-bold rounded-0 pr-4 pl-4" (click)="CabinChoice()">
+                  {{screenLangInfo.lbl_button_Reservar}}
+                </a>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+
+                    <!--<div *ngIf="reservation.mode == 'Offline'"
+          class="flex d-flex flex-row mt-0 mt-sm-0 pr-10 pb-10 align-items-center w-100"
+          style="margin-bottom:10px !important; padding-left: 50px !important; padding-right:130px !important;">-->
+
+                    <div *ngIf="reservation.mode == 'Offline'" class="flex d-flex flex-row mt-0 mt-sm-0 pr-10 pb-10 align-items-center w-100">
+
+                        <div class="flex d-flex flex-column justify-content-start align-items-start w-50">
+                            <!--<a (click)="ShowSearch()"
+              class="steps__header-button m-2 m-sm-0 btn btn-primary text-white text-uppercase font-weight-bold rounded-0 pr-3 pl-3 pr-sm-4 pl-sm-4">
+              {{screenLangInfo.lbl_button_Cambiar}}
+            </a>-->
+
+                            <a (click)="ShowSearch()" class="m-2 m-sm-0 btn btn-primary text-white text-uppercase font-weight-bold rounded-0 pr-3 pl-3 pr-sm-4 pl-sm-4">
+                {{screenLangInfo.lbl_button_Cambiar}}
+              </a>
+                        </div>
+                        <div class="flex d-flex flex-column justify-content-end align-items-end mr-10 mb-10 w-50 disabled">
+                            <div class="d-flex justify-content-center">
+                                <a (click)="ShowPassengerQuote()" class="m-2 btn btn-primary text-white text-uppercase font-weight-bold rounded-0 pr-4 pl-4">
+                  {{screenLangInfo.lbl_button_Cotizar}}
+                </a>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!--Paso a paso-->
+        <div class="flex d-flex flex-row flex-nowrap bg-light w-100" style="margin: 0px !important;padding: 0px !important;">
+            <div style="width: 100%; margin-top: -13px;" class="container-paso-paso">
+                <nav *ngIf="reservation.mode == 'Online' && !loadingLabels && !errorLoadingLabels" class="nav nav-pills flex-row bg-secondary nav-pills--steps">
+                    <a class="flex-fill text-white rounded-0 text-center nav-link completed" style="cursor: pointer; " (click)="PassengersNumber()">
+                        <span class="angle"></span> {{screenLangInfo.lbl_tirillaNavegacion_Paso1}}
+                    </a>
+                    <a class="flex-fill text-white rounded-0 text-center nav-link active">
+                        <span class="angle"></span> {{screenLangInfo.lbl_tirillaNavegacion_Paso2}}
+                    </a>
+                    <a class="flex-fill text-white rounded-0 text-center nav-link disabled">
+                        <span class="angle"></span> {{screenLangInfo.lbl_tirillaNavegacion_Paso3}}
+                    </a>
+                </nav>
+
+                <!--<nav *ngIf="reservation.mode == 'Offline' && !loadingLabels && !errorLoadingLabels"
+    class="nav nav-pills flex-row bg-secondary nav-pills--steps">
+    <a class="flex-fill text-white rounded-0 text-center nav-link active">
+      <span class="angle"></span>
+      {{screenLangInfo.lbl_tirillaNavegacion_Paso4}}
+    </a>
+    <a class="flex-fill text-white rounded-0 text-center nav-link disabled">
+      <span class="angle"></span>
+      {{screenLangInfo.lbl_tirillaNavegacion_Paso5}}
+    </a>
+  </nav>-->
+
+                <nav *ngIf="reservation.mode == 'Offline' && !loadingLabels && !errorLoadingLabels" class="nav nav-pills flex-row bg-secondary nav-pills--steps">
+                    <a class="flex-fill text-white rounded-0 text-center nav-link active">
+                        <span class="angle"></span> {{screenLangInfo.lbl_tirillaNavegacion_Split_Paso1}} {{screenLangInfo.lbl_tirillaNavegacion_Split_SelTarifa}}
+                    </a>
+                    <a class="flex-fill text-white rounded-0 text-center nav-link disabled">
+                        <span class="angle"></span> {{screenLangInfo.lbl_tirillaNavegacion_Split_Paso2}}
+                    </a>
+                </nav>
+
+            </div>
+        </div>
+    </header>
+
+    <main *ngIf="loadingLabels==false && getScreenWidth < 576 && reservation.mode == 'Offline'" class="container pt-1 pb-5 px-2 main_mobil" style="padding-left:14px !important;z-index: 0px; position: relative; width: 100% !important;">
+        <!-- Selección de tarifa -->
+        <div *ngIf="!loadingLabels && !errorLoadingLabels">
+            <ul class="cruise__lists list-unstyled">
+                <!-- tarifa -->
+                <li *ngFor="let rate of rateListReverse let i=index" class="cruise__card expanded active pt-3 pb-4 border-bottom" style="border-bottom: 1px solid #dee2e6 !important;">
+
+                    <!--<app-rate-element [indice]="i" [disponible]="rate.disponible" [enableProcess]="enableProcess"
+            [screenLangInfo]="screenLangInfo" [rate]="rate.tarifa" [ratecomplete]="rate"
+            [InteriorInfo]="InteriorInfo[i]" [ExteriorInfo]="ExteriorInfo[i]" [SuiteInfo]="SuiteInfo[i]"
+            [BalconInfo]="BalconInfo[i]" [bestRate]="i == 0 && existBR" [filterBR]="filterBR"
+            (ChangeCategory)="ChangeCategory($event)" (TerminaCargar)="TerminaCargar($event)">
+          </app-rate-element>-->
+
+                    <app-rate-element [indice]="i" [disponible]="rate.disponible" [enableProcess]="enableProcess" [screenLangInfo]="screenLangInfo" [rate]="rate.tarifa" [ratecomplete]="rate" [filterBR]="filterBR" (ChangeCategory)="ChangeCategory($event)" (TerminaCargar)="TerminaCargar($event)"
+                        (EnableProcessFather)="EnableProcessFather($event)">
+                    </app-rate-element>
+
+                </li>
+                <!--// tarifa -->
+            </ul>
+        </div>
+    </main>
+
+
+    <main *ngIf="loadingLabels==false && getScreenWidth < 576 && reservation.mode == 'Online'" class="container pt-1 pb-5 px-2 main_mobil_online" style="padding-left:14px !important;z-index: 0px; position: relative; width: 100% !important;">
+
+        <div *ngIf="!loadingLabels && !errorLoadingLabels">
+            <ul class="cruise__lists list-unstyled">
+                <!-- tarifa -->
+                <li *ngFor="let rate of rateListReverse let i=index" class="cruise__card expanded active pt-3 pb-4 border-bottom" style="border-bottom: 1px solid #dee2e6 !important;">
+
+                    <app-rate-element [indice]="i" [disponible]="rate.disponible" [enableProcess]="enableProcess" [screenLangInfo]="screenLangInfo" [rate]="rate.tarifa" [ratecomplete]="rate" [filterBR]="filterBR" (ChangeCategory)="ChangeCategory($event)" (TerminaCargar)="TerminaCargar($event)"
+                        (EnableProcessFather)="EnableProcessFather($event)">
+                    </app-rate-element>
+
+                </li>
+                <!--// tarifa -->
+            </ul>
+        </div>
+    </main>
+    <!--Fin para mobil o celular pequenno-->
+
+    <!--Para mobil o celular grande-->
+    <header *ngIf="loadingLabels==false && getScreenWidth > 575 && getScreenWidth < 768" class=" steps__header container-fluid fixed my_header" style="position: absolute !important;">
+
+        <div class="wrapper row flex-column flex-nowrap bg-light p-3 p-sm-3">
+
+            <div class="row align-items-center">
+                <div class="col-12 col-sm-6 order-1 order-sm-0">
+                    <h1 class="text-primary mb-1">{{itinerary.destino}}</h1>
+                    <p class="mb-2 text-primary">{{itinerary.nnoches}} {{screenLangInfo.lbl_nochesEnEl}} {{itinerary.shipName}}
+                    </p>
+                </div>
+
+                <div class="col-12 col-sm-6 order-0 order-sm-0 text-center">
+                    <img src="{{itinerary.urlImageMeduim}}" style="max-height: 80px; min-width: 50px;max-width: 180px;">
+                    <ng-template #popContent>
+                        <app-popover [screenLangInfo]="screenLangInfo"></app-popover>
+                    </ng-template>
+                    <ng-template #popoverTitle>
+                        <div class="popover-header p-1 text-center bg-white border-0">
+                            <div class="popover shadow p-2" role="tooltip">
+                                <div class="arrow"></div>
+                                <h3>
+                                </h3>
+                            </div>
+                        </div>
+                    </ng-template>
+                    <button class="btn shadow-none" [ngbPopover]="popContent" popoverTitle="{{screenLangInfo.lbl_Compartir}}" placement="bottom" ngbTooltip="{{screenLangInfo.lbl_Compartir}}">
+            <svg xmlns="http://www.w3.org/2000/svg" width="23.276" height="23.876" viewBox="0 0 23.276 23.876">
+              <path
+                d="M18.581,14.984a4.208,4.208,0,0,0-3.261,1.558l-7.061-3.53a4.082,4.082,0,0,0-.036-2.188l7.187-3.89A4.189,4.189,0,1,0,14.385,4.2a4.089,4.089,0,0,0,.168,1.157L7.366,9.242a4.2,4.2,0,1,0,.09,5.382l7.061,3.53a4.141,4.141,0,0,0-.132,1.025,4.2,4.2,0,1,0,4.2-4.2Zm0-13.186a2.4,2.4,0,1,1-2.4,2.4A2.4,2.4,0,0,1,18.581,1.8ZM4.2,14.385a2.4,2.4,0,1,1,2.4-2.4A2.4,2.4,0,0,1,4.2,14.385Zm14.385,7.192a2.4,2.4,0,1,1,2.4-2.4A2.4,2.4,0,0,1,18.581,21.577Z"
+                transform="translate(0.25 0.25)" fill="#666" stroke="#666" stroke-width="0.5">
+              </path>
+            </svg>
+          </button>
+                </div>
+            </div>
+
+            <div class="row align-items-center">
+                <div class="col-6 col-sm-8">
+                    <ul class="list-unstyled list-inline font-weight-bold mb-3">
+                        <li *ngIf="itinerary.mostrarBarco" class="list-inline-item">
+                            <u><a (click)="ShowItinerary(false)" class="text-secondary" data-toggle="modal"
+                  data-target="#modal_launch" data-show-tab="boat" role="button">
+                  {{screenLangInfo.lbl_Button_VerBarco}}</a></u>
+                        </li>
+                        <li *ngIf="itinerary.mostrarItinerario" class="list-inline-item">
+                            <u><a (click)="ShowItinerary(true)" class="text-secondary" data-toggle="modal" data-target="#modal_launch"
+                  data-show-tab="itinerary" role="button">
+                  {{screenLangInfo.lbl_Button_VerItinerario}}</a></u>
+                        </li>
+                    </ul>
+
+
+                    <ul class="list-unstyled text-muted mb-3">
+                        <li class="mb-2"><strong>{{screenLangInfo.lbl_fecha}}</strong> {{selectedDate.dateOut.dia}} {{selectedDate.dateOut.mes}} {{selectedDate.dateOut.anno}}</li>
+                        <li class="mb-2"><strong>{{screenLangInfo.lbl_CantidadPasajeros}}</strong> {{cantidadPasajeros}}</li>
+                        <li class="mb-1"><span [innerHtml]="rateTitle"></span>
+
+                            <ng-template #addons0>
+                                <app-tooltip autofocus [innerHtml]="cleanDescriptionRate">
+                                </app-tooltip>
+                            </ng-template>
+                            <span style="cursor: pointer;" placement="end" [ngbTooltip]="addons0" triggers="click:blur">
+                <svg xmlns="http://www.w3.org/2000/svg" width="25.453" height="25.453" viewBox="0 0 25.453 25.453">
+                  <g transform="translate(0)">
+                    <g transform="translate(9.834 4.339)">
+                      <path
+                        d="M195.894,14a2.87,2.87,0,0,0-2.048.85,2.9,2.9,0,0,0,0,4.09,2.891,2.891,0,0,0,4.1,0,2.9,2.9,0,0,0,0-4.09A2.87,2.87,0,0,0,195.894,14Zm.816,3.714a1.16,1.16,0,1,1,0-1.637A1.153,1.153,0,0,1,196.71,17.714Z"
+                        transform="translate(-193.002 -14)" fill="#2a5c96" />
+                      <path
+                        d="M194.735,35.834h2.314a1.733,1.733,0,0,0,1.735-1.735V27.735A1.733,1.733,0,0,0,197.049,26h-2.314A1.733,1.733,0,0,0,193,27.735V34.1A1.737,1.737,0,0,0,194.735,35.834Zm0-8.1h2.314V34.1h-2.314Z"
+                        transform="translate(-193 -19.058)" fill="#2a5c96" />
+                    </g>
+                    <path
+                      d="M188.726,6.5a12.726,12.726,0,1,0,12.726,12.726A12.741,12.741,0,0,0,188.726,6.5Zm0,23.717a10.991,10.991,0,1,1,10.991-10.991A10.994,10.994,0,0,1,188.726,30.217Z"
+                      transform="translate(-176 -6.5)" fill="#2a5c96" />
+                  </g>
+                </svg>
+              </span>
+                        </li>
+                        <li *ngIf="itinerary.company=='MSC' && experienciatitle" class="mb-1">
+                            Experiencia: {{experienciatitle}}
+                            <ng-template #addonse0>
+                                <app-tooltip autofocus [innerHtml]="experienciadescription">
+                                </app-tooltip>
+                            </ng-template>
+                            <span placement="bottom" [ngbTooltip]="addonse0">
+                <img src="{{experienciaicon}}" title="{{experienciadescription}}">
+
+              </span>
+                        </li>
+                        <li class="mb-1 italic-class">
+
+                        </li>
+
+                        <li *ngIf="selectedDate && activeaddons && activeaddons[0].valor == true" class="mb-1 col">
+
+                            <span *ngIf="(activeaddons[0] && activeaddons[0].valor == true) || (selectedCabin && selectedCabin.aeropuertoName && selectedCabin.aeropuertoName.trim() != '')" [innerHtml]="showHTML(activeaddons[0].descripcion)" class="pr-2"></span>
+
+
+                            <svg xmlns="http://www.w3.org/2000/svg" width="31.905" height="31.905" viewBox="0 0 31.905 31.905">
+                <path
+                  d="M10.413,1.735a1.792,1.792,0,0,1,1.157.578,2.856,2.856,0,0,1,.578,1.735V8.677l6.942,5.206v1.735l-7.52-2.892V19.09L14.462,21.4v1.157L10.413,21.4,6.363,22.561V21.4L9.256,19.09V12.726l-7.52,2.892V13.883L8.677,8.677V4.049a2.856,2.856,0,0,1,.578-1.735,1.792,1.792,0,0,1,1.157-.578m0-1.735A3.529,3.529,0,0,0,8.029,1.088,4.456,4.456,0,0,0,6.942,4.049v3.76L.694,12.5A1.734,1.734,0,0,0,0,13.883v1.735a1.738,1.738,0,0,0,1.735,1.735,1.808,1.808,0,0,0,.625-.116l5.16-1.99v3L5.281,20.044A1.733,1.733,0,0,0,4.628,21.4v1.157a1.745,1.745,0,0,0,.688,1.388,1.725,1.725,0,0,0,1.047.347,1.652,1.652,0,0,0,.474-.069l3.575-1.018,3.575,1.018a1.681,1.681,0,0,0,.474.069,1.776,1.776,0,0,0,1.047-.347,1.737,1.737,0,0,0,.688-1.388V21.4a1.722,1.722,0,0,0-.654-1.354l-2.239-1.8v-3l5.16,1.984a1.784,1.784,0,0,0,.625.116,1.738,1.738,0,0,0,1.735-1.735V13.878a1.734,1.734,0,0,0-.694-1.388l-6.248-4.68V4.049A4.465,4.465,0,0,0,12.8,1.088,3.529,3.529,0,0,0,10.413,0Z"
+                  transform="translate(17.18) rotate(45)" fill="#2a5c96" />
+              </svg>
+
+                        </li>
+                        <li *ngIf="selectedDate && activeaddons && activeaddons[1].valor == true && selectedCabin?.esNRF" class="mb-1">
+                            <span *ngIf="(activeaddons[1] && activeaddons[1].valor == true) || (selectedCabin && selectedCabin.aeropuertoName && selectedCabin.aeropuertoName.trim() != '')" [innerHtml]="showHTML(activeaddons[1].descripcion)" class="pr-2"></span>
+
+
+
+                            <svg xmlns="http://www.w3.org/2000/svg" width="6.768" height="27.102" viewBox="0 0 6.768 27.102">
+                <g transform="translate(0)">
+                  <path
+                    d="M142.684,41.914a3.387,3.387,0,1,0-2.395-.995A3.366,3.366,0,0,0,142.684,41.914Zm-1.163-4.553a1.634,1.634,0,0,1,2.325,0,1.651,1.651,0,0,1,0,2.331,1.634,1.634,0,0,1-2.325,0A1.651,1.651,0,0,1,141.521,37.361Z"
+                    transform="translate(-139.3 -14.812)" fill="#2a5c96" />
+                  <path
+                    d="M144.2,0h-2.314a1.733,1.733,0,0,0-1.735,1.735V17.354a1.733,1.733,0,0,0,1.735,1.735H144.2a1.733,1.733,0,0,0,1.735-1.735V1.735A1.733,1.733,0,0,0,144.2,0Zm0,17.354h-2.314V1.735H144.2Z"
+                    transform="translate(-139.658)" fill="#2a5c96" />
+                </g>
+              </svg>
+
+                        </li>
+
+                        <li class="mb-2"><strong>{{screenLangInfo.lbl_Categoria}}</strong> {{GetCatTranslate()}}</li>
+                    </ul>
+                </div>
+
+                <div *ngIf="preciofinal" class="col-6 col-sm-3 text-center">
+                    <span *ngIf="reservation.mode != 'Online'" class="small">{{screenLangInfo.lbl_PorPersona}}</span>
+                    <span *ngIf="reservation.mode == 'Online'" class="small">{{xcabinaxpasajero}}</span>
+
+                    <h1 *ngIf="selectedDateCategoryData.posMoneda == 0" class="text-primary price mb-0 text-nowrap">
+                        {{selectedDateCategoryData.valorPrincipalString}} <span>{{selectedDateCategoryData.monedaP}}</span>
+                    </h1>
+                    <small *ngIf="selectedDateCategoryData.posMoneda == 0 && itinerary.mostrarMonedaLocal" class="text-primary text-nowrap">{{selectedDateCategoryData.valorLocalString}}
+            {{selectedDateCategoryData.monedaL}}</small>
+
+                    <h1 *ngIf="selectedDateCategoryData.posMoneda == 1" class="text-primary price mb-0 text-nowrap">
+                        <span>{{selectedDateCategoryData.monedaP}} </span>{{selectedDateCategoryData.valorPrincipalString}}
+                    </h1>
+                    <small *ngIf="selectedDateCategoryData.posMoneda == 1 && itinerary.mostrarMonedaLocal" class="text-primary text-nowrap">{{selectedDateCategoryData.monedaL}}
+            {{selectedDateCategoryData.valorLocalString}}</small>
+
+                </div>
+
+            </div>
+
+            <div class="flex d-flex flex-row flex-nowrap bg-light w-100" style="margin: 0px !important;padding: 0px !important;">
+                <div style="width: 100%; margin-top: 0px !important;">
+                    <div *ngIf="reservation.mode == 'Online'" class="flex d-flex flex-row mt-0 mt-sm-0 pr-10 pb-10 align-items-center w-100" style="margin-bottom:10px !important; padding-left: 50px !important; padding-right:60px !important;">
+                        <div class="flex d-flex flex-column justify-content-start align-items-start w-50">
+                            <a (click)="ShowSearch()" class="steps__header-button m-2 m-sm-0 btn btn-primary text-white text-uppercase font-weight-bold rounded-0 pr-3 pl-3 pr-sm-4 pl-sm-4" style="font-size: 15px;">
+                {{screenLangInfo.lbl_button_Cambiar}}
+              </a>
+                        </div>
+                        <div class="flex d-flex flex-column justify-content-end align-items-end mr-10 mb-10 w-50 disabled">
+                            <div *ngIf="enableProcess" class="d-flex justify-content-center">
+                                <a (click)="ShowPassengerQuote()" class="m-2 btn btn-primary text-white text-uppercase font-weight-bold rounded-0 pr-4 pl-4">
+                  {{screenLangInfo.lbl_button_Cotizar}}
+                </a>
+
+                                <a *ngIf="reservation.mode == 'Online' &&  !(soloCotizacionOnline) && !!ValidateDiasValidosReserva()" data-toggle="modal" data-target="#modal_cabin_selection" class="m-2 btn btn-primary text-white text-uppercase font-weight-bold rounded-0 pr-4 pl-4" (click)="CabinChoice()">
+                  {{screenLangInfo.lbl_button_Reservar}}
+                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div *ngIf="reservation.mode == 'Offline'" class="flex d-flex flex-row mt-0 mt-sm-0 pr-10 pb-10 align-items-center w-100">
+
+                        <div class="flex d-flex flex-column justify-content-start align-items-start w-50">
+
+                            <a (click)="ShowSearch()" class="m-2 m-sm-0 btn btn-primary text-white text-uppercase font-weight-bold rounded-0 pr-3 pl-3 pr-sm-4 pl-sm-4">
+                {{screenLangInfo.lbl_button_Cambiar}}
+              </a>
+                        </div>
+                        <div class="flex d-flex flex-column justify-content-end align-items-end mr-10 mb-10 w-50 disabled">
+                            <div class="d-flex justify-content-center">
+                                <a (click)="ShowPassengerQuote()" class="m-2 btn btn-primary text-white text-uppercase font-weight-bold rounded-0 pr-4 pl-4">
+                  {{screenLangInfo.lbl_button_Cotizar}}
+                </a>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!--Paso a paso-->
+        <div class="flex d-flex flex-row flex-nowrap bg-light w-100" style="margin: 0px !important;padding: 0px !important;">
+            <div style="width: 100%; margin-top: -13px;" class="container-paso-paso">
+                <nav *ngIf="reservation.mode == 'Online' && !loadingLabels && !errorLoadingLabels" class="nav nav-pills flex-row bg-secondary nav-pills--steps">
+                    <a class="flex-fill text-white rounded-0 text-center nav-link completed" style="cursor: pointer; " (click)="PassengersNumber()">
+                        <span class="angle"></span> {{screenLangInfo.lbl_tirillaNavegacion_Paso1}}
+                    </a>
+                    <a class="flex-fill text-white rounded-0 text-center nav-link active">
+                        <span class="angle"></span> {{screenLangInfo.lbl_tirillaNavegacion_Paso2}}
+                    </a>
+                    <a class="flex-fill text-white rounded-0 text-center nav-link disabled">
+                        <span class="angle"></span> {{screenLangInfo.lbl_tirillaNavegacion_Paso3}}
+                    </a>
+                </nav>
+
+
+                <nav *ngIf="reservation.mode == 'Offline' && !loadingLabels && !errorLoadingLabels" class="nav nav-pills flex-row bg-secondary nav-pills--steps">
+                    <a class="flex-fill text-white rounded-0 text-center nav-link active">
+                        <span class="angle"></span> {{screenLangInfo.lbl_tirillaNavegacion_Split_Paso1}} {{screenLangInfo.lbl_tirillaNavegacion_Split_SelTarifa}}
+                    </a>
+                    <a class="flex-fill text-white rounded-0 text-center nav-link disabled">
+                        <span class="angle"></span> {{screenLangInfo.lbl_tirillaNavegacion_Split_Paso2}}
+                    </a>
+                </nav>
+
+            </div>
+        </div>
+    </header>
+
+    <main *ngIf="loadingLabels==false && getScreenWidth > 575 && getScreenWidth < 768 && reservation.mode == 'Offline'" class="container pt-1 pb-5 px-2 main_mobil" style="padding-left:14px !important;z-index: 0px; position: relative; width: 100% !important;">
+        <!-- Selección de tarifa -->
+        <div *ngIf="!loadingLabels && !errorLoadingLabels">
+            <ul class="cruise__lists list-unstyled">
+                <!-- tarifa -->
+                <li *ngFor="let rate of rateListReverse let i=index" class="cruise__card expanded active pt-3 pb-4 border-bottom" style="border-bottom: 1px solid #dee2e6 !important;">
+
+                    <!--<app-rate-element [indice]="i" [disponible]="rate.disponible" [enableProcess]="enableProcess"
+            [screenLangInfo]="screenLangInfo" [rate]="rate.tarifa" [ratecomplete]="rate"
+            [InteriorInfo]="InteriorInfo[i]" [ExteriorInfo]="ExteriorInfo[i]" [SuiteInfo]="SuiteInfo[i]"
+            [BalconInfo]="BalconInfo[i]" [bestRate]="i == 0 && existBR" [filterBR]="filterBR"
+            (ChangeCategory)="ChangeCategory($event)" (TerminaCargar)="TerminaCargar($event)">
+          </app-rate-element>-->
+
+                    <app-rate-element [indice]="i" [disponible]="rate.disponible" [enableProcess]="enableProcess" [screenLangInfo]="screenLangInfo" [rate]="rate.tarifa" [ratecomplete]="rate" [filterBR]="filterBR" (ChangeCategory)="ChangeCategory($event)" (TerminaCargar)="TerminaCargar($event)"
+                        (EnableProcessFather)="EnableProcessFather($event)">
+                    </app-rate-element>
+
+                </li>
+                <!--// tarifa -->
+            </ul>
+        </div>
+    </main>
+
+    <main *ngIf="loadingLabels==false && getScreenWidth > 575 && getScreenWidth < 768 && reservation.mode == 'Online'" class="container pt-1 pb-5 px-2 main_mobil_online" style="padding-left:14px !important;z-index: 0px; position: relative; width: 100% !important;">
+
+        <div *ngIf="!loadingLabels && !errorLoadingLabels">
+            <ul class="cruise__lists list-unstyled">
+                <!-- tarifa -->
+                <li *ngFor="let rate of rateListReverse let i=index" class="cruise__card expanded active pt-3 pb-4 border-bottom" style="border-bottom: 1px solid #dee2e6 !important;">
+
+                    <app-rate-element [indice]="i" [disponible]="rate.disponible" [enableProcess]="enableProcess" [screenLangInfo]="screenLangInfo" [rate]="rate.tarifa" [ratecomplete]="rate" [filterBR]="filterBR" (ChangeCategory)="ChangeCategory($event)" (TerminaCargar)="TerminaCargar($event)"
+                        (EnableProcessFather)="EnableProcessFather($event)">
+                    </app-rate-element>
+
+                </li>
+                <!--// tarifa -->
+            </ul>
+        </div>
+    </main>
+    <!--Fin para mobil o celular grande-->
+    <!--Table md-->
+    <header *ngIf="loadingLabels==false && getScreenWidth > 767 && getScreenWidth < 992" class=" steps__header container-fluid fixed my_header" style="position: absolute !important;">
+
+        <div class="wrapper row flex-column flex-nowrap bg-light p-3 pl-sm-5">
+
+            <div class="row align-items-center">
+                <div class="col-12 col-sm-6 col-md-8 order-1 order-sm-0">
+                    <h1 class="text-primary mb-1">{{itinerary.destino}}</h1>
+                    <p class="mb-2 text-primary">{{itinerary.nnoches}} {{screenLangInfo.lbl_nochesEnEl}} {{itinerary.shipName}}
+                    </p>
+                </div>
+
+                <div class="col-12 col-sm-6 col-md-4 order-0 order-sm-0 text-center">
+                    <img src="{{itinerary.urlImageMeduim}}" style="max-height: 80px; min-width: 50px;max-width: 180px;">
+                    <ng-template #popContent>
+                        <app-popover [screenLangInfo]="screenLangInfo"></app-popover>
+                    </ng-template>
+                    <ng-template #popoverTitle>
+                        <div class="popover-header p-1 text-center bg-white border-0">
+                            <div class="popover shadow p-2" role="tooltip">
+                                <div class="arrow"></div>
+                                <h3>
+                                </h3>
+                            </div>
+                        </div>
+                    </ng-template>
+                    <button class="btn shadow-none" [ngbPopover]="popContent" popoverTitle="{{screenLangInfo.lbl_Compartir}}" placement="bottom" ngbTooltip="{{screenLangInfo.lbl_Compartir}}">
+          <svg xmlns="http://www.w3.org/2000/svg" width="23.276" height="23.876" viewBox="0 0 23.276 23.876">
+            <path
+              d="M18.581,14.984a4.208,4.208,0,0,0-3.261,1.558l-7.061-3.53a4.082,4.082,0,0,0-.036-2.188l7.187-3.89A4.189,4.189,0,1,0,14.385,4.2a4.089,4.089,0,0,0,.168,1.157L7.366,9.242a4.2,4.2,0,1,0,.09,5.382l7.061,3.53a4.141,4.141,0,0,0-.132,1.025,4.2,4.2,0,1,0,4.2-4.2Zm0-13.186a2.4,2.4,0,1,1-2.4,2.4A2.4,2.4,0,0,1,18.581,1.8ZM4.2,14.385a2.4,2.4,0,1,1,2.4-2.4A2.4,2.4,0,0,1,4.2,14.385Zm14.385,7.192a2.4,2.4,0,1,1,2.4-2.4A2.4,2.4,0,0,1,18.581,21.577Z"
+              transform="translate(0.25 0.25)" fill="#666" stroke="#666" stroke-width="0.5">
+            </path>
+          </svg>
+        </button>
+                </div>
+            </div>
+
+            <div class="row align-items-center">
+                <div class="col-6 col-sm-8 col-md-8">
+                    <ul class="list-unstyled list-inline font-weight-bold mb-3">
+                        <li *ngIf="itinerary.mostrarBarco" class="list-inline-item">
+                            <u><a (click)="ShowItinerary(false)" class="text-secondary" data-toggle="modal"
+                data-target="#modal_launch" data-show-tab="boat" role="button">
+                {{screenLangInfo.lbl_Button_VerBarco}}</a></u>
+                        </li>
+                        <li *ngIf="itinerary.mostrarItinerario" class="list-inline-item">
+                            <u><a (click)="ShowItinerary(true)" class="text-secondary" data-toggle="modal" data-target="#modal_launch"
+                data-show-tab="itinerary" role="button">
+                {{screenLangInfo.lbl_Button_VerItinerario}}</a></u>
+                        </li>
+                    </ul>
+
+
+                    <ul class="list-unstyled text-muted mb-3">
+                        <li class="mb-2"><strong>{{screenLangInfo.lbl_fecha}}</strong> {{selectedDate.dateOut.dia}} {{selectedDate.dateOut.mes}} {{selectedDate.dateOut.anno}}</li>
+                        <li class="mb-2"><strong>{{screenLangInfo.lbl_CantidadPasajeros}}</strong> {{cantidadPasajeros}}</li>
+                        <li class="mb-1"><span [innerHtml]="rateTitle"></span>
+
+                            <ng-template #addons0>
+                                <app-tooltip autofocus [innerHtml]="cleanDescriptionRate">
+                                </app-tooltip>
+                            </ng-template>
+                            <span style="cursor: pointer;" placement="end" [ngbTooltip]="addons0" triggers="click:blur">
+              <svg xmlns="http://www.w3.org/2000/svg" width="25.453" height="25.453" viewBox="0 0 25.453 25.453">
+                <g transform="translate(0)">
+                  <g transform="translate(9.834 4.339)">
+                    <path
+                      d="M195.894,14a2.87,2.87,0,0,0-2.048.85,2.9,2.9,0,0,0,0,4.09,2.891,2.891,0,0,0,4.1,0,2.9,2.9,0,0,0,0-4.09A2.87,2.87,0,0,0,195.894,14Zm.816,3.714a1.16,1.16,0,1,1,0-1.637A1.153,1.153,0,0,1,196.71,17.714Z"
+                      transform="translate(-193.002 -14)" fill="#2a5c96" />
+                    <path
+                      d="M194.735,35.834h2.314a1.733,1.733,0,0,0,1.735-1.735V27.735A1.733,1.733,0,0,0,197.049,26h-2.314A1.733,1.733,0,0,0,193,27.735V34.1A1.737,1.737,0,0,0,194.735,35.834Zm0-8.1h2.314V34.1h-2.314Z"
+                      transform="translate(-193 -19.058)" fill="#2a5c96" />
+                  </g>
+                  <path
+                    d="M188.726,6.5a12.726,12.726,0,1,0,12.726,12.726A12.741,12.741,0,0,0,188.726,6.5Zm0,23.717a10.991,10.991,0,1,1,10.991-10.991A10.994,10.994,0,0,1,188.726,30.217Z"
+                    transform="translate(-176 -6.5)" fill="#2a5c96" />
+                </g>
+              </svg>
+            </span>
+                        </li>
+                        <li *ngIf="itinerary.company=='MSC' && experienciatitle" class="mb-1">
+                            Experiencia: {{experienciatitle}}
+                            <ng-template #addonse0>
+                                <app-tooltip autofocus [innerHtml]="experienciadescription">
+                                </app-tooltip>
+                            </ng-template>
+                            <span placement="bottom" [ngbTooltip]="addonse0">
+              <img src="{{experienciaicon}}" title="{{experienciadescription}}">
+
+            </span>
+                        </li>
+                        <li class="mb-1 italic-class">
+
+                        </li>
+
+                        <li *ngIf="selectedDate && activeaddons && activeaddons[0].valor == true" class="mb-1 col">
+
+                            <span *ngIf="(activeaddons[0] && activeaddons[0].valor == true) || (selectedCabin && selectedCabin.aeropuertoName && selectedCabin.aeropuertoName.trim() != '')" [innerHtml]="showHTML(activeaddons[0].descripcion)" class="pr-2"></span>
+
+
+                            <svg xmlns="http://www.w3.org/2000/svg" width="31.905" height="31.905" viewBox="0 0 31.905 31.905">
+              <path
+                d="M10.413,1.735a1.792,1.792,0,0,1,1.157.578,2.856,2.856,0,0,1,.578,1.735V8.677l6.942,5.206v1.735l-7.52-2.892V19.09L14.462,21.4v1.157L10.413,21.4,6.363,22.561V21.4L9.256,19.09V12.726l-7.52,2.892V13.883L8.677,8.677V4.049a2.856,2.856,0,0,1,.578-1.735,1.792,1.792,0,0,1,1.157-.578m0-1.735A3.529,3.529,0,0,0,8.029,1.088,4.456,4.456,0,0,0,6.942,4.049v3.76L.694,12.5A1.734,1.734,0,0,0,0,13.883v1.735a1.738,1.738,0,0,0,1.735,1.735,1.808,1.808,0,0,0,.625-.116l5.16-1.99v3L5.281,20.044A1.733,1.733,0,0,0,4.628,21.4v1.157a1.745,1.745,0,0,0,.688,1.388,1.725,1.725,0,0,0,1.047.347,1.652,1.652,0,0,0,.474-.069l3.575-1.018,3.575,1.018a1.681,1.681,0,0,0,.474.069,1.776,1.776,0,0,0,1.047-.347,1.737,1.737,0,0,0,.688-1.388V21.4a1.722,1.722,0,0,0-.654-1.354l-2.239-1.8v-3l5.16,1.984a1.784,1.784,0,0,0,.625.116,1.738,1.738,0,0,0,1.735-1.735V13.878a1.734,1.734,0,0,0-.694-1.388l-6.248-4.68V4.049A4.465,4.465,0,0,0,12.8,1.088,3.529,3.529,0,0,0,10.413,0Z"
+                transform="translate(17.18) rotate(45)" fill="#2a5c96" />
+            </svg>
+
+                        </li>
+                        <li *ngIf="selectedDate && activeaddons && activeaddons[1].valor == true && selectedCabin?.esNRF" class="mb-1">
+                            <span *ngIf="(activeaddons[1] && activeaddons[1].valor == true) || (selectedCabin && selectedCabin.aeropuertoName && selectedCabin.aeropuertoName.trim() != '')" [innerHtml]="showHTML(activeaddons[1].descripcion)" class="pr-2"></span>
+
+
+
+                            <svg xmlns="http://www.w3.org/2000/svg" width="6.768" height="27.102" viewBox="0 0 6.768 27.102">
+              <g transform="translate(0)">
+                <path
+                  d="M142.684,41.914a3.387,3.387,0,1,0-2.395-.995A3.366,3.366,0,0,0,142.684,41.914Zm-1.163-4.553a1.634,1.634,0,0,1,2.325,0,1.651,1.651,0,0,1,0,2.331,1.634,1.634,0,0,1-2.325,0A1.651,1.651,0,0,1,141.521,37.361Z"
+                  transform="translate(-139.3 -14.812)" fill="#2a5c96" />
+                <path
+                  d="M144.2,0h-2.314a1.733,1.733,0,0,0-1.735,1.735V17.354a1.733,1.733,0,0,0,1.735,1.735H144.2a1.733,1.733,0,0,0,1.735-1.735V1.735A1.733,1.733,0,0,0,144.2,0Zm0,17.354h-2.314V1.735H144.2Z"
+                  transform="translate(-139.658)" fill="#2a5c96" />
+              </g>
+            </svg>
+                        </li>
+
+                        <li class="mb-2"><strong>{{screenLangInfo.lbl_Categoria}}</strong> {{GetCatTranslate()}}</li>
+                    </ul>
+                </div>
+
+                <div *ngIf="preciofinal" class="col-6 col-sm-3 col-md-4 text-center">
+                    <span *ngIf="reservation.mode != 'Online'" class="small">{{screenLangInfo.lbl_PorPersona}}</span>
+                    <span *ngIf="reservation.mode == 'Online'" class="small">{{xcabinaxpasajero}}</span>
+
+                    <h1 *ngIf="selectedDateCategoryData.posMoneda == 0" class="text-primary price mb-0 text-nowrap">
+                        {{selectedDateCategoryData.valorPrincipalString}} <span>{{selectedDateCategoryData.monedaP}}</span>
+                    </h1>
+                    <small *ngIf="selectedDateCategoryData.posMoneda == 0 && itinerary.mostrarMonedaLocal" class="text-primary text-nowrap">{{selectedDateCategoryData.valorLocalString}}
+          {{selectedDateCategoryData.monedaL}}</small>
+
+                    <h1 *ngIf="selectedDateCategoryData.posMoneda == 1" class="text-primary price mb-0 text-nowrap">
+                        <span>{{selectedDateCategoryData.monedaP}} </span>{{selectedDateCategoryData.valorPrincipalString}}
+                    </h1>
+                    <small *ngIf="selectedDateCategoryData.posMoneda == 1 && itinerary.mostrarMonedaLocal" class="text-primary text-nowrap">{{selectedDateCategoryData.monedaL}}
+          {{selectedDateCategoryData.valorLocalString}}</small>
+
+                </div>
+
+            </div>
+
+            <div class="flex d-flex flex-row flex-nowrap bg-light w-100" style="margin: 0px !important;padding: 0px !important;">
+                <div style="width: 100%; margin-top: 0px !important;">
+                    <div *ngIf="reservation.mode == 'Online'" class="flex d-flex flex-row mt-0 mt-sm-0 pr-10 pb-10 align-items-center w-100" style="margin-bottom:10px !important; padding-left: 50px !important; padding-right:60px !important;">
+                        <div class="flex d-flex flex-column justify-content-start align-items-start w-50">
+                            <a (click)="ShowSearch()" class="steps__header-button m-2 m-sm-0 btn btn-primary text-white text-uppercase font-weight-bold rounded-0 pr-3 pl-3 pr-sm-4 pl-sm-4">
+              {{screenLangInfo.lbl_button_Cambiar}}
+            </a>
+                        </div>
+                        <div class="flex d-flex flex-column justify-content-end align-items-end mr-10 mb-10 w-50 disabled">
+                            <div *ngIf="enableProcess" class="d-flex justify-content-center">
+                                <a (click)="ShowPassengerQuote()" class="m-2 btn btn-primary text-white text-uppercase font-weight-bold rounded-0 pr-4 pl-4">
+                {{screenLangInfo.lbl_button_Cotizar}}
+              </a>
+
+                                <a *ngIf="reservation.mode == 'Online' && !soloCotizacionOnline && !!ValidateDiasValidosReserva()" data-toggle="modal" data-target="#modal_cabin_selection" class="m-2 btn btn-primary text-white text-uppercase font-weight-bold rounded-0 pr-4 pl-4" (click)="CabinChoice()">
+                {{screenLangInfo.lbl_button_Reservar}}
+              </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div *ngIf="reservation.mode == 'Offline'" class="flex d-flex flex-row mt-0 mt-sm-0 pr-10 pb-10 align-items-center w-100">
+
+                        <div class="flex d-flex flex-column justify-content-start align-items-start w-50">
+
+                            <a (click)="ShowSearch()" class="m-2 m-sm-0 btn btn-primary text-white text-uppercase font-weight-bold rounded-0 pr-3 pl-3 pr-sm-4 pl-sm-4">
+              {{screenLangInfo.lbl_button_Cambiar}}
+            </a>
+                        </div>
+                        <div class="flex d-flex flex-column justify-content-end align-items-end mr-10 mb-10 w-50 disabled">
+                            <div class="d-flex justify-content-center">
+                                <a (click)="ShowPassengerQuote()" class="m-2 btn btn-primary text-white text-uppercase font-weight-bold rounded-0 pr-4 pl-4">
+                {{screenLangInfo.lbl_button_Cotizar}}
+              </a>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!--Paso a paso-->
+        <div class="flex d-flex flex-row flex-nowrap bg-light w-100" style="margin: 0px !important;padding: 0px !important;">
+            <div style="width: 100%; margin-top: -13px;" class="container-paso-paso">
+                <nav *ngIf="reservation.mode == 'Online' && !loadingLabels && !errorLoadingLabels" class="nav nav-pills flex-row bg-secondary nav-pills--steps">
+                    <a class="flex-fill text-white rounded-0 text-center nav-link completed" style="cursor: pointer; " (click)="PassengersNumber()">
+                        <span class="angle"></span> {{screenLangInfo.lbl_tirillaNavegacion_Paso1}}
+                    </a>
+                    <a class="flex-fill text-white rounded-0 text-center nav-link active">
+                        <span class="angle"></span> {{screenLangInfo.lbl_tirillaNavegacion_Paso2}}
+                    </a>
+                    <a class="flex-fill text-white rounded-0 text-center nav-link disabled">
+                        <span class="angle"></span> {{screenLangInfo.lbl_tirillaNavegacion_Paso3}}
+                    </a>
+                </nav>
+
+
+                <nav *ngIf="reservation.mode == 'Offline' && !loadingLabels && !errorLoadingLabels" class="nav nav-pills flex-row bg-secondary nav-pills--steps">
+                    <a class="flex-fill text-white rounded-0 text-center nav-link active">
+                        <span class="angle"></span> {{screenLangInfo.lbl_tirillaNavegacion_Split_Paso1}} {{screenLangInfo.lbl_tirillaNavegacion_Split_SelTarifa}}
+                    </a>
+                    <a class="flex-fill text-white rounded-0 text-center nav-link disabled">
+                        <span class="angle"></span> {{screenLangInfo.lbl_tirillaNavegacion_Split_Paso2}}
+                    </a>
+                </nav>
+
+            </div>
+        </div>
+    </header>
+
+    <main *ngIf="loadingLabels==false && getScreenWidth > 767 && getScreenWidth < 992 && reservation.mode == 'Offline'" class="container pt-1 pb-5 px-2 main_mobil" style="padding-left:14px !important;z-index: 0px; position: relative; width: 100% !important;">
+        <!-- Selección de tarifa -->
+        <div *ngIf="!loadingLabels && !errorLoadingLabels">
+            <ul class="cruise__lists list-unstyled">
+                <!-- tarifa -->
+                <li *ngFor="let rate of rateListReverse let i=index" class="cruise__card expanded active pt-3 pb-4 border-bottom" style="border-bottom: 1px solid #dee2e6 !important;">
+
+                    <!--<app-rate-element [indice]="i" [disponible]="rate.disponible" [enableProcess]="enableProcess"
+          [screenLangInfo]="screenLangInfo" [rate]="rate.tarifa" [ratecomplete]="rate"
+          [InteriorInfo]="InteriorInfo[i]" [ExteriorInfo]="ExteriorInfo[i]" [SuiteInfo]="SuiteInfo[i]"
+          [BalconInfo]="BalconInfo[i]" [bestRate]="i == 0 && existBR" [filterBR]="filterBR"
+          (ChangeCategory)="ChangeCategory($event)" (TerminaCargar)="TerminaCargar($event)">
+        </app-rate-element>-->
+
+                    <app-rate-element [indice]="i" [disponible]="rate.disponible" [enableProcess]="enableProcess" [screenLangInfo]="screenLangInfo" [rate]="rate.tarifa" [ratecomplete]="rate" [filterBR]="filterBR" (ChangeCategory)="ChangeCategory($event)" (TerminaCargar)="TerminaCargar($event)"
+                        (EnableProcessFather)="EnableProcessFather($event)">
+                    </app-rate-element>
+
+                </li>
+                <!--// tarifa -->
+            </ul>
+        </div>
+    </main>
+
+
+    <main *ngIf="loadingLabels==false && getScreenWidth > 767 && getScreenWidth < 992 && reservation.mode == 'Online'" class="container pt-1 pb-5 px-2 main_mobil" style="padding-left:14px !important;z-index: 0px; position: relative; width: 100% !important;">
+
+        <div *ngIf="!loadingLabels && !errorLoadingLabels">
+            <ul class="cruise__lists list-unstyled">
+                <!-- tarifa -->
+                <li *ngFor="let rate of rateListReverse let i=index" class="cruise__card expanded active pt-3 pb-4 border-bottom" style="border-bottom: 1px solid #dee2e6 !important;">
+
+                    <app-rate-element [indice]="i" [disponible]="rate.disponible" [enableProcess]="enableProcess" [screenLangInfo]="screenLangInfo" [rate]="rate.tarifa" [ratecomplete]="rate" [filterBR]="filterBR" (ChangeCategory)="ChangeCategory($event)" (TerminaCargar)="TerminaCargar($event)"
+                        (EnableProcessFather)="EnableProcessFather($event)">
+                    </app-rate-element>
+
+                </li>
+                <!--// tarifa -->
+            </ul>
+        </div>
+    </main>
+    <!--Fin table md-->
+    <header *ngIf="loadingLabels==false && getScreenWidth > 991" class=" steps__header container-fluid fixed">
+        <div class="wrapper row flex flex-row flex-nowrap bg-light p-3 p-sm-3" style="margin-bottom:0px !important;padding-bottom: 0px !important;">
+
+            <div class="flex flex-column" style="width: 36%; ">
+                <div class="row align-items-center pl-5 pl-sm-5">
+                    <div class="col-10 col-sm-10 order-1 order-sm-0">
+                        <span class="text-primary mb-1 fs-24">{{itinerary.destino}}</span>
+                        <p class="mb-2 text-primary">{{itinerary.nnoches}} {{screenLangInfo.lbl_nochesEnEl}} {{itinerary.shipName}}
+                        </p>
+
+
+                        <ul class="list-unstyled  font-weight-bold mb-3 text-nowrap">
+                            <li *ngIf="itinerary.mostrarBarco" class="mb-1">
+                                <u><a class="text-secondary" data-toggle="modal" data-target="#modal_launch" data-show-tab="boat"
+                    (click)="ShowItinerary(false)" role="button">{{screenLangInfo.lbl_Button_VerBarco}}</a></u>
+                            </li>
+                            <li *ngIf="itinerary.mostrarItinerario" class="mb-1">
+                                <u><a class="text-secondary" data-toggle="modal" data-target="#modal_launch" data-show-tab="itinerary"
+                    (click)="ShowItinerary(true)" role="button">{{screenLangInfo.lbl_Button_VerItinerario}}</a></u>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="flex flex-column " style="width: 20%;">
+                <div class="row align-items-center ">
+                    <div class="col-6 col-sm-9" style="padding-top: 2.5rem;">
+
+                        <ul class="list-unstyled text-muted mb-3 text-wrap">
+                            <li class="mb-1"><strong>{{screenLangInfo.lbl_fecha}}</strong> {{selectedDate.dateOut.dia}} {{selectedDate.dateOut.mes}} {{selectedDate.dateOut.anno}}</li>
+                            <li class="mb-2"><strong>{{screenLangInfo.lbl_CantidadPasajeros}}</strong> {{cantidadPasajeros}}</li>
+                            <li class="mb-1"><span [innerHtml]="rateTitle"></span>
+                                <ng-template #addons0>
+                                    <app-tooltip autofocus [innerHtml]="cleanDescriptionRate">
+                                    </app-tooltip>
+                                </ng-template>
+                                <span placement="bottom" [ngbTooltip]="addons0">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="25.453" height="25.453" viewBox="0 0 25.453 25.453">
+                    <g transform="translate(0)">
+                      <g transform="translate(9.834 4.339)">
+                        <path
+                          d="M195.894,14a2.87,2.87,0,0,0-2.048.85,2.9,2.9,0,0,0,0,4.09,2.891,2.891,0,0,0,4.1,0,2.9,2.9,0,0,0,0-4.09A2.87,2.87,0,0,0,195.894,14Zm.816,3.714a1.16,1.16,0,1,1,0-1.637A1.153,1.153,0,0,1,196.71,17.714Z"
+                          transform="translate(-193.002 -14)" fill="#2a5c96" />
+                        <path
+                          d="M194.735,35.834h2.314a1.733,1.733,0,0,0,1.735-1.735V27.735A1.733,1.733,0,0,0,197.049,26h-2.314A1.733,1.733,0,0,0,193,27.735V34.1A1.737,1.737,0,0,0,194.735,35.834Zm0-8.1h2.314V34.1h-2.314Z"
+                          transform="translate(-193 -19.058)" fill="#2a5c96" />
+                      </g>
+                      <path
+                        d="M188.726,6.5a12.726,12.726,0,1,0,12.726,12.726A12.741,12.741,0,0,0,188.726,6.5Zm0,23.717a10.991,10.991,0,1,1,10.991-10.991A10.994,10.994,0,0,1,188.726,30.217Z"
+                        transform="translate(-176 -6.5)" fill="#2a5c96" />
+                    </g>
+                  </svg>
+                </span>
+                            </li>
+                            <li *ngIf="itinerary.company=='MSC' && experienciatitle" class="mb-1">
+                                Experiencia: {{experienciatitle}}
+                                <ng-template #addonse0>
+                                    <app-tooltip autofocus [innerHtml]="experienciadescription">
+                                    </app-tooltip>
+                                </ng-template>
+                                <span placement="bottom" [ngbTooltip]="addonse0">
+                  <img src="{{experienciaicon}}" title="{{experienciadescription}}">
+
+                </span>
+                            </li>
+                            <li class="mb-1 italic-class">
+
+                            </li>
+
+                            <li *ngIf="selectedDate && activeaddons && activeaddons[0].valor == true" class="mb-1 col">
+
+                                <span *ngIf="(activeaddons[0] && activeaddons[0].valor == true) || (selectedCabin && selectedCabin.aeropuertoName && selectedCabin.aeropuertoName.trim() != '')" [innerHtml]="showHTML(activeaddons[0].descripcion)" class="pr-2"></span>
+
+
+                                <svg xmlns="http://www.w3.org/2000/svg" width="31.905" height="31.905" viewBox="0 0 31.905 31.905">
+                  <path
+                    d="M10.413,1.735a1.792,1.792,0,0,1,1.157.578,2.856,2.856,0,0,1,.578,1.735V8.677l6.942,5.206v1.735l-7.52-2.892V19.09L14.462,21.4v1.157L10.413,21.4,6.363,22.561V21.4L9.256,19.09V12.726l-7.52,2.892V13.883L8.677,8.677V4.049a2.856,2.856,0,0,1,.578-1.735,1.792,1.792,0,0,1,1.157-.578m0-1.735A3.529,3.529,0,0,0,8.029,1.088,4.456,4.456,0,0,0,6.942,4.049v3.76L.694,12.5A1.734,1.734,0,0,0,0,13.883v1.735a1.738,1.738,0,0,0,1.735,1.735,1.808,1.808,0,0,0,.625-.116l5.16-1.99v3L5.281,20.044A1.733,1.733,0,0,0,4.628,21.4v1.157a1.745,1.745,0,0,0,.688,1.388,1.725,1.725,0,0,0,1.047.347,1.652,1.652,0,0,0,.474-.069l3.575-1.018,3.575,1.018a1.681,1.681,0,0,0,.474.069,1.776,1.776,0,0,0,1.047-.347,1.737,1.737,0,0,0,.688-1.388V21.4a1.722,1.722,0,0,0-.654-1.354l-2.239-1.8v-3l5.16,1.984a1.784,1.784,0,0,0,.625.116,1.738,1.738,0,0,0,1.735-1.735V13.878a1.734,1.734,0,0,0-.694-1.388l-6.248-4.68V4.049A4.465,4.465,0,0,0,12.8,1.088,3.529,3.529,0,0,0,10.413,0Z"
+                    transform="translate(17.18) rotate(45)" fill="#2a5c96" />
+                </svg>
+
+                            </li>
+                            <li *ngIf="selectedDate && activeaddons && activeaddons[1].valor == true && selectedCabin?.esNRF" class="mb-1">
+                                <span *ngIf="(activeaddons[1] && activeaddons[1].valor == true) || (selectedCabin && selectedCabin.aeropuertoName && selectedCabin.aeropuertoName.trim() != '')" [innerHtml]="showHTML(activeaddons[1].descripcion)" class="pr-2"></span>
+
+
+
+                                <svg xmlns="http://www.w3.org/2000/svg" width="6.768" height="27.102" viewBox="0 0 6.768 27.102">
+                  <g transform="translate(0)">
+                    <path
+                      d="M142.684,41.914a3.387,3.387,0,1,0-2.395-.995A3.366,3.366,0,0,0,142.684,41.914Zm-1.163-4.553a1.634,1.634,0,0,1,2.325,0,1.651,1.651,0,0,1,0,2.331,1.634,1.634,0,0,1-2.325,0A1.651,1.651,0,0,1,141.521,37.361Z"
+                      transform="translate(-139.3 -14.812)" fill="#2a5c96" />
+                    <path
+                      d="M144.2,0h-2.314a1.733,1.733,0,0,0-1.735,1.735V17.354a1.733,1.733,0,0,0,1.735,1.735H144.2a1.733,1.733,0,0,0,1.735-1.735V1.735A1.733,1.733,0,0,0,144.2,0Zm0,17.354h-2.314V1.735H144.2Z"
+                      transform="translate(-139.658)" fill="#2a5c96" />
+                  </g>
+                </svg>
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+            <div class="flex flex-column " style="width: 20%;">
+
+                <div class="row align-items-center">
+                    <div class="col-6 col-sm-9" style="padding-top: 2.5rem;">
+
+                        <ul class="list-unstyled text-muted mb-3 text-nowrap">
+                            <li class="mb-2"><strong>{{screenLangInfo.lbl_Categoria}}</strong> {{GetCatTranslate()}}</li>
+                            <li class="mb-1" *ngIf="selectedCabin.deckCode && selectedCabin.cabinNumber && selectedCabin.deckCode!=''"><strong>{{screenLangInfo.lbl_Cubierta}}</strong>{{selectedCabin.deckCode}}</li>
+                            <li class="mb-1" *ngIf="selectedCabin.deckCode && selectedCabin.cabinNumber && selectedCabin.deckCode!=''"><strong>{{screenLangInfo.lbl_Camarote}}</strong>{{selectedCabin.cabinNumber}}</li>
+
+
+                            <li *ngIf="(selectedCabin && selectedCabin.aeropuertoName && selectedCabin.aeropuertoName.trim() != '')">
+
+                                <strong>{{screenLangInfo.lbl_cmb_AeropuertoTitle}}:</strong>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="31.905" height="31.905" viewBox="0 0 31.905 31.905">
+                  <path
+                    d="M10.413,1.735a1.792,1.792,0,0,1,1.157.578,2.856,2.856,0,0,1,.578,1.735V8.677l6.942,5.206v1.735l-7.52-2.892V19.09L14.462,21.4v1.157L10.413,21.4,6.363,22.561V21.4L9.256,19.09V12.726l-7.52,2.892V13.883L8.677,8.677V4.049a2.856,2.856,0,0,1,.578-1.735,1.792,1.792,0,0,1,1.157-.578m0-1.735A3.529,3.529,0,0,0,8.029,1.088,4.456,4.456,0,0,0,6.942,4.049v3.76L.694,12.5A1.734,1.734,0,0,0,0,13.883v1.735a1.738,1.738,0,0,0,1.735,1.735,1.808,1.808,0,0,0,.625-.116l5.16-1.99v3L5.281,20.044A1.733,1.733,0,0,0,4.628,21.4v1.157a1.745,1.745,0,0,0,.688,1.388,1.725,1.725,0,0,0,1.047.347,1.652,1.652,0,0,0,.474-.069l3.575-1.018,3.575,1.018a1.681,1.681,0,0,0,.474.069,1.776,1.776,0,0,0,1.047-.347,1.737,1.737,0,0,0,.688-1.388V21.4a1.722,1.722,0,0,0-.654-1.354l-2.239-1.8v-3l5.16,1.984a1.784,1.784,0,0,0,.625.116,1.738,1.738,0,0,0,1.735-1.735V13.878a1.734,1.734,0,0,0-.694-1.388l-6.248-4.68V4.049A4.465,4.465,0,0,0,12.8,1.088,3.529,3.529,0,0,0,10.413,0Z"
+                    transform="translate(17.18) rotate(45)" fill="#2a5c96" />
+                </svg> {{selectedCabin.aeropuertoName}}
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+
+
+            </div>
+            <div class="flex flex-column " style="width: 20%;">
+                <div class="row mt-0 mt-sm-0 align-items-center text-center justify-content-center">
+                    <div class="col-12 col-sm-12 order-0 order-sm-0 text-center">
+                        <img src="{{itinerary.urlImageMeduim}}" style="max-height: 80px; min-width: 50px;max-width: 180px;">
+                        <ng-template #popContent>
+                            <app-popover [screenLangInfo]="screenLangInfo"></app-popover>
+                        </ng-template>
+                        <ng-template #popoverTitle>
+                            <div class="popover-header p-1 text-center bg-white border-0">
+                                <div class="popover shadow p-2" role="tooltip">
+                                    <div class="arrow"></div>
+                                    <h3>
+                                    </h3>
+                                </div>
+                            </div>
+                        </ng-template>
+                        <button class="btn shadow-none" [ngbPopover]="popContent" popoverTitle="{{screenLangInfo.lbl_Compartir}}" placement="bottom" ngbTooltip="{{screenLangInfo.lbl_Compartir}}">
+              <svg xmlns="http://www.w3.org/2000/svg" width="23.276" height="23.876" viewBox="0 0 23.276 23.876">
+                <path
+                  d="M18.581,14.984a4.208,4.208,0,0,0-3.261,1.558l-7.061-3.53a4.082,4.082,0,0,0-.036-2.188l7.187-3.89A4.189,4.189,0,1,0,14.385,4.2a4.089,4.089,0,0,0,.168,1.157L7.366,9.242a4.2,4.2,0,1,0,.09,5.382l7.061,3.53a4.141,4.141,0,0,0-.132,1.025,4.2,4.2,0,1,0,4.2-4.2Zm0-13.186a2.4,2.4,0,1,1-2.4,2.4A2.4,2.4,0,0,1,18.581,1.8ZM4.2,14.385a2.4,2.4,0,1,1,2.4-2.4A2.4,2.4,0,0,1,4.2,14.385Zm14.385,7.192a2.4,2.4,0,1,1,2.4-2.4A2.4,2.4,0,0,1,18.581,21.577Z"
+                  transform="translate(0.25 0.25)" fill="#666" stroke="#666" stroke-width="0.5">
+                </path>
+              </svg>
+            </button>
+                    </div>
+                    <div *ngIf="preciofinal" class="col-12 col-sm-12 text-center pb-3 mt-3">
+                        <span *ngIf="reservation.mode != 'Online'" class="small">{{screenLangInfo.lbl_PorPersona}}</span>
+                        <span *ngIf="reservation.mode == 'Online'" class="small">{{xcabinaxpasajero}}</span>
+
+                        <h1 *ngIf="selectedDateCategoryData.posMoneda == 0" class="text-primary price mb-0 text-nowrap">
+                            {{selectedDateCategoryData.valorPrincipalString}} <span>{{selectedDateCategoryData.monedaP}}</span>
+                        </h1>
+                        <small *ngIf="selectedDateCategoryData.posMoneda == 0 && itinerary.mostrarMonedaLocal" class="text-primary text-nowrap">{{selectedDateCategoryData.valorLocalString}}
+              {{selectedDateCategoryData.monedaL}}</small>
+
+                        <h1 *ngIf="selectedDateCategoryData.posMoneda == 1" class="text-primary price mb-0 text-nowrap">
+                            <span>{{selectedDateCategoryData.monedaP}} </span>{{selectedDateCategoryData.valorPrincipalString}}
+                        </h1>
+                        <small *ngIf="selectedDateCategoryData.posMoneda == 1 && itinerary.mostrarMonedaLocal" class="text-primary text-nowrap">{{selectedDateCategoryData.monedaL}}
+              {{selectedDateCategoryData.valorLocalString}}</small>
+
+
+                    </div>
+
+
+                </div>
+            </div>
+
+        </div>
+        <div class="flex d-flex flex-row flex-nowrap bg-light w-100" style="margin: 0px !important;padding: 0px !important;">
+            <div style="width: 100%; margin-top: 0px !important;">
+                <div *ngIf="reservation.mode == 'Online'" class="flex d-flex flex-row mt-0 mt-sm-0 pr-10 pb-10 align-items-center w-100" style="margin-bottom:10px !important; padding-left: 50px !important; padding-right:60px !important;">
+                    <div class="flex d-flex flex-column justify-content-start align-items-start w-50">
+                        <a (click)="ShowSearch()" class="steps__header-button m-2 m-sm-0 btn btn-primary text-white text-uppercase font-weight-bold rounded-0 pr-3 pl-3 pr-sm-4 pl-sm-4">
+              {{screenLangInfo.lbl_button_Cambiar}}
+            </a>
+                        <!-- <a (click)="ShowPassengerDataReservation()"  
+                    class="steps__header-button d-block d-sm-none m-2 btn btn-primary text-white text-uppercase font-weight-bold rounded-0 pr-3 pl-3 pr-sm-4 pl-sm-4">
+                    {{screenLangInfo.lbl_button_Reservar}}
+                </a>-->
+                    </div>
+                    <div class="flex d-flex flex-column justify-content-end align-items-end mr-10 mb-10 w-50 disabled">
+                        <div *ngIf="enableProcess" class="d-flex justify-content-center">
+                            <a (click)="ShowPassengerQuote()" class="m-2 btn btn-primary text-white text-uppercase font-weight-bold rounded-0 pr-4 pl-4">
+                {{screenLangInfo.lbl_button_Cotizar}}
+              </a>
+
+                            <a *ngIf="reservation.mode == 'Online' && !soloCotizacionOnline && !!ValidateDiasValidosReserva()" data-toggle="modal" data-target="#modal_cabin_selection" class="m-2 btn btn-primary text-white text-uppercase font-weight-bold rounded-0 pr-4 pl-4" (click)="CabinChoice()">
+                {{screenLangInfo.lbl_button_Reservar}}
+              </a>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div *ngIf="reservation.mode == 'Offline'" class="flex d-flex flex-row mt-0 mt-sm-0 pr-10 pb-10 align-items-center w-100" style="margin-bottom:10px !important; padding-left: 50px !important; padding-right:130px !important;">
+                    <div class="flex d-flex flex-column justify-content-start align-items-start w-50">
+                        <a (click)="ShowSearch()" class="steps__header-button m-2 m-sm-0 btn btn-primary text-white text-uppercase font-weight-bold rounded-0 pr-3 pl-3 pr-sm-4 pl-sm-4">
+              {{screenLangInfo.lbl_button_Cambiar}}
+            </a>
+                        <!-- <a (click)="ShowPassengerDataReservation()"  
+                  class="steps__header-button d-block d-sm-none m-2 btn btn-primary text-white text-uppercase font-weight-bold rounded-0 pr-3 pl-3 pr-sm-4 pl-sm-4">
+                  {{screenLangInfo.lbl_button_Reservar}}
+              </a>-->
+                    </div>
+                    <div class="flex d-flex flex-column justify-content-end align-items-end mr-10 mb-10 w-50 disabled">
+                        <div class="d-flex justify-content-center">
+                            <a (click)="ShowPassengerQuote()" class="m-2 btn btn-primary text-white text-uppercase font-weight-bold rounded-0 pr-4 pl-4">
+                {{screenLangInfo.lbl_button_Cotizar}}
+              </a>
+
+                        </div>
+                    </div>
+
+
+                </div>
+                <nav *ngIf="reservation.mode == 'Online' && !loadingLabels && !errorLoadingLabels" class="nav nav-pills flex-row bg-secondary nav-pills--steps">
+                    <a class="flex-fill text-white rounded-0 text-center nav-link completed" style="cursor: pointer; " (click)="PassengersNumber()">
+                        <span class="angle"></span> {{screenLangInfo.lbl_tirillaNavegacion_Paso1}}
+                    </a>
+                    <a class="flex-fill text-white rounded-0 text-center nav-link active">
+                        <span class="angle"></span> {{screenLangInfo.lbl_tirillaNavegacion_Paso2}}
+                    </a>
+                    <a class="flex-fill text-white rounded-0 text-center nav-link disabled">
+                        <span class="angle"></span> {{screenLangInfo.lbl_tirillaNavegacion_Paso3}}
+                    </a>
+                </nav>
+                <nav *ngIf="reservation.mode == 'Offline' && !loadingLabels && !errorLoadingLabels" class="nav nav-pills flex-row bg-secondary nav-pills--steps">
+                    <a class="flex-fill text-white rounded-0 text-center nav-link active">
+                        <span class="angle"></span> {{screenLangInfo.lbl_tirillaNavegacion_Paso4}}
+                    </a>
+                    <a class="flex-fill text-white rounded-0 text-center nav-link disabled">
+                        <span class="angle"></span> {{screenLangInfo.lbl_tirillaNavegacion_Paso5}}
+                    </a>
+                </nav>
+            </div>
+        </div>
+    </header>
+    <!--<main class="container pt-2 pb-2 pt-sm-4 pt-sm-4">-->
+
+    <main *ngIf="loadingLabels==false && getScreenWidth > 991 && reservation.mode == 'Offline'" class="container pt-1 pb-5 px-2" style="padding-left:14px !important;margin-top:350px !important;z-index: 0px; position: relative; width: 100% !important;">
+        <!-- Selección de tarifa -->
+
+        <div *ngIf="!loadingLabels && !errorLoadingLabels">
+            <ul class="cruise__lists list-unstyled">
+                <!-- tarifa -->
+                <!--<li *ngFor="let rate of rateListReverse let i=index"
+          class="cruise__card expanded active pt-3 pb-4 border-bottom">-->
+                <!--Antes-->
+
+                <li *ngFor="let rate of orderBy(rateListReverse) let i=index" class="cruise__card expanded active pt-3 pb-4 border-bottom">
+
+                    <!--<app-rate-element  [screenLangInfo]="screenLangInfo" [rate]="rate" [InteriorInfo]="InteriorInfo"
+          [ExteriorInfo]="ExteriorInfo" [SuiteInfo]="SuiteInfo" [BalconInfo]="BalconInfo"  [bestRate]="i == 0 && existBR" 
+          [filterBR]="filterBR" (ChangeCategory)="ChangeCategory($event)">
+          </app-rate-element>-->
+
+
+                    <!--<app-rate-element [indice]="i" [disponible]="rate.disponible" [enableProcess]="enableProcess"
+            [screenLangInfo]="screenLangInfo" [rate]="rate.tarifa" [ratecomplete]="rate"
+            [InteriorInfo]="InteriorInfo[i]" [ExteriorInfo]="ExteriorInfo[i]" [SuiteInfo]="SuiteInfo[i]"
+            [BalconInfo]="BalconInfo[i]" [bestRate]="i == 0 && existBR" [filterBR]="filterBR"
+            (ChangeCategory)="ChangeCategory($event)" (TerminaCargar)="TerminaCargar($event)">
+          </app-rate-element>-->
+
+                    <app-rate-element [indice]="i" [disponible]="rate.disponible" [enableProcess]="enableProcess" [screenLangInfo]="screenLangInfo" [rate]="rate.tarifa" [ratecomplete]="rate" [filterBR]="filterBR" (ChangeCategory)="ChangeCategory($event)" (TerminaCargar)="TerminaCargar($event)"
+                        (EnableProcessFather)="EnableProcessFather($event)">
+                    </app-rate-element>
+                </li>
+                <!--// tarifa -->
+            </ul>
+        </div>
+    </main>
+
+
+    <main *ngIf="loadingLabels==false && getScreenWidth > 1036 && reservation.mode == 'Online'" class="container pt-1 pb-5 px-2" style="padding-left:14px !important;margin-top:350px !important;z-index: 0px; position: relative; width: 100% !important;">
+
+        <div *ngIf="!loadingLabels && !errorLoadingLabels">
+            <ul class="cruise__lists list-unstyled">
+
+                <li *ngFor="let rate of orderBy(rateListReverse) let i=index" class="cruise__card expanded active pt-3 pb-4 border-bottom">
+
+                    <app-rate-element [indice]="i" [disponible]="rate.disponible" [enableProcess]="enableProcess" [screenLangInfo]="screenLangInfo" [rate]="rate.tarifa" [ratecomplete]="rate" [filterBR]="filterBR" (ChangeCategory)="ChangeCategory($event)" (TerminaCargar)="TerminaCargar($event)"
+                        (EnableProcessFather)="EnableProcessFather($event)">
+                    </app-rate-element>
+
+                </li>
+                <!--// tarifa -->
+            </ul>
+        </div>
+    </main>
+
+    <main *ngIf="loadingLabels==false && getScreenWidth > 991 && getScreenWidth < 1037 && reservation.mode == 'Online'" class="container pt-1 pb-5 px-2" style="padding-left:14px !important;margin-top:330px !important;z-index: 0px; position: relative; width: 100% !important;">
+
+        <div *ngIf="!loadingLabels && !errorLoadingLabels">
+            <ul class="cruise__lists list-unstyled">
+
+                <li *ngFor="let rate of orderBy(rateListReverse) let i=index" class="cruise__card expanded active pt-3 pb-4 border-bottom">
+
+                    <app-rate-element [indice]="i" [disponible]="rate.disponible" [enableProcess]="enableProcess" [screenLangInfo]="screenLangInfo" [rate]="rate.tarifa" [ratecomplete]="rate" [filterBR]="filterBR" (ChangeCategory)="ChangeCategory($event)" (TerminaCargar)="TerminaCargar($event)"
+                        (EnableProcessFather)="EnableProcessFather($event)">
+                    </app-rate-element>
+
+                </li>
+                <!--// tarifa -->
+            </ul>
+        </div>
+    </main>
+</div>

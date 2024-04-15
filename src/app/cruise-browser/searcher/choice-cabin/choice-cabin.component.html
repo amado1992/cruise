@@ -1,0 +1,42 @@
+<div class="modal-content">
+  <div class="modal-header border-0 align-items-center">
+      <h5 class="modal-title text-primary m-auto border-bottom p-4 text-uppercase font-weight-bold">
+        {{screenInfo?.lbl_Title_Ventana}}
+      </h5>
+      <button type="button" class="close m-sm-0" data-dismiss="modal" aria-label="Close"  (click)="close()">
+          <span aria-hidden="true">&times;</span>
+      </button>
+  </div>
+  <div class="modal-body p-4">
+      <div class="row justify-content-around">
+          <div class="col-6 col-sm-5 text-center">
+              <div class="d-flex flex-column justify-content-between h-100">
+                  <div class="bg-secondary text-white text-uppercase font-weight-bold p-3 mb-4">
+                      {{screenInfo?.lbl_AsignarCamarote}}
+                  </div>
+                  <p class="h-100">
+                      {{screenInfo?.lbl_Msg_AsignarCamarote}}
+                  </p>
+                  <div>
+                      <a (click)="ShowReservationSummary()"
+                          class="btn btn-primary text-white text-uppercase font-weight-bold rounded-0 pr-3 pl-3 pr-sm-4 pl-sm-4">{{screenInfo?.lbl_button_Seleccionar}}</a>
+                  </div>
+              </div>
+          </div>
+          <div class="col-6 col-sm-5 text-center">
+              <div class="d-flex flex-column justify-content-between h-100">
+                  <div class="bg-secondary text-white text-uppercase font-weight-bold p-3 mb-4">
+                      {{screenInfo?.lbl_ElegirCamarote}}
+                  </div>
+                  <p class="h-100">
+                      {{screenInfo?.lbl_Msg_ElegirCamarote}}
+                  </p>
+                  <div>
+                      <a (click)="ShowStateroomChoice()"
+                          class="btn btn-primary text-white text-uppercase font-weight-bold rounded-0 pr-3 pl-3 pr-sm-4 pl-sm-4">{{screenInfo?.lbl_button_Seleccionar}}</a>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>

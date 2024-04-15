@@ -1,0 +1,123 @@
+<div class="modal-content" style="border: 0px !important;">
+    <div class="modal-header border-0 align-items-center">
+        <span class="text-primary font-weight-bold fs-22">{{selectedCabin.titulo}}
+
+      <ng-template #popContent>
+        <app-popover [screenLangInfo]="screenLangInfo"></app-popover>
+      </ng-template>
+      <ng-template #popoverTitle>
+        <div class="popover-header p-1 text-center bg-white border-0">
+          <div class="popover shadow p-2" role="tooltip">
+            <div class="arrow"></div>
+            <h3>
+            </h3>
+          </div>
+        </div>
+      </ng-template>
+    <button class="btn shadow-none" [ngbPopover]="popContent" popoverTitle="{{screenLangInfo.lbl_Compartir}}" placement="bottom"
+  ngbTooltip="{{screenLangInfo.lbl_Compartir}}">
+  <svg xmlns="http://www.w3.org/2000/svg" width="23.276" height="23.876" viewBox="0 0 23.276 23.876">
+  <path
+      d="M18.581,14.984a4.208,4.208,0,0,0-3.261,1.558l-7.061-3.53a4.082,4.082,0,0,0-.036-2.188l7.187-3.89A4.189,4.189,0,1,0,14.385,4.2a4.089,4.089,0,0,0,.168,1.157L7.366,9.242a4.2,4.2,0,1,0,.09,5.382l7.061,3.53a4.141,4.141,0,0,0-.132,1.025,4.2,4.2,0,1,0,4.2-4.2Zm0-13.186a2.4,2.4,0,1,1-2.4,2.4A2.4,2.4,0,0,1,18.581,1.8ZM4.2,14.385a2.4,2.4,0,1,1,2.4-2.4A2.4,2.4,0,0,1,4.2,14.385Zm14.385,7.192a2.4,2.4,0,1,1,2.4-2.4A2.4,2.4,0,0,1,18.581,21.577Z"
+      transform="translate(0.25 0.25)" fill="#666" stroke="#666" stroke-width="0.5">
+  </path>
+  </svg>
+  </button>
+  
+    </span>
+        <span class="spancer"></span>
+
+
+        <button type="button" class="close m-0" data-dismiss="modal" aria-label="Close" (click)="close()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    </div>
+    <div class="modal-body p-4">
+        <div class="col-12" style="height: 500px;">
+            <!-- <div class="row">
+        <div class="col-6  text-wrap">
+          <p class="fs-12">
+            {{selectedCabin.descripcion}}
+          </p>
+          <p class="fs-12">
+            {{screenLangInfo.lbl_TipoCabina}} ({{screenLangInfo.lbl_CategoriaTipoCabina}} {{selectedCabin.categoria}})
+          </p>
+          <p class="fs-12">
+            {{screenLangInfo.lbl_Cubierta}} {{selectedCabin.deckCode}}
+          </p>
+          <div class="row" style="margin-left: 0px;">
+            <span class="fs-12" style="margin-right: 5px;margin-top: 5px;">
+              {{screenLangInfo.lbl_ColorCabina}}
+            </span>
+            <div [ngStyle]="{'width': '100px','height': '25px', 'background-color': selectedCabin.color}"></div>
+          </div>
+        </div>
+        <div class="col-6">
+          <div *ngIf="selectedCabin && selectedCabin.deckProfileImg" style="margin-top: 16px;">
+            <img class="w-100 h-auto" src="{{selectedCabin.deckProfileImg.url}}">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-2"style="padding-left: 0px;padding-right: 0px;">
+          <div class="d-none d-md-flex" *ngIf="selectedCabin && selectedCabin.deckImg" id="samples" style="margin-top: 16px;">
+            <img id="zoom1" width="100px" height="250px" (mousemove)="zoomIn($event)" (mouseout)="zoomOut()"
+              src="{{selectedCabin.deckImg.url}}"
+              style="padding-left: 15px;padding-top: 15px;padding-bottom: 15px;padding-right: 15px;">
+          </div>
+        </div>
+        <div class="col-10"style="padding-left: 0px;padding-right: 0px;">
+          <div id="preview" (mousemove)="zoomIn($event)"
+            [ngStyle]="{'background-image':'url('+selectedCabin.deckImg.url+')', 'transform': 'rotate(-90deg) translateX(-10px) translateY(-70px)'}">
+          </div>
+        </div>
+      </div> -->
+            <div class="row  w-100 h-100">
+                <div class="col-sm-12 col-md-6 text-wrap">
+                    <div class="d-none d-md-block col-6" *ngIf="selectedCabin && selectedCabin.deckProfileImg" style="margin-bottom: 16px;">
+                        <img *ngIf="!plano" class="h-auto" src="{{selectedCabin.deckProfileImg.url}}">
+                        <img *ngIf="plano" class="h-auto" style="width: 250px !important;height: 200px !important;" src="{{selectedCabin.deckProfileImg.url}}">
+
+
+
+                    </div>
+                    <p class="fs-12">
+                        {{selectedCabin.descripcion}}
+                    </p>
+                    <p class="fs-12">
+                        {{screenLangInfo.lbl_TipoCabina}} ({{screenLangInfo.lbl_CategoriaTipoCabina}} {{selectedCabin.categoria}})
+                    </p>
+                    <p *ngIf="ModoReservacion=='Online' && !plano" class="fs-12">
+                        {{screenLangInfo.lbl_Cubierta}} {{selectedCabin.deckCode}}
+                    </p>
+                    <p *ngIf="ModoReservacion=='Online' && selectedCabin.cabinNumber !='' && !plano" class="fs-12">
+                        {{screenLangInfo.lbl_Camarote}} {{selectedCabin.cabinNumber}}
+                    </p>
+                    <div *ngIf="!plano" class="row" style="margin-left: 0px;">
+                        <span class="fs-12" style="margin-right: 5px;margin-top: 5px;">
+              {{screenLangInfo.lbl_ColorCabina}}
+            </span>
+                        <div [ngStyle]="{'width': '100px','height': '25px', 'background-color': selectedCabin.color}"></div>
+                    </div>
+                    <!-- <div class="row" style="margin-top: 30px;">
+            <div class="d-none d-md-block col-6" id="zoom"
+              [ngStyle]="{'background-image':'url('+selectedCabin.deckImg.url+')','transform': 'scale(1.5)', 'margin-top': '30px', 'margin-bottom': '30px' }">
+            </div> 
+          </div> -->
+                </div>
+                <div class="col-sm-12 col-md-6">
+                    <div id="preview" (mousemove)="zoomIn($event)" (mouseleave)="zoomOut()" (mouseenter)="zoomOut()" [ngStyle]="{'background-image':'url('+selectedCabin.deckImg.url+')'}">
+                    </div>
+                </div>
+
+                <!--<div *ngIf="plano" class="col-sm-12 col-md-6">
+          <div id="preview1" (mousemove)="zoomIn($event)" (mouseleave)="zoomOut()" (mouseenter)="zoomOut()"
+            [ngStyle]="{'background-image':'url(assets/images/plano.png)'}">
+            <div style="opacity:1 !important;color:black !important;position: absolute;top: 50%;left: 50%;transform: translate(-50%, -50%);"><b>{{screenLangInfo.lbl_CabinaNoDisponible}}</b></div>
+          
+          </div>
+        </div> -->
+            </div>
+        </div>
+    </div>
+</div>

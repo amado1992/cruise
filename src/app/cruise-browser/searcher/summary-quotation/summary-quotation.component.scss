@@ -1,0 +1,117 @@
+ul.sublist li {
+    font-size: 15px;
+}
+
+header.fixed {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 0px;
+    margin: 0px;
+    z-index: 10;
+  }
+  
+  html {
+    --top-spacing: 100px;
+    scroll-padding-top: var(--top-spacing);
+  }
+  
+  body {
+    margin: var(--top-spacing) auto;
+    
+    max-width: 400px;
+    padding: 0 20px;
+    font: 18px/1.4 system-ui;
+  }
+
+  .float{
+    position:fixed;
+    width:60px;
+    height:60px;
+    bottom:40px;
+    right:40px;
+    background-color:#fff;
+    color:#2a5c96;
+    border-radius:50px;
+    text-align:center;
+    box-shadow: 2px 2px 2px 3px #2a5c96;
+  }
+  
+  .my-float{
+    margin-top:10px;
+    width:40px;
+    height:40px;
+ 
+    
+  }
+
+  .my-float1{
+    margin-top:-8px;
+    width:40px;
+    height:40px;
+ 
+    
+  }
+  
+
+
+  .float1{
+    
+    width:100px;
+    height:60px;
+    background-color:#fff;
+    color:#2a5c96;
+    border-radius:50px;
+    text-align:center;
+    box-shadow: 2px 2px 2px 3px #2a5c96;
+  }
+
+
+  header.fixed[_ngcontent-c1].my_header {
+    position: absolute !important;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 0px;
+    margin: 0px;
+    z-index: 10;
+  }
+
+
+
+  //XS Extra small devices (portrait phones, less than 576px)
+  @media screen and (max-width: 576px){
+    .main_mobil {
+      margin-top: 10px !important
+    }
+  }
+
+  //Fin XS
+
+  //SM Small devices (landscape phones, less than 768px)
+  @media (min-width: 576px) and (max-width: 768px) { 
+    .main_mobil {
+      margin-top: 79px !important
+    }
+    
+  }
+  
+//MD Medium devices (tablets, 768px and up)
+@media (min-width: 768px) and (max-width: 992px) {
+  .main_mobil {
+    margin-top: 79px !important
+  }
+
+}
+
+// Large devices (desktops, 992px and up)
+@media (min-width: 992px) and (max-width: 1200px) { 
+
+
+}
+
+// Extra large devices (large desktops, 1200px and up)
+@media (min-width: 1200px) {
+
+}

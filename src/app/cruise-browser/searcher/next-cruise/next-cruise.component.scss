@@ -1,0 +1,43 @@
+ul.sublist li {
+    font-size: 15px;
+}
+
+.scrollbar
+{
+
+	overflow-y: hidden;
+
+}
+
+
+
+/*
+ *  STYLE 1
+ */
+
+ #stylebar::-webkit-scrollbar {
+  width: 7px;
+}
+
+/* Track */
+#stylebar::-webkit-scrollbar-track {
+  width: 7px;
+  background-color: rgba(0, 0, 0, 0);
+}
+
+/* Handle */
+#stylebar::-webkit-scrollbar-thumb {
+  background: #2a5c96;
+  border-radius: 3px;
+}
+
+/* Handle on hover */
+#stylebar::-webkit-scrollbar-thumb:hover {
+  background: #386fad;
+}
+
+ #stylebar{
+  scrollbar-color: #2a5c96;
+  scrollbar-width: thin;
+  border-radius: 3px;
+}

@@ -1,0 +1,11 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\src",
+    "\\src\\app",
+    "\\src\\app\\cruise-browser",
+    "\\src\\app\\services"
+  ],
+  "SelectedNode": "\\src\\app\\services\\resize.service.ts",
+  "PreviewInSolutionExplorer": false
+}

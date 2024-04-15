@@ -1,0 +1,16 @@
+{
+    "urlInitial": "http://sb-naveotest-services.istinfor.com/languaje/CruiseSearcher/",
+    "urlPrincipal": "http://sb-naveotest-services.istinfor.com/Principal/",
+    "urlBarcoItinerario": "http://sb-naveotest-services.istinfor.com/languaje/VerBarcoItinerario/",
+    "urlTarifaSelection": "http://sb-naveotest-services.istinfor.com/languaje/TarifaSelection/",
+    "urlresumen": "http://sb-naveotest-services.istinfor.com/Resumen/",
+
+
+    "_urlInitial": "http://sb-naveodevel-services.istinfor.com/languaje/CruiseSearcher/",
+    "_urlPrincipal": "http://sb-naveodevel-services.istinfor.com/Principal/",
+    "_urlBarcoItinerario": "http://sb-naveodevel-services.istinfor.com/languaje/VerBarcoItinerario/",
+    "_urlTarifaSelection": "http://sb-naveodevel-services.istinfor.com/languaje/TarifaSelection/",
+    "_urlresumen": "http://sb-naveodevel-services.istinfor.com/Resumen/",
+
+    "googleAnalyticsId": "G-LNJKJ6NJ23"
+}

@@ -1,0 +1,95 @@
+<div class="row mt-4 pt-4 border-top">
+  <div class="col-12 no-gutters mb-3 text-sm-left text-center">
+      <div class="row no-gutters justify-content-between align-items-center">
+          <div class="col-sm-8 order-2 order-sm-1">
+              <h1 class="text-primary text-uppercase font-weight-bold mb-0 fs-26">
+                {{screenLangInfo.lbl_Titulo_SeccionBarco}}
+              </h1>
+          </div>
+          <div class="col-sm-3 col-md-auto order-1 order-sm-2">
+            <img class="mb-4 mb-sm-0" src="{{itinerary.urlImageMeduim}}" style="max-height: 80px; min-width: 50px;">
+            <ng-template #popContent>
+                <app-popover [screenLangInfo]="screenLangInfo"></app-popover>
+              </ng-template>
+              <ng-template #popoverTitle>
+                <div class="popover-header p-1 text-center bg-white border-0">
+                  <div class="popover shadow p-2" role="tooltip">
+                    <div class="arrow"></div>
+                    <h3>
+                    </h3>
+                  </div>
+                </div>
+              </ng-template>
+    
+              <button class="btn shadow-none" [ngbPopover]="popContent" popoverTitle="{{screenLangInfo.lbl_Compartir}}" placement="bottom"
+              ngbTooltip="{{screenLangInfo.lbl_Compartir}}">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="23.276" height="23.876" viewBox="0 0 23.276 23.876">
+                      <path
+                          d="M18.581,14.984a4.208,4.208,0,0,0-3.261,1.558l-7.061-3.53a4.082,4.082,0,0,0-.036-2.188l7.187-3.89A4.189,4.189,0,1,0,14.385,4.2a4.089,4.089,0,0,0,.168,1.157L7.366,9.242a4.2,4.2,0,1,0,.09,5.382l7.061,3.53a4.141,4.141,0,0,0-.132,1.025,4.2,4.2,0,1,0,4.2-4.2Zm0-13.186a2.4,2.4,0,1,1-2.4,2.4A2.4,2.4,0,0,1,18.581,1.8ZM4.2,14.385a2.4,2.4,0,1,1,2.4-2.4A2.4,2.4,0,0,1,4.2,14.385Zm14.385,7.192a2.4,2.4,0,1,1,2.4-2.4A2.4,2.4,0,0,1,18.581,21.577Z"
+                          transform="translate(0.25 0.25)" fill="#666" stroke="#666" stroke-width="0.5">
+                      </path>
+                  </svg>
+              </button>
+          </div>
+      </div>
+  </div>
+
+  <div class="col-sm-4">
+      <img src="{{urlShip}}" alt="" class="img-fluid mb-3 w-100">
+  </div>
+  <div class="col-sm-3">
+      <h3 class="text-primary font-weight-bold fs-22">{{itinerary.destino}}</h3>
+      <ul class="list-unstyled fs-14 mb-4 mb-sm-2 sublist">
+          <li>
+              <strong>{{screenLangInfo.lbl_Salida}}</strong> {{selectedDate.dateOut.dia}}
+              {{selectedDate.dateOut.mes}} {{selectedDate.dateOut.anno}}
+          </li>
+          <li>
+              <strong>{{screenLangInfo.lbl_Duracion}}</strong> {{itinerary.nnoches}} {{screenLangInfo.lbl_Noches}}
+          </li>
+          <li>
+              <strong>{{screenLangInfo.lbl_Barco}}</strong>  {{itinerary.shipName}}
+          </li>
+          <li>
+              <strong>{{screenLangInfo.lbl_PasajeroSeccionBarco}}</strong> {{reservation.pasajeros.length}}
+          </li>
+          <li *ngIf="(selectedCabin && selectedCabin.aeropuertoName && selectedCabin.aeropuertoName.trim() != '')">
+            <strong>{{screenLangInfo.lbl_cmb_AeropuertoTitle}}:</strong>
+             {{selectedCabin.aeropuertoName}}
+        </li>
+      </ul>
+      <!-- <p class="fs-12 d-none d-sm-inline-block">
+          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eius perferendis inventore repudiandae.
+      </p> -->
+  </div>
+  <div id="stylebar" class="col-sm-5 scrollbar" style="max-height: 300px; position: relative;" [ngStyle]="{'overflow-y': showScroll == true ? 'scroll' : 'hidden' }">
+    <!--<button (click)="showScrollBar()" *ngIf="showArrow"   style="border-radius: 50%; width: 30px;height: 30px; position: absolute;bottom: 5px;right: 5px; background-color: transparent;border: 1px solid #2a5c96;color:#2a5c96;" >
+        <svg style="position: absolute; top: 10%; left:10%;" xmlns="http://www.w3.org/2000/svg" width="80%" height="80%" fill="currentColor" class="bi bi-arrow-down" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1z"/>
+          </svg>
+        </button>-->
+      <table class="table fs-12">
+          <thead class="text-primary">
+              <tr>
+                  <th scope="col">{{screenLangInfo.lbl_TbItinerario_Dia}}</th>
+                  <th scope="col">{{screenLangInfo.lbl_TbItinerario_Fecha}}</th>
+                  <th scope="col">{{screenLangInfo.lbl_TbItinerario_Puerto}}</th>
+                  <th scope="col">{{screenLangInfo.lbl_TbItinerario_Llegada}}</th>
+                  <th scope="col">{{screenLangInfo.lbl_TbItinerario_Salida}}</th>
+              </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let dia of selectedDate.recorrido; let i=index">
+                <th scope="row">{{i + 1}}</th>
+                <td class="text-nowrap">{{dia.diaActividadString}}</td>
+                <td>{{dia.nombre}}</td>
+                <td>{{dia.horaLlegada}}</td>
+                <td>{{dia.horaSalida}}</td>
+              </tr>
+          </tbody>
+      </table>
+      <!-- <p class="fs-12 d-sm-none d-inline-block">
+          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eius perferendis inventore repudiandae.
+      </p> -->
+  </div>
+</div>

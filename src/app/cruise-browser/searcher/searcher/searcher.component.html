@@ -1,0 +1,1287 @@
+<!--Para mobil o celular-->
+<header *ngIf="getScreenWidth < 768" class="hero fixed" style="position: absolute !important;">
+    <!-- <div *ngIf="!loadingLabels && !errorLoadingLabels" class="hero__message">
+    <h1>Lorem ipsum dolor</h1>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+  </div> -->
+
+    <!-- <div [ngClass]="(loadingData || loadingLabels) ? 'row-12 text-center w-100': 'row-12 text-center w-100 d-none'" style="margin: auto;">
+     <div class="spinner-border text-primary">
+
+    </div>
+    <img src="./assets/images/cargando.gif" style="width: 200px; height: 120px;">
+  </div> -->
+
+    <div *ngIf="!loadingLabels && !errorLoadingLabels" class="cruise_search" style="position: relative; background: white !important; padding: 0px !important;">
+
+        <div class="searcher__container" style="background-color: #ebebeb;
+    margin-top: 0px;
+    margin-bottom: 15px;">
+
+            <!--<div class="powered-by mb-1 d-lg-inline-block text-white text-center text-md-left">-->
+            <!--<div class="powered-by mb-1 d-lg-inline-block text-center text-md-left fs-12">
+
+        {{screenLangInfo.lbl_Poweredby}}
+        <img class="d-inline-block" src="./assets/images/logo-blue.png" style="max-height: 30px;">
+      </div>-->
+
+            <!--Responsive css-->
+            <!--<div *ngFor="let s of sizes" class="{{s.css + ' ' + (prefix + s.id) }}">{{s.name}}</div>-->
+            <!--Fin responsive css-->
+
+            <div class="searcher__flex container">
+                <!--<div class="searcher__button custom-reset">
+          <div class="row">
+            <div class="col">
+              <button class="btn btn-block btn-primary rounded-0 h-50" [disabled]="disabled()"
+                style="padding-top: 0px;padding-bottom: 0px;border-top-width: 0px;border-bottom-width: 0px;"
+                (click)="ResetCombos()" placement="bottom" ngbTooltip="{{screenLangInfo.lbl_tooltips_Reset}}">
+                <svg xmlns="http://www.w3.org/2000/svg" width="28.659" height="25" viewBox="0 0 36 37.5">
+                  <path
+                    d="M35.56,15.6l-2.62,2.62c0,.42.06.85.06,1.28a15,15,0,1,1-15-15,13.43,13.43,0,0,1,9,2.92L22.79,8A1.5,1.5,0,0,0,23,11h.21l7-1a1.52,1.52,0,0,0,1.28-1.7l-1-7a1.5,1.5,0,0,0-3,.42l.41,2.87A16,16,0,0,0,18,1.5,18.06,18.06,0,1,0,35.56,15.6Z"
+                    fill="#fff" />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>-->
+
+                <!-- destination -->
+                <div class="searcher__item searcher__item_custom">
+                    <div class="choices__list py-1 bg-white pr-4" type="button" data-toggle="dropdown" data-display="static" aria-haspopup="true" aria-expanded="false">
+                        <div class="choices__list--icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="15.705" height="20.217" viewBox="0 0 20.705 25.217">
+                <g transform="translate(0.2 0.2)">
+                  <path
+                    d="M65.753,6.84A10.417,10.417,0,0,0,55.6,16.993a11.28,11.28,0,0,0,1.325,4.687c.023.045.051.1.079.141,6.142,9.837,7.97,9.837,8.748,9.837,1.218,0,2.532-.857,5.663-5.229,1.63-2.279,3.029-4.518,3.085-4.614.028-.045.051-.09.079-.135A11.28,11.28,0,0,0,75.9,16.992,10.417,10.417,0,0,0,65.753,6.84Zm7.315,14.084s-5.629,9.041-7.315,9.041c-1.67,0-7.315-9.041-7.315-9.041a9.658,9.658,0,0,1-1.145-3.931,8.46,8.46,0,1,1,16.921,0A9.659,9.659,0,0,1,73.068,20.924Z"
+                    transform="translate(-55.6 -6.84)" fill="#166ab3" stroke="#176ab3" stroke-width="0.4" />
+                  <path
+                    d="M70.112,15.84a4.512,4.512,0,1,0,4.512,4.512A4.518,4.518,0,0,0,70.112,15.84Zm0,7.332a2.82,2.82,0,1,1,2.82-2.82A2.821,2.821,0,0,1,70.112,23.172Z"
+                    transform="translate(-59.96 -10.764)" fill="#166ab3" stroke="#176ab3" stroke-width="0.4" />
+                </g>
+              </svg>
+                        </div>
+                        <div class="choices__list--input">
+                            <p class="input-label">{{screenLangInfo.lbl_combo_Destino}}</p>
+                        </div>
+                        <div ngbDropdown class="d-block custom-dropdown" #dropDestCombo="ngbDropdown" (openChange)="navHaveChange?dropDestCombo.close(): null">
+                            <button class="btn btn-inline text-truncate w-100" id="dropdownDest" ngbDropdownToggle [disabled]="disabled()" style="padding-top: 0px;padding-bottom: 0px;border-top-width: 0px;border-bottom-width: 0px; text-align: left;   max-width: 150px;">{{dropDest}}</button>
+                            <div ngbDropdownMenu aria-labelledby="dropdownDest" style="padding-right: 10px;  overflow-y: auto; max-height: 250px; width: 250px;">
+                                <div *ngIf="!disabled()" style="padding-left: 10px;">
+                                    <div *ngFor="let destino of filtersInfo.destinos;let i=index">
+                                        <label *ngIf="!destino.hijos || destino.hijos.length == 0" (click)="changeDest(destino);" style="padding-left: 15px; cursor: pointer;">
+                      {{ destino.descripcion }}</label>
+                                        <div *ngIf="destino.hijos && destino.hijos.length > 0" style="padding-left: 0px; margin-bottom: 8px;" (click)="onSelect(i); $event.stopPropagation(); dropDestCombo.open();">
+                                            <label *ngIf="selectionDest[i]" style="cursor: pointer; ">
+                        - {{ destino.descripcion }}
+                      </label>
+                                            <label *ngIf="!selectionDest[i]" style="cursor: pointer; ">
+                        + {{ destino.descripcion }}
+                      </label>
+                                            <div class="col" *ngIf="selectionDest[i]" style="cursor: pointer; ">
+                                                <div class="row" style="padding-left: 30px;" *ngFor="let hijo of destino.hijos">
+                                                    <label (click)="changeDest(hijo); $event.stopPropagation(); dropDestCombo.close();" style="cursor: pointer; ">
+                            {{ hijo.descripcion }}</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- date -->
+                <div class="searcher__item searcher__item_custom" *ngIf="getScreenWidth < 768">
+                    <div class="choices__list py-1 bg-white pr-4" type="button" data-toggle="datepicker">
+                        <div class="choices__list--icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20.527" height="20.527" viewBox="0 0 25.527 25.527">
+                <g transform="translate(0.2 0.2)">
+                  <path
+                    d="M186.949,9.7h-1.286V8.416a.846.846,0,1,0-1.692,0V9.7h-4.7V8.416a.846.846,0,1,0-1.692,0V9.7h-4.7V8.416a.846.846,0,0,0-1.692,0V9.7H169.9a4.051,4.051,0,0,0-4.044,4.044V28.653A4.051,4.051,0,0,0,169.9,32.7h17.045a4.046,4.046,0,0,0,4.038-4.044V13.74A4.046,4.046,0,0,0,186.949,9.7ZM189.3,28.653a2.353,2.353,0,0,1-2.346,2.352H169.9a2.354,2.354,0,0,1-2.352-2.352V17.785H189.3Zm0-12.561H167.552V13.74a2.354,2.354,0,0,1,2.352-2.352h1.286v1.286a.846.846,0,0,0,1.692,0V11.388h4.7v1.286a.846.846,0,1,0,1.692,0V11.388h4.7v1.286a.846.846,0,1,0,1.692,0V11.388h1.286A2.353,2.353,0,0,1,189.3,13.74Z"
+                    transform="translate(-165.86 -7.57)" fill="#166ab3" stroke="#176ab3" stroke-width="0.4" />
+                  <g transform="translate(4.264 13.847)">
+                    <path
+                      d="M177.238,32.966a.845.845,0,0,1-.846.846h-2.126a.846.846,0,1,1,0-1.692h2.126A.845.845,0,0,1,177.238,32.966Z"
+                      transform="translate(-173.42 -32.12)" fill="#166ab3" stroke="#176ab3" stroke-width="0.4" />
+                  </g>
+                  <g transform="translate(10.654 13.847)">
+                    <path
+                      d="M188.574,32.966a.849.849,0,0,1-.846.846H185.6a.846.846,0,0,1,0-1.692h2.132A.849.849,0,0,1,188.574,32.966Z"
+                      transform="translate(-184.75 -32.12)" fill="#166ab3" stroke="#176ab3" stroke-width="0.4" />
+                  </g>
+                  <g transform="translate(17.045 13.847)">
+                    <path
+                      d="M199.9,32.966a.845.845,0,0,1-.846.846h-2.132a.846.846,0,0,1,0-1.692h2.132A.845.845,0,0,1,199.9,32.966Z"
+                      transform="translate(-196.08 -32.12)" fill="#166ab3" stroke="#176ab3" stroke-width="0.4" />
+                  </g>
+                  <g transform="translate(4.264 18.105)">
+                    <path
+                      d="M177.238,40.516a.845.845,0,0,1-.846.846h-2.126a.846.846,0,1,1,0-1.692h2.126A.849.849,0,0,1,177.238,40.516Z"
+                      transform="translate(-173.42 -39.67)" fill="#166ab3" stroke="#176ab3" stroke-width="0.4" />
+                  </g>
+                  <g transform="translate(10.654 18.105)">
+                    <path
+                      d="M188.574,40.516a.849.849,0,0,1-.846.846H185.6a.846.846,0,0,1,0-1.692h2.132A.852.852,0,0,1,188.574,40.516Z"
+                      transform="translate(-184.75 -39.67)" fill="#166ab3" stroke="#176ab3" stroke-width="0.4" />
+                  </g>
+                  <g transform="translate(17.045 18.105)">
+                    <path
+                      d="M199.9,40.516a.845.845,0,0,1-.846.846h-2.132a.846.846,0,0,1,0-1.692h2.132A.849.849,0,0,1,199.9,40.516Z"
+                      transform="translate(-196.08 -39.67)" fill="#166ab3" stroke="#176ab3" stroke-width="0.4" />
+                  </g>
+                </g>
+              </svg>
+                        </div>
+                        <div class="choices__list--input">
+                            <p class="input-label">{{screenLangInfo.lbl_combo_Fecha}}</p>
+                        </div>
+                        <div ngbDropdown class="d-block custom-dropdown" #dropDateCombo="ngbDropdown" (openChange)="navHaveChange?dropDateCombo.close(): null">
+                            <button class="btn btn-inline text-truncate w-100" id="dropdownDate" ngbDropdownToggle [disabled]="disabled()" style="padding-top: 0px;padding-bottom: 0px;border-top-width: 0px;border-bottom-width: 0px; text-align: left;   max-width: 150px;">{{dropDate}}</button>
+                            <div ngbDropdownMenu aria-labelledby="dropdownDate" style="padding-right: 10px;  overflow-y: auto; max-height: 250px;">
+                                <ul *ngIf="!disabled()" style="padding-left: 20px;">
+                                    <div *ngFor="let fecha of filtersInfo.fechas">
+                                        <label (click)="changeDate(fecha)" style="cursor: pointer; ">{{ fecha.descripcion }}</label>
+                                    </div>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- maritime line -->
+                <div class="searcher__item searcher__item_custom" *ngIf="getScreenWidth < 768">
+                    <div class="choices__list py-1 bg-white pr-4" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <div class="choices__list--icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="21.151" height="21.274" viewBox="0 0 26.151 26.274">
+                <g transform="translate(0.311 0.253)">
+                  <g transform="translate(-0.003 -0.002)">
+                    <path
+                      d="M25.3,23.7a3.677,3.677,0,0,0-4.385,0,1.709,1.709,0,0,1-.54.287l2-4.992c0-.006.006-.011.006-.017s.006-.011.006-.017l1.287-3.216a.767.767,0,0,0-.011-.59.777.777,0,0,0-.439-.4l-3.216-1.169V8.027a2.621,2.621,0,0,0-2.62-2.614h-2.03V1.522a.753.753,0,0,0-.219-.534,3.39,3.39,0,0,0-4.79,0,.735.735,0,0,0-.225.534v3.89H8.1A2.621,2.621,0,0,0,5.48,8.027v5.554L2.264,14.751a.766.766,0,0,0-.433.4.743.743,0,0,0-.011.59l1.293,3.233L5.1,23.948A1.6,1.6,0,0,1,4.67,23.7a3.685,3.685,0,0,0-4.391,0,.76.76,0,1,0,.95,1.186,2.173,2.173,0,0,1,2.491,0,3.533,3.533,0,0,0,2.193.725,3.538,3.538,0,0,0,2.2-.725,2.173,2.173,0,0,1,2.491,0,3.677,3.677,0,0,0,4.385,0,2.183,2.183,0,0,1,2.491,0,3.685,3.685,0,0,0,4.391,0,2.173,2.173,0,0,1,2.491,0A.758.758,0,0,0,25.3,23.7ZM11.647,1.871a1.864,1.864,0,0,1,2.2,0V5.413h-2.2ZM7,8.027a1.1,1.1,0,0,1,1.1-1.1h9.293a1.1,1.1,0,0,1,1.1,1.1v5l-5.487-2H13a.236.236,0,0,0-.084-.022.575.575,0,0,0-.337,0,.236.236,0,0,0-.084.022h-.006L7,13.03v-5Zm-3.48,7.882,9.231-3.351,9.226,3.351-.736,1.844-8.23-3c-.006,0-.017-.006-.022-.006-.028-.011-.062-.017-.1-.028h-.034a.717.717,0,0,0-.219,0,.874.874,0,0,0-.129.028.021.021,0,0,1-.017.006l-8.236,3Zm15.258,8.006a1.651,1.651,0,0,1-.349-.214,3.685,3.685,0,0,0-4.391,0,2.173,2.173,0,0,1-2.491,0,3.677,3.677,0,0,0-4.385,0,1.6,1.6,0,0,1-.427.247L4.822,19.164l7.927-2.89,7.927,2.89Z"
+                      transform="translate(0.003 0.002)" fill="#166ab3" stroke="#166ab3" stroke-width="0.5" />
+                  </g>
+                  <g transform="translate(8.274 8.201)">
+                    <path d="M22.911,16.108H15.479a.759.759,0,1,1,0-1.518h7.438a.759.759,0,1,1-.006,1.518Z"
+                      transform="translate(-14.72 -14.59)" fill="#166ab3" stroke="#166ab3" stroke-width="0.5" />
+                  </g>
+                </g>
+              </svg>
+                        </div>
+                        <div class="choices__list--input">
+                            <p class="input-label">{{screenLangInfo.lbl_combo_Compania}}</p>
+                        </div>
+                        <div ngbDropdown class="d-block custom-dropdown" #dropNavCombo="ngbDropdown">
+                            <button class="btn btn-inline text-truncate w-100" id="dropdownNav" ngbDropdownToggle [disabled]="disabled()" style="padding-top: 0px;padding-bottom: 0px;border-top-width: 0px;border-bottom-width: 0px; text-align: left;   max-width: 150px;">{{dropNav}}</button>
+                            <div ngbDropdownMenu aria-labelledby="dropdownNav" (clickOutside)="clickOutsideMenu()" style="padding-right: 10px;  overflow-y: auto; max-height: 250px; width: 250px;">
+                                <ul *ngIf="!disabled()" style="padding-left: 20px;">
+                                    <div *ngFor="let compania of filtersInfo.companias">
+                                        <label style="cursor: pointer; ">
+                      <input type="checkbox" [checked]="isCheckNav(compania)"
+                        (change)="onCheckNav($event, compania); $event.stopPropagation(); dropNavCombo.open();"
+                        style="margin-right: 5px; cursor: pointer; " />
+                      <img src={{compania.image}} class="img-fluid">
+                      {{ compania.descripcion }}
+                    </label>
+                                    </div>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- port -->
+                <div class="searcher__item searcher__item_custom" *ngIf="getScreenWidth < 768">
+                    <div class="choices__list py-1 bg-white pr-4" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <div class="choices__list--icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="22.349" height="19.095" viewBox="0 0 27.349 24.095">
+                <g transform="translate(0.2 0.2)">
+                  <path
+                    d="M132.5,17.329h-3.3a.846.846,0,1,0,0,1.692h.852a10.175,10.175,0,0,1-9.273,9.278V14.531a4.146,4.146,0,1,0-1.692,0V28.3a10.185,10.185,0,0,1-9.278-9.278h.739a.846.846,0,0,0,0-1.692h-3.305a.846.846,0,1,0,0,1.692h.874a11.843,11.843,0,0,0,23.627,0h.756a.846.846,0,0,0,0-1.692Zm-15.02-6.853a2.454,2.454,0,1,1,2.454,2.454A2.455,2.455,0,0,1,117.483,10.476Z"
+                    transform="translate(-106.4 -6.33)" fill="#166ab3" stroke="#176ab3" stroke-width="0.4" />
+                </g>
+              </svg>
+            </div>
+            <div class="choices__list--input">
+              <p class="input-label">{{screenLangInfo.lbl_combo_Puerto}}</p>
+            </div>
+            <div ngbDropdown class="d-block custom-dropdown" #dropPortCombo="ngbDropdown"
+              (openChange)="navHaveChange?dropPortCombo.close(): null">
+              <button class="btn btn-inline text-truncate w-100" id="dropdownPort" ngbDropdownToggle
+                [disabled]="disabled()"
+                style="padding-top: 0px;padding-bottom: 0px;border-top-width: 0px;border-bottom-width: 0px; text-align: left;   max-width: 150px;">{{dropPort}}</button>
+              <div ngbDropdownMenu aria-labelledby="dropdownPort"
+                style="padding-right: 10px;  overflow-y: auto; max-height: 250px;">
+                <ul *ngIf="!disabled()" style="padding-left: 20px;">
+                  <div *ngFor="let puerto of filtersInfo.puertos">
+                    <label (click)="changePort(puerto)" style="cursor: pointer; ">{{ puerto.descripcion }}</label>
+                  </div>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+                <!-- boat -->
+                <div *ngIf="showAdvSearch" class="searcher__item searcher__item_custom">
+                    <div class="choices__list py-1 bg-white pr-4" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <div class="choices__list--icon">
+                            <svg xmlns='http://www.w3.org/2000/svg' width='24.072' height='20.366' viewBox='0 0 24.072 25.366'>
+                <path
+                  d='M2.894,18.049H8.215a1.8,1.8,0,0,0,1.794-1.794V7.384A1.792,1.792,0,0,0,8.693,5.656a1.918,1.918,0,0,0-.478-.066,1.8,1.8,0,0,0-1.536.873L1.357,15.335a1.791,1.791,0,0,0,1.536,2.714ZM8.215,7.336v8.92H2.894Z'
+                  transform='translate(-0.446 -2.248)' fill="#166ab3" />
+                <path
+                  d='M23.9,18.007A1.8,1.8,0,0,0,22.284,17H12.557V15.8h7.772a1.8,1.8,0,0,0,1.572-.933,1.782,1.782,0,0,0-.06-1.823L14.07.831A1.792,1.792,0,0,0,12.557,0a1.82,1.82,0,0,0-.5.072,1.8,1.8,0,0,0-.963.688.908.908,0,0,0-.329.693V17H1.8a1.78,1.78,0,0,0-1.6.992,1.8,1.8,0,0,0,.167,1.877l3.587,4.783a1.792,1.792,0,0,0,1.435.717H18.535a1.787,1.787,0,0,0,1.411-.688L23.695,19.9A1.79,1.79,0,0,0,23.9,18.007ZM12.557,2.051V1.919L20.329,14H12.557Zm5.978,21.522H5.383L1.8,18.79h20.41Z'
+                  transform='translate(-0.006)' fill="#166ab3" />
+              </svg>
+                        </div>
+                        <div class="choices__list--input">
+                            <p class="input-label">{{screenLangInfo.lbl_combo_Barco}}</p>
+                        </div>
+                        <div ngbDropdown class="d-block custom-dropdown" #dropBoatCombo="ngbDropdown" (openChange)="navHaveChange?dropBoatCombo.close(): null">
+                            <button class="btn btn-inline text-truncate w-100" id="dropdownBoat" ngbDropdownToggle [disabled]="disabled()" style="padding-top: 0px;padding-bottom: 0px;border-top-width: 0px;border-bottom-width: 0px; text-align: left;   max-width: 150px;">{{dropBoat}}</button>
+                            <div ngbDropdownMenu aria-labelledby="dropdownBoat" style="padding-right: 10px;  overflow-y: auto; max-height: 250px; width: 250px;">
+                                <ul *ngIf="!disabled()" style="padding-left: 20px;">
+                                    <div *ngFor="let barco of filtersInfo.barcos">
+                                        <label (click)="changeBoat(barco)" style="cursor: pointer; ">{{ barco.descripcion }}</label>
+                                    </div>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- duration -->
+                <div *ngIf="showAdvSearch" class="searcher__item searcher__item_custom">
+                    <div class="choices__list py-1 bg-white pr-4" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <div class="choices__list--icon">
+                            <svg xmlns='http://www.w3.org/2000/svg' width='27.247' height='20.305' viewBox='0 0 27.247 26.305'>
+                <path
+                  d='M13.724,49.59a13.161,13.161,0,1,0,0,26.3,13.161,13.161,0,1,0,0-26.3Zm0,24.511a11.366,11.366,0,1,1,0-22.718,11.366,11.366,0,1,1,0,22.718Z'
+                  transform='translate(-0.1 -49.59)' fill="#166ab3" />
+                <path d='M27.531,65.563H21.958V58.987a.929.929,0,0,0-1.858,0v8.37h7.431a.9.9,0,1,0,0-1.794Z'
+                  transform='translate(-7.715 -53.008)' fill="#166ab3" />
+              </svg>
+                        </div>
+                        <div class="choices__list--input">
+                            <p class="input-label">{{screenLangInfo.lbl_combo_Duracion}}</p>
+                        </div>
+                        <div ngbDropdown class="d-block custom-dropdown" #dropDaysCombo="ngbDropdown" (openChange)="navHaveChange?dropDaysCombo.close(): null">
+                            <button class="btn btn-inline text-truncate w-100" id="dropdownDays" ngbDropdownToggle [disabled]="disabled()" style="padding-top: 0px;padding-bottom: 0px;border-top-width: 0px;border-bottom-width: 0px; text-align: left;   max-width: 150px;">{{dropDays}}</button>
+                            <div ngbDropdownMenu aria-labelledby="dropdownDays" style="padding-right: 10px;  overflow-y: auto; max-height: 250px;">
+                                <ul *ngIf="!disabled()" style="padding-left: 20px;">
+                                    <div *ngFor="let duracion of filtersInfo.duraciones">
+                                        <label (click)="changeDays(duracion)" style="cursor: pointer; ">{{ duracion.descripcion }}</label>
+                                    </div>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--<div class="searcher__button search_avance" style="padding-left: 59px;">
+          <a style="font-size: 14px; display: ruby;"
+            class="d-sm-block font-weight-light font-size-13 text-white text-wrap pb-1" (click)="changeAdvanceSearch()">
+            <u *ngIf="showAdvSearch" style="cursor: pointer; color: #2a5c96;">{{screenLangInfo.lbl_BusquedaSimple}}</u>
+            <u *ngIf="!showAdvSearch"
+              style="cursor: pointer; color: #2a5c96;">{{screenLangInfo.lbl_button_BusquedaAvanzada}}</u>
+          </a>
+          <button [disabled]="disabled()" (click)="SearchItineraryCopy(true)" class="btn btn-block btn-primary h-100"
+            ngbTooltip="{{showAdvSearch ? screenLangInfo.lbl_button_BusquedaAvanzada : screenLangInfo.lbl_BusquedaSimple}}">
+            <svg xmlns="http://www.w3.org/2000/svg" width="28.659" height="30.621" viewBox="0 0 18.659 19.621">
+              <path
+                d="M18.446,18.388,14,13.939a8.235,8.235,0,1,0-1.107.934l4.536,4.536a.721.721,0,0,0,1.021,0A.718.718,0,0,0,18.446,18.388ZM8.185,14.926a6.741,6.741,0,1,1,6.741-6.741A6.742,6.742,0,0,1,8.185,14.926Z"
+                fill="#fff" />
+            </svg>
+            <span class="d-inline-block d-sm-none font-weight-bold">{{screenLangInfoBuscarCrucero}}</span>
+          </button>
+
+        </div>-->
+
+                <div class="searcher__button search_avance" style="padding-left: 16px;">
+                    <div class="mr-auto">
+                        <a style="font-size: 14px; display: ruby;" class="d-sm-block font-weight-light font-size-13 text-white text-wrap pb-1" (click)="changeAdvanceSearch()">
+                            <u *ngIf="showAdvSearch" style="cursor: pointer; color: #2a5c96;">{{screenLangInfo.lbl_BusquedaSimple}}</u>
+                            <u *ngIf="!showAdvSearch" style="cursor: pointer; color: #2a5c96;">{{screenLangInfo.lbl_button_BusquedaAvanzada}}</u>
+                        </a>
+                    </div>
+
+                    <div class="px-2">
+                        <button class="btn btn-block btn-primary h-100" [disabled]="disabled()" (click)="ResetCombos()" placement="bottom" ngbTooltip="{{screenLangInfo.lbl_tooltips_Reset}}">
+          <svg xmlns="http://www.w3.org/2000/svg" width="28.659" height="25" viewBox="0 0 36 37.5">
+            <path
+              d="M35.56,15.6l-2.62,2.62c0,.42.06.85.06,1.28a15,15,0,1,1-15-15,13.43,13.43,0,0,1,9,2.92L22.79,8A1.5,1.5,0,0,0,23,11h.21l7-1a1.52,1.52,0,0,0,1.28-1.7l-1-7a1.5,1.5,0,0,0-3,.42l.41,2.87A16,16,0,0,0,18,1.5,18.06,18.06,0,1,0,35.56,15.6Z"
+              fill="#fff" />
+          </svg>
+        </button>
+                    </div>
+                    <div style="width: 40%;">
+                        <button [disabled]="disabled()" (click)="SearchItineraryCopy(true)" class="btn btn-block btn-primary h-100" ngbTooltip="{{showAdvSearch ? screenLangInfo.lbl_button_BusquedaAvanzada : screenLangInfo.lbl_BusquedaSimple}}">
+            <svg xmlns="http://www.w3.org/2000/svg" width="28.659" height="30.621" viewBox="0 0 18.659 19.621">
+              <path
+                d="M18.446,18.388,14,13.939a8.235,8.235,0,1,0-1.107.934l4.536,4.536a.721.721,0,0,0,1.021,0A.718.718,0,0,0,18.446,18.388ZM8.185,14.926a6.741,6.741,0,1,1,6.741-6.741A6.742,6.742,0,0,1,8.185,14.926Z"
+                fill="#fff" />
+            </svg>
+          </button>
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+        <div class="container-fluid">
+            <!--Ordenar-->
+            <!--<div *ngIf="!loadingLabels && !errorLoadingLabels" style="padding-top:20px;" class="d-none d-md-block">-->
+            <div *ngIf="!loadingLabels && !errorLoadingLabels" style="padding-top:20px;">
+
+                <div *ngIf="getScreenWidth < 768" class="d-flex flex-column flex-sm-row justify-content-center justify-content-md-between align-items-center mb-3 pb-3 border-bottom" style="margin-top: -0.5rem;">
+
+                    <p class="mb-3 mb-md-0 text-center text-sm-left" *ngIf="getScreenWidth < 768">
+                        {{screenLangInfo.lbl_Pag_MostrandoDe}} {{elementIni}} {{screenLangInfo.lbl_Pag_Al}} {{elementFin}} {{screenLangInfo.lbl_Pag_DeUnTotal}}
+                        <span class="text-primary font-weight-bold">{{ itineraryTotalCount}}</span> {{screenLangInfo.lbl_Pag_Itinerarios}} {{screenLangInfo.lbl_Pag_Con}} <span class="text-primary font-weight-bold">{{ datesTotalCount}}</span> {{screenLangInfo.lbl_SalidasTotal}}
+                    </p>
+
+                    <form *ngIf="filtersInfo && getScreenWidth < 768" class="form-inline">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text bg-transparent">{{screenLangInfo.lbl_button_OrdenarPor}}</span>
+                            </div>
+                            <div ngbDropdown class="d-block" #dropOrderByCombo="ngbDropdown" (openChange)="navHaveChange?dropOrderByCombo.close(): null" style="border-top-width: 1px;border-top-style: solid;border-left-width: 1px;
+              border-left-style: solid;border-bottom-width: 1px;border-bottom-style: solid;
+              border-right-width: 1px;border-right-style: solid; border-color:#ced4da;
+              padding-left: 0px;margin-left: 0px;">
+                                <button class="btn btn-inline w-100" id="dropdownOrderBy" ngbDropdownToggle [disabled]="disabled()" style="padding-top: 4px;padding-bottom: 0px;border-top-width: 0px;border-bottom-width: 0px; text-align: left;
+                border-left-width: 0px;border-right-width: 0px;margin-top: 2px;padding-right: 2px;padding-left: 2px">{{orderByDesc}}</button>
+                                <div ngbDropdownMenu aria-labelledby="dropdownOrderBy" style="padding-left: 10px; padding-right: 10px; overflow-y: auto; max-height: 250px;">
+                                    <ul *ngIf="!disabled()" style="padding-left: 0px; margin-bottom: 0px;">
+                                        <div *ngFor="let orden of filtersInfo.orderBy">
+                                            <label (click)="ChangeOrderOption(orden)" style="justify-content: left; cursor: pointer;">{{
+                        orden.descripcion }}</label>
+                                        </div>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+                <div class="fs-12 d-flex flex-row justify-content-center" style="margin-top: -47px;">
+                    <!--<img class="d-inline-block" src="./assets/images/logo-blue.png" style="max-height: 30px;">-->
+                    <div>
+                        <img class="d-inline-block" src="./assets/images/logo-blue.png" style="max-height: 25px;">
+                    </div>
+                </div>
+            </div>
+            <!--Fin ordenar-->
+
+            <!--Paginado superior-->
+            <!--Se visualiza para md-->
+            <div *ngIf="itineraryTotalCount > 0" class="py-3 d-none d-md-block border-bottom">
+                <nav aria-label="Page navigation">
+                    <ngb-pagination class="pagination justify-content-center" [collectionSize]="itineraryTotalCount" [(page)]="page" [maxSize]="5" [pageSize]="itemsPerPage" [rotate]="true" [boundaryLinks]="true" (pageChange)="PageChange()" [disabled]="disabled()">
+                    </ngb-pagination>
+                </nav>
+            </div>
+            <!--Se visualiza para xs y sm-->
+            <div *ngIf="itineraryTotalCount > 0" class="py-3 d-block d-md-none border-bottom">
+                <nav aria-label="Page navigation">
+                    <ngb-pagination class="pagination justify-content-center" [collectionSize]="itineraryTotalCount" [(page)]="page" [maxSize]="2" [pageSize]="itemsPerPage" [rotate]="true" [boundaryLinks]="true" (pageChange)="PageChange()" [disabled]="disabled()">
+                    </ngb-pagination>
+                </nav>
+            </div>
+        </div>
+        <!--Fin paginado superior-->
+    </div>
+
+</header>
+
+
+<!-- Resultados -->
+<main *ngIf="getScreenWidth < 768" class="container" [ngClass]="{
+  'main-list-element-mobil': showAdvSearch,
+  'main-list-element': !showAdvSearch
+}" style="padding-left:14px !important;z-index: 0px; position: relative; width: 100% !important;">
+    <!--<main class="container pt-2 pb-2 pt-sm-4" style="padding-left:14px !important;margin-top: 350px !important;z-index: 0px; position: relative; width: 100% !important;">-->
+
+    <!-- Paginado -->
+
+    <ul class="cruise__lists list-unstyled">
+        <!-- Result 1 -->
+        <li *ngFor="let itinerary of ItineraryList; let i=index" class="cruise__card pt-5 pb-5 border-bottom" style="border-bottom: 1px solid #dee2e6 !important;padding-bottom: 9px !important;">
+            <app-itinerary-element [itinerary]="itinerary" [screenLangInfo]="screenLangInfo"></app-itinerary-element>
+        </li>
+        <!--// End Result -->
+    </ul>
+    <!--Mas paginacion-->
+    <!--Ultima pie de pagina para md-->
+    <div *ngIf="itineraryTotalCount > 0" class="py-3 d-none d-md-block border-bottom">
+        <nav aria-label="Page navigation">
+            <ngb-pagination class="pagination justify-content-center" [collectionSize]="itineraryTotalCount" [(page)]="page" [maxSize]="5" [pageSize]="itemsPerPage" [rotate]="true" [boundaryLinks]="true" (pageChange)="PageChange()" [disabled]="disabled()"></ngb-pagination>
+        </nav>
+    </div>
+
+    <!--Ultima pie de pagina para xs, sm-->
+    <div *ngIf="itineraryTotalCount > 0" class="py-3 d-block d-md-none border-bottom">
+        <nav aria-label="Page navigation">
+            <ngb-pagination class="pagination justify-content-center" [collectionSize]="itineraryTotalCount" [(page)]="page" [maxSize]="2" [pageSize]="itemsPerPage" [rotate]="true" [boundaryLinks]="true" (pageChange)="PageChange()" [disabled]="disabled()"></ngb-pagination>
+        </nav>
+    </div>
+
+    <!--Fin mas paginacion-->
+
+</main>
+
+<app-search-filters *ngIf="filtersInfo && !loadingData && !errorLoadingData && ItineraryList && getScreenWidth < 768" [filtersInfo]="filtersInfo" [screenLangInfo]="screenLangInfo" [propPriceFilter]="propPriceFilter" [durationChecked]="durationChecked"
+    (Changefilters)="ChangefiltersData($event)"></app-search-filters>
+
+<!--Fin para mobil o celular-->
+
+<!--Table MD-->
+
+<header *ngIf="getScreenWidth > 767 && getScreenWidth < 992" class="hero fixed" style="position: absolute !important;">
+    <!-- <div *ngIf="!loadingLabels && !errorLoadingLabels" class="hero__message">
+    <h1>Lorem ipsum dolor</h1>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+  </div> -->
+
+    <!-- <div [ngClass]="(loadingData || loadingLabels) ? 'row-12 text-center w-100': 'row-12 text-center w-100 d-none'" style="margin: auto;">
+     <div class="spinner-border text-primary">
+
+    </div>
+    <img src="./assets/images/cargando.gif" style="width: 200px; height: 120px;">
+  </div> -->
+
+    <div *ngIf="!loadingLabels && !errorLoadingLabels" class="cruise_search" style="position: relative; background: white !important;">
+        <div class="searcher__container">
+
+            <!--<div class="powered-by mb-1 d-lg-inline-block text-white text-center text-md-left">-->
+            <!--<div class="powered-by mb-1 d-lg-inline-block text-center text-md-left fs-12">
+        {{screenLangInfo.lbl_Poweredby}}
+        <img class="d-inline-block" src="./assets/images/logo-blue.png" style="max-height: 30px;">
+      </div>-->
+            <!--Responsive css-->
+            <!--<div *ngFor="let s of sizes" class="{{s.css + ' ' + (prefix + s.id) }}">{{s.name}}</div>-->
+            <!--Fin responsive css-->
+
+            <div class="searcher__flex">
+                <div class="searcher__button custom-reset">
+                    <div class="row">
+                        <div class="col">
+                            <button class="btn btn-block btn-primary rounded-0 h-50" [disabled]="disabled()" style="padding-top: 0px;padding-bottom: 0px;border-top-width: 0px;border-bottom-width: 0px;" (click)="ResetCombos()" placement="bottom" ngbTooltip="{{screenLangInfo.lbl_tooltips_Reset}}">
+                <svg xmlns="http://www.w3.org/2000/svg" width="28.659" height="25" viewBox="0 0 36 37.5">
+                  <path
+                    d="M35.56,15.6l-2.62,2.62c0,.42.06.85.06,1.28a15,15,0,1,1-15-15,13.43,13.43,0,0,1,9,2.92L22.79,8A1.5,1.5,0,0,0,23,11h.21l7-1a1.52,1.52,0,0,0,1.28-1.7l-1-7a1.5,1.5,0,0,0-3,.42l.41,2.87A16,16,0,0,0,18,1.5,18.06,18.06,0,1,0,35.56,15.6Z"
+                    fill="#fff" />
+                </svg>
+              </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- destination -->
+                <div class="searcher__item searcher__item_custom">
+                    <div class="choices__list py-1 bg-white pr-4" type="button" data-toggle="dropdown" data-display="static" aria-haspopup="true" aria-expanded="false">
+                        <div class="choices__list--icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="15.705" height="20.217" viewBox="0 0 20.705 25.217">
+                <g transform="translate(0.2 0.2)">
+                  <path
+                    d="M65.753,6.84A10.417,10.417,0,0,0,55.6,16.993a11.28,11.28,0,0,0,1.325,4.687c.023.045.051.1.079.141,6.142,9.837,7.97,9.837,8.748,9.837,1.218,0,2.532-.857,5.663-5.229,1.63-2.279,3.029-4.518,3.085-4.614.028-.045.051-.09.079-.135A11.28,11.28,0,0,0,75.9,16.992,10.417,10.417,0,0,0,65.753,6.84Zm7.315,14.084s-5.629,9.041-7.315,9.041c-1.67,0-7.315-9.041-7.315-9.041a9.658,9.658,0,0,1-1.145-3.931,8.46,8.46,0,1,1,16.921,0A9.659,9.659,0,0,1,73.068,20.924Z"
+                    transform="translate(-55.6 -6.84)" fill="#166ab3" stroke="#176ab3" stroke-width="0.4" />
+                  <path
+                    d="M70.112,15.84a4.512,4.512,0,1,0,4.512,4.512A4.518,4.518,0,0,0,70.112,15.84Zm0,7.332a2.82,2.82,0,1,1,2.82-2.82A2.821,2.821,0,0,1,70.112,23.172Z"
+                    transform="translate(-59.96 -10.764)" fill="#166ab3" stroke="#176ab3" stroke-width="0.4" />
+                </g>
+              </svg>
+                        </div>
+                        <div class="choices__list--input">
+                            <p class="input-label">{{screenLangInfo.lbl_combo_Destino}}</p>
+                        </div>
+                        <div ngbDropdown class="d-block custom-dropdown" #dropDestCombo="ngbDropdown" (openChange)="navHaveChange?dropDestCombo.close(): null">
+                            <button class="btn btn-inline text-truncate w-100" id="dropdownDest" ngbDropdownToggle [disabled]="disabled()" style="padding-top: 0px;padding-bottom: 0px;border-top-width: 0px;border-bottom-width: 0px; text-align: left;   max-width: 150px;">{{dropDest}}</button>
+                            <div ngbDropdownMenu aria-labelledby="dropdownDest" style="padding-right: 10px;  overflow-y: auto; max-height: 250px; width: 250px;">
+                                <div *ngIf="!disabled()" style="padding-left: 10px;">
+                                    <div *ngFor="let destino of filtersInfo.destinos;let i=index">
+                                        <label *ngIf="!destino.hijos || destino.hijos.length == 0" (click)="changeDest(destino);" style="padding-left: 15px; cursor: pointer;">
+                      {{ destino.descripcion }}</label>
+                                        <div *ngIf="destino.hijos && destino.hijos.length > 0" style="padding-left: 0px; margin-bottom: 8px;" (click)="onSelect(i); $event.stopPropagation(); dropDestCombo.open();">
+                                            <label *ngIf="selectionDest[i]" style="cursor: pointer; ">
+                        - {{ destino.descripcion }}
+                      </label>
+                                            <label *ngIf="!selectionDest[i]" style="cursor: pointer; ">
+                        + {{ destino.descripcion }}
+                      </label>
+                                            <div class="col" *ngIf="selectionDest[i]" style="cursor: pointer; ">
+                                                <div class="row" style="padding-left: 30px;" *ngFor="let hijo of destino.hijos">
+                                                    <label (click)="changeDest(hijo); $event.stopPropagation(); dropDestCombo.close();" style="cursor: pointer; ">
+                            {{ hijo.descripcion }}</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- date -->
+                <div class="searcher__item searcher__item_custom" *ngIf="getScreenWidth > 767 && getScreenWidth < 992">
+                    <div class="choices__list py-1 bg-white pr-4" type="button" data-toggle="datepicker">
+                        <div class="choices__list--icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20.527" height="20.527" viewBox="0 0 25.527 25.527">
+                <g transform="translate(0.2 0.2)">
+                  <path
+                    d="M186.949,9.7h-1.286V8.416a.846.846,0,1,0-1.692,0V9.7h-4.7V8.416a.846.846,0,1,0-1.692,0V9.7h-4.7V8.416a.846.846,0,0,0-1.692,0V9.7H169.9a4.051,4.051,0,0,0-4.044,4.044V28.653A4.051,4.051,0,0,0,169.9,32.7h17.045a4.046,4.046,0,0,0,4.038-4.044V13.74A4.046,4.046,0,0,0,186.949,9.7ZM189.3,28.653a2.353,2.353,0,0,1-2.346,2.352H169.9a2.354,2.354,0,0,1-2.352-2.352V17.785H189.3Zm0-12.561H167.552V13.74a2.354,2.354,0,0,1,2.352-2.352h1.286v1.286a.846.846,0,0,0,1.692,0V11.388h4.7v1.286a.846.846,0,1,0,1.692,0V11.388h4.7v1.286a.846.846,0,1,0,1.692,0V11.388h1.286A2.353,2.353,0,0,1,189.3,13.74Z"
+                    transform="translate(-165.86 -7.57)" fill="#166ab3" stroke="#176ab3" stroke-width="0.4" />
+                  <g transform="translate(4.264 13.847)">
+                    <path
+                      d="M177.238,32.966a.845.845,0,0,1-.846.846h-2.126a.846.846,0,1,1,0-1.692h2.126A.845.845,0,0,1,177.238,32.966Z"
+                      transform="translate(-173.42 -32.12)" fill="#166ab3" stroke="#176ab3" stroke-width="0.4" />
+                  </g>
+                  <g transform="translate(10.654 13.847)">
+                    <path
+                      d="M188.574,32.966a.849.849,0,0,1-.846.846H185.6a.846.846,0,0,1,0-1.692h2.132A.849.849,0,0,1,188.574,32.966Z"
+                      transform="translate(-184.75 -32.12)" fill="#166ab3" stroke="#176ab3" stroke-width="0.4" />
+                  </g>
+                  <g transform="translate(17.045 13.847)">
+                    <path
+                      d="M199.9,32.966a.845.845,0,0,1-.846.846h-2.132a.846.846,0,0,1,0-1.692h2.132A.845.845,0,0,1,199.9,32.966Z"
+                      transform="translate(-196.08 -32.12)" fill="#166ab3" stroke="#176ab3" stroke-width="0.4" />
+                  </g>
+                  <g transform="translate(4.264 18.105)">
+                    <path
+                      d="M177.238,40.516a.845.845,0,0,1-.846.846h-2.126a.846.846,0,1,1,0-1.692h2.126A.849.849,0,0,1,177.238,40.516Z"
+                      transform="translate(-173.42 -39.67)" fill="#166ab3" stroke="#176ab3" stroke-width="0.4" />
+                  </g>
+                  <g transform="translate(10.654 18.105)">
+                    <path
+                      d="M188.574,40.516a.849.849,0,0,1-.846.846H185.6a.846.846,0,0,1,0-1.692h2.132A.852.852,0,0,1,188.574,40.516Z"
+                      transform="translate(-184.75 -39.67)" fill="#166ab3" stroke="#176ab3" stroke-width="0.4" />
+                  </g>
+                  <g transform="translate(17.045 18.105)">
+                    <path
+                      d="M199.9,40.516a.845.845,0,0,1-.846.846h-2.132a.846.846,0,0,1,0-1.692h2.132A.849.849,0,0,1,199.9,40.516Z"
+                      transform="translate(-196.08 -39.67)" fill="#166ab3" stroke="#176ab3" stroke-width="0.4" />
+                  </g>
+                </g>
+              </svg>
+                        </div>
+                        <div class="choices__list--input">
+                            <p class="input-label">{{screenLangInfo.lbl_combo_Fecha}}</p>
+                        </div>
+                        <div ngbDropdown class="d-block custom-dropdown" #dropDateCombo="ngbDropdown" (openChange)="navHaveChange?dropDateCombo.close(): null">
+                            <button class="btn btn-inline text-truncate w-100" id="dropdownDate" ngbDropdownToggle [disabled]="disabled()" style="padding-top: 0px;padding-bottom: 0px;border-top-width: 0px;border-bottom-width: 0px; text-align: left;   max-width: 150px;">{{dropDate}}</button>
+                            <div ngbDropdownMenu aria-labelledby="dropdownDate" style="padding-right: 10px;  overflow-y: auto; max-height: 250px;">
+                                <ul *ngIf="!disabled()" style="padding-left: 20px;">
+                                    <div *ngFor="let fecha of filtersInfo.fechas">
+                                        <label (click)="changeDate(fecha)" style="cursor: pointer; ">{{ fecha.descripcion }}</label>
+                                    </div>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- maritime line -->
+                <div class="searcher__item searcher__item_custom">
+                    <div class="choices__list py-1 bg-white pr-4" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <div class="choices__list--icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="21.151" height="21.274" viewBox="0 0 26.151 26.274">
+                <g transform="translate(0.311 0.253)">
+                  <g transform="translate(-0.003 -0.002)">
+                    <path
+                      d="M25.3,23.7a3.677,3.677,0,0,0-4.385,0,1.709,1.709,0,0,1-.54.287l2-4.992c0-.006.006-.011.006-.017s.006-.011.006-.017l1.287-3.216a.767.767,0,0,0-.011-.59.777.777,0,0,0-.439-.4l-3.216-1.169V8.027a2.621,2.621,0,0,0-2.62-2.614h-2.03V1.522a.753.753,0,0,0-.219-.534,3.39,3.39,0,0,0-4.79,0,.735.735,0,0,0-.225.534v3.89H8.1A2.621,2.621,0,0,0,5.48,8.027v5.554L2.264,14.751a.766.766,0,0,0-.433.4.743.743,0,0,0-.011.59l1.293,3.233L5.1,23.948A1.6,1.6,0,0,1,4.67,23.7a3.685,3.685,0,0,0-4.391,0,.76.76,0,1,0,.95,1.186,2.173,2.173,0,0,1,2.491,0,3.533,3.533,0,0,0,2.193.725,3.538,3.538,0,0,0,2.2-.725,2.173,2.173,0,0,1,2.491,0,3.677,3.677,0,0,0,4.385,0,2.183,2.183,0,0,1,2.491,0,3.685,3.685,0,0,0,4.391,0,2.173,2.173,0,0,1,2.491,0A.758.758,0,0,0,25.3,23.7ZM11.647,1.871a1.864,1.864,0,0,1,2.2,0V5.413h-2.2ZM7,8.027a1.1,1.1,0,0,1,1.1-1.1h9.293a1.1,1.1,0,0,1,1.1,1.1v5l-5.487-2H13a.236.236,0,0,0-.084-.022.575.575,0,0,0-.337,0,.236.236,0,0,0-.084.022h-.006L7,13.03v-5Zm-3.48,7.882,9.231-3.351,9.226,3.351-.736,1.844-8.23-3c-.006,0-.017-.006-.022-.006-.028-.011-.062-.017-.1-.028h-.034a.717.717,0,0,0-.219,0,.874.874,0,0,0-.129.028.021.021,0,0,1-.017.006l-8.236,3Zm15.258,8.006a1.651,1.651,0,0,1-.349-.214,3.685,3.685,0,0,0-4.391,0,2.173,2.173,0,0,1-2.491,0,3.677,3.677,0,0,0-4.385,0,1.6,1.6,0,0,1-.427.247L4.822,19.164l7.927-2.89,7.927,2.89Z"
+                      transform="translate(0.003 0.002)" fill="#166ab3" stroke="#166ab3" stroke-width="0.5" />
+                  </g>
+                  <g transform="translate(8.274 8.201)">
+                    <path d="M22.911,16.108H15.479a.759.759,0,1,1,0-1.518h7.438a.759.759,0,1,1-.006,1.518Z"
+                      transform="translate(-14.72 -14.59)" fill="#166ab3" stroke="#166ab3" stroke-width="0.5" />
+                  </g>
+                </g>
+              </svg>
+                        </div>
+                        <div class="choices__list--input">
+                            <p class="input-label">{{screenLangInfo.lbl_combo_Compania}}</p>
+                        </div>
+                        <div ngbDropdown class="d-block custom-dropdown" #dropNavCombo="ngbDropdown">
+                            <button class="btn btn-inline text-truncate w-100" id="dropdownNav" ngbDropdownToggle [disabled]="disabled()" style="padding-top: 0px;padding-bottom: 0px;border-top-width: 0px;border-bottom-width: 0px; text-align: left;   max-width: 150px;">{{dropNav}}</button>
+                            <div ngbDropdownMenu aria-labelledby="dropdownNav" (clickOutside)="clickOutsideMenu()" style="padding-right: 10px;  overflow-y: auto; max-height: 250px; width: 250px;">
+                                <ul *ngIf="!disabled()" style="padding-left: 20px;">
+                                    <div *ngFor="let compania of filtersInfo.companias">
+                                        <label style="cursor: pointer; ">
+                      <input type="checkbox" [checked]="isCheckNav(compania)"
+                        (change)="onCheckNav($event, compania); $event.stopPropagation(); dropNavCombo.open();"
+                        style="margin-right: 5px; cursor: pointer; " />
+                      <img src={{compania.image}} class="img-fluid">
+                      {{ compania.descripcion }}
+                    </label>
+                                    </div>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- port -->
+                <div class="searcher__item searcher__item_custom">
+                    <div class="choices__list py-1 bg-white pr-4" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <div class="choices__list--icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="22.349" height="19.095" viewBox="0 0 27.349 24.095">
+                <g transform="translate(0.2 0.2)">
+                  <path
+                    d="M132.5,17.329h-3.3a.846.846,0,1,0,0,1.692h.852a10.175,10.175,0,0,1-9.273,9.278V14.531a4.146,4.146,0,1,0-1.692,0V28.3a10.185,10.185,0,0,1-9.278-9.278h.739a.846.846,0,0,0,0-1.692h-3.305a.846.846,0,1,0,0,1.692h.874a11.843,11.843,0,0,0,23.627,0h.756a.846.846,0,0,0,0-1.692Zm-15.02-6.853a2.454,2.454,0,1,1,2.454,2.454A2.455,2.455,0,0,1,117.483,10.476Z"
+                    transform="translate(-106.4 -6.33)" fill="#166ab3" stroke="#176ab3" stroke-width="0.4" />
+                </g>
+              </svg>
+            </div>
+            <div class="choices__list--input">
+              <p class="input-label">{{screenLangInfo.lbl_combo_Puerto}}</p>
+            </div>
+            <div ngbDropdown class="d-block custom-dropdown" #dropPortCombo="ngbDropdown"
+              (openChange)="navHaveChange?dropPortCombo.close(): null">
+              <button class="btn btn-inline text-truncate w-100" id="dropdownPort" ngbDropdownToggle
+                [disabled]="disabled()"
+                style="padding-top: 0px;padding-bottom: 0px;border-top-width: 0px;border-bottom-width: 0px; text-align: left;   max-width: 150px;">{{dropPort}}</button>
+              <div ngbDropdownMenu aria-labelledby="dropdownPort"
+                style="padding-right: 10px;  overflow-y: auto; max-height: 250px;">
+                <ul *ngIf="!disabled()" style="padding-left: 20px;">
+                  <div *ngFor="let puerto of filtersInfo.puertos">
+                    <label (click)="changePort(puerto)" style="cursor: pointer; ">{{ puerto.descripcion }}</label>
+                  </div>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+                <!-- boat -->
+                <div *ngIf="showAdvSearch" class="searcher__item searcher__item_custom">
+                    <div class="choices__list py-1 bg-white pr-4" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <div class="choices__list--icon">
+                            <svg xmlns='http://www.w3.org/2000/svg' width='24.072' height='20.366' viewBox='0 0 24.072 25.366'>
+                <path
+                  d='M2.894,18.049H8.215a1.8,1.8,0,0,0,1.794-1.794V7.384A1.792,1.792,0,0,0,8.693,5.656a1.918,1.918,0,0,0-.478-.066,1.8,1.8,0,0,0-1.536.873L1.357,15.335a1.791,1.791,0,0,0,1.536,2.714ZM8.215,7.336v8.92H2.894Z'
+                  transform='translate(-0.446 -2.248)' fill="#166ab3" />
+                <path
+                  d='M23.9,18.007A1.8,1.8,0,0,0,22.284,17H12.557V15.8h7.772a1.8,1.8,0,0,0,1.572-.933,1.782,1.782,0,0,0-.06-1.823L14.07.831A1.792,1.792,0,0,0,12.557,0a1.82,1.82,0,0,0-.5.072,1.8,1.8,0,0,0-.963.688.908.908,0,0,0-.329.693V17H1.8a1.78,1.78,0,0,0-1.6.992,1.8,1.8,0,0,0,.167,1.877l3.587,4.783a1.792,1.792,0,0,0,1.435.717H18.535a1.787,1.787,0,0,0,1.411-.688L23.695,19.9A1.79,1.79,0,0,0,23.9,18.007ZM12.557,2.051V1.919L20.329,14H12.557Zm5.978,21.522H5.383L1.8,18.79h20.41Z'
+                  transform='translate(-0.006)' fill="#166ab3" />
+              </svg>
+                        </div>
+                        <div class="choices__list--input">
+                            <p class="input-label">{{screenLangInfo.lbl_combo_Barco}}</p>
+                        </div>
+                        <div ngbDropdown class="d-block custom-dropdown" #dropBoatCombo="ngbDropdown" (openChange)="navHaveChange?dropBoatCombo.close(): null">
+                            <button class="btn btn-inline text-truncate w-100" id="dropdownBoat" ngbDropdownToggle [disabled]="disabled()" style="padding-top: 0px;padding-bottom: 0px;border-top-width: 0px;border-bottom-width: 0px; text-align: left;   max-width: 150px;">{{dropBoat}}</button>
+                            <div ngbDropdownMenu aria-labelledby="dropdownBoat" style="padding-right: 10px;  overflow-y: auto; max-height: 250px; width: 250px;">
+                                <ul *ngIf="!disabled()" style="padding-left: 20px;">
+                                    <div *ngFor="let barco of filtersInfo.barcos">
+                                        <label (click)="changeBoat(barco)" style="cursor: pointer; ">{{ barco.descripcion }}</label>
+                                    </div>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- duration -->
+                <div *ngIf="showAdvSearch" class="searcher__item searcher__item_custom">
+                    <div class="choices__list py-1 bg-white pr-4" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <div class="choices__list--icon">
+                            <svg xmlns='http://www.w3.org/2000/svg' width='27.247' height='20.305' viewBox='0 0 27.247 26.305'>
+                <path
+                  d='M13.724,49.59a13.161,13.161,0,1,0,0,26.3,13.161,13.161,0,1,0,0-26.3Zm0,24.511a11.366,11.366,0,1,1,0-22.718,11.366,11.366,0,1,1,0,22.718Z'
+                  transform='translate(-0.1 -49.59)' fill="#166ab3" />
+                <path d='M27.531,65.563H21.958V58.987a.929.929,0,0,0-1.858,0v8.37h7.431a.9.9,0,1,0,0-1.794Z'
+                  transform='translate(-7.715 -53.008)' fill="#166ab3" />
+              </svg>
+                        </div>
+                        <div class="choices__list--input">
+                            <p class="input-label">{{screenLangInfo.lbl_combo_Duracion}}</p>
+                        </div>
+                        <div ngbDropdown class="d-block custom-dropdown" #dropDaysCombo="ngbDropdown" (openChange)="navHaveChange?dropDaysCombo.close(): null">
+                            <button class="btn btn-inline text-truncate w-100" id="dropdownDays" ngbDropdownToggle [disabled]="disabled()" style="padding-top: 0px;padding-bottom: 0px;border-top-width: 0px;border-bottom-width: 0px; text-align: left;   max-width: 150px;">{{dropDays}}</button>
+                            <div ngbDropdownMenu aria-labelledby="dropdownDays" style="padding-right: 10px;  overflow-y: auto; max-height: 250px;">
+                                <ul *ngIf="!disabled()" style="padding-left: 20px;">
+                                    <div *ngFor="let duracion of filtersInfo.duraciones">
+                                        <label (click)="changeDays(duracion)" style="cursor: pointer; ">{{ duracion.descripcion }}</label>
+                                    </div>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="searcher__button custom-reset search_avance">
+                    <a class="d-sm-block font-weight-light font-size-13 text-white text-wrap pb-1" (click)="changeAdvanceSearch()">
+                        <u *ngIf="showAdvSearch" style="cursor: pointer; color: #2a5c96;">{{screenLangInfo.lbl_BusquedaSimple}}</u>
+                        <u *ngIf="!showAdvSearch" style="cursor: pointer; color: #2a5c96;">{{screenLangInfo.lbl_button_BusquedaAvanzada}}</u>
+                    </a>
+                    <div class="row">
+                        <div class="col">
+                            <!--<button class="btn btn-block btn-primary rounded-0 h-50" [disabled]="disabled()"
+                style="padding-top: 0px;padding-bottom: 0px;border-top-width: 0px;border-bottom-width: 0px;"
+                (click)="SearchItinerary(true)" placement="bottom"
+                ngbTooltip="{{showAdvSearch ? screenLangInfo.lbl_button_BusquedaAvanzada : screenLangInfo.lbl_BusquedaSimple}}">
+                <svg xmlns="http://www.w3.org/2000/svg" width="28.659" height="25" viewBox="0 0 18.659 19.621">
+                  <path
+                    d="M18.446,18.388,14,13.939a8.235,8.235,0,1,0-1.107.934l4.536,4.536a.721.721,0,0,0,1.021,0A.718.718,0,0,0,18.446,18.388ZM8.185,14.926a6.741,6.741,0,1,1,6.741-6.741A6.742,6.742,0,0,1,8.185,14.926Z"
+                    fill="#fff" />
+                </svg>
+              </button>-->
+
+                            <button class="btn btn-block btn-primary rounded-0 h-50" [disabled]="disabled()" style="padding-top: 0px;padding-bottom: 0px;border-top-width: 0px;border-bottom-width: 0px;" (click)="SearchItineraryCopy(true)" placement="bottom" ngbTooltip="{{showAdvSearch ? screenLangInfo.lbl_button_BusquedaAvanzada : screenLangInfo.lbl_BusquedaSimple}}">
+                <svg xmlns="http://www.w3.org/2000/svg" width="28.659" height="25" viewBox="0 0 18.659 19.621">
+                  <path
+                    d="M18.446,18.388,14,13.939a8.235,8.235,0,1,0-1.107.934l4.536,4.536a.721.721,0,0,0,1.021,0A.718.718,0,0,0,18.446,18.388ZM8.185,14.926a6.741,6.741,0,1,1,6.741-6.741A6.742,6.742,0,0,1,8.185,14.926Z"
+                    fill="#fff" />
+                </svg>
+              </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--Ordenar-->
+            <!--<div *ngIf="!loadingLabels && !errorLoadingLabels" style="padding-top:20px;" class="d-none d-md-block">-->
+            <div *ngIf="!loadingLabels && !errorLoadingLabels" style="padding-top:20px;">
+
+                <div *ngIf="getScreenWidth > 767 && getScreenWidth < 992" class="d-flex flex-column flex-sm-row justify-content-center justify-content-md-between align-items-center mb-3 pb-3 border-bottom mt-4 mt-sm-0">
+                    <p class="mb-3 mb-md-0 text-center text-sm-left" *ngIf="getScreenWidth > 767 && getScreenWidth < 992">
+                        {{screenLangInfo.lbl_Pag_MostrandoDe}} {{elementIni}} {{screenLangInfo.lbl_Pag_Al}} {{elementFin}} {{screenLangInfo.lbl_Pag_DeUnTotal}}
+                        <span class="text-primary font-weight-bold">{{ itineraryTotalCount}}</span> {{screenLangInfo.lbl_Pag_Itinerarios}} {{screenLangInfo.lbl_Pag_Con}} <span class="text-primary font-weight-bold">{{ datesTotalCount}}</span> {{screenLangInfo.lbl_SalidasTotal}}
+                    </p>
+
+                    <!--<form *ngIf="filtersInfo" class="form-inline d-none d-md-block">-->
+                    <form *ngIf="filtersInfo && getScreenWidth > 767 && getScreenWidth < 992" class="form-inline">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text bg-transparent">{{screenLangInfo.lbl_button_OrdenarPor}}</span>
+                            </div>
+
+
+                            <!--<div ngbDropdown class="d-none d-md-block" #dropOrderByCombo="ngbDropdown"-->
+                            <div ngbDropdown class="d-block" #dropOrderByCombo="ngbDropdown" (openChange)="navHaveChange?dropOrderByCombo.close(): null" style="border-top-width: 1px;border-top-style: solid;border-left-width: 1px;
+              border-left-style: solid;border-bottom-width: 1px;border-bottom-style: solid;
+              border-right-width: 1px;border-right-style: solid; border-color:#ced4da;
+              padding-left: 0px;margin-left: 0px;">
+                                <button class="btn btn-inline w-100" id="dropdownOrderBy" ngbDropdownToggle [disabled]="disabled()" style="padding-top: 4px;padding-bottom: 0px;border-top-width: 0px;border-bottom-width: 0px; text-align: left;
+                border-left-width: 0px;border-right-width: 0px;margin-top: 2px;padding-right: 2px;padding-left: 2px">{{orderByDesc}}</button>
+                                <div ngbDropdownMenu aria-labelledby="dropdownOrderBy" style="padding-left: 10px; padding-right: 10px; overflow-y: auto; max-height: 250px;">
+                                    <ul *ngIf="!disabled()" style="padding-left: 0px; margin-bottom: 0px;">
+                                        <div *ngFor="let orden of filtersInfo.orderBy">
+                                            <label (click)="ChangeOrderOption(orden)" style="justify-content: left; cursor: pointer;">{{
+                        orden.descripcion }}</label>
+                                        </div>
+                                    </ul>
+                                </div>
+                            </div>
+                            <!-- <select class="custom-select text-primary font-weight-bold form-control" [disabled]="disabled()">
+                <option *ngFor="let orden of filtersInfo.orderBy; let i=index" [selected]="orden.id == orderBy"
+                  value="{{orden.id}}" (click)="ChangeOrderOption(orden.id)">
+                  {{orden.descripcion}}</option>
+              </select> -->
+                        </div>
+                    </form>
+
+                </div>
+                <div class="fs-12" style="margin-top: -47px;">
+                    <!--<img class="d-inline-block" src="./assets/images/logo-blue.png" style="max-height: 30px;">-->
+                    <img class="d-inline-block" src="./assets/images/logo-blue.png" style="max-height: 25px;">
+                </div>
+            </div>
+            <!--Fin ordenar-->
+
+            <!--Paginado superior-->
+            <!--Se visualiza para md-->
+            <div *ngIf="itineraryTotalCount > 0" class="py-3 d-none d-md-block border-bottom">
+                <nav aria-label="Page navigation">
+                    <ngb-pagination class="pagination justify-content-center" [collectionSize]="itineraryTotalCount" [(page)]="page" [maxSize]="5" [pageSize]="itemsPerPage" [rotate]="true" [boundaryLinks]="true" (pageChange)="PageChange()" [disabled]="disabled()">
+                    </ngb-pagination>
+                </nav>
+            </div>
+            <!--Se visualiza para xs y sm-->
+            <!--<div *ngIf="itineraryTotalCount > 0" class="py-3 d-block d-md-none border-bottom">
+        <nav aria-label="Page navigation">
+          <ngb-pagination class="pagination justify-content-center" [collectionSize]="itineraryTotalCount" [(page)]="page"
+            [maxSize]="2" [pageSize]="itemsPerPage" [rotate]="true" [boundaryLinks]="true" (pageChange)="PageChange()"
+            [disabled]="disabled()">
+          </ngb-pagination>
+        </nav>
+      </div>-->
+            <!--Fin paginado superior-->
+        </div>
+    </div>
+
+
+</header>
+
+
+<!-- Resultados -->
+<main *ngIf="getScreenWidth > 767 && getScreenWidth < 992" class="container pt-2 pb-2 pt-sm-4 pt-sm-4" [ngClass]="{
+    'main-list-element': !showAdvSearch,
+    'main_search_avance': showAdvSearch
+  }" style="padding-left:14px !important;z-index: 0px; position: relative; width: 100% !important;">
+    <!--<main class="container pt-2 pb-2 pt-sm-4 pt-sm-4 " style="padding-left:14px !important;margin-top: 350px !important;z-index: 0px; position: relative; width: 100% !important;">-->
+
+
+    <!-- Paginado -->
+
+
+
+
+    <ul class="cruise__lists list-unstyled">
+        <!-- Result 1 -->
+        <li *ngFor="let itinerary of ItineraryList; let i=index" class="cruise__card pt-5 pb-5 border-bottom">
+            <!--<li *ngFor="let itinerary of ItineraryList; let i=index" class="cruise__card pt-5 pb-5" [ngClass]="{
+      'border-bottom': i > 0,
+      'border-none': i === 0
+    }">-->
+            <app-itinerary-element [itinerary]="itinerary" [screenLangInfo]="screenLangInfo"></app-itinerary-element>
+        </li>
+        <!--// End Result -->
+    </ul>
+    <!--Mas paginacion-->
+    <!--Ultima pie de pagina para md-->
+    <div *ngIf="itineraryTotalCount > 0" class="py-3 d-none d-md-block border-bottom">
+        <nav aria-label="Page navigation">
+            <ngb-pagination class="pagination justify-content-center" [collectionSize]="itineraryTotalCount" [(page)]="page" [maxSize]="5" [pageSize]="itemsPerPage" [rotate]="true" [boundaryLinks]="true" (pageChange)="PageChange()" [disabled]="disabled()"></ngb-pagination>
+        </nav>
+    </div>
+
+    <!--Ultima pie de pagina para xs, sm-->
+    <div *ngIf="itineraryTotalCount > 0" class="py-3 d-block d-md-none border-bottom">
+        <nav aria-label="Page navigation">
+            <ngb-pagination class="pagination justify-content-center" [collectionSize]="itineraryTotalCount" [(page)]="page" [maxSize]="2" [pageSize]="itemsPerPage" [rotate]="true" [boundaryLinks]="true" (pageChange)="PageChange()" [disabled]="disabled()"></ngb-pagination>
+        </nav>
+    </div>
+
+    <!--Fin mas paginacion-->
+
+</main>
+
+<app-search-filters *ngIf="filtersInfo && !loadingData && !errorLoadingData && ItineraryList && getScreenWidth > 767 && getScreenWidth < 992" [filtersInfo]="filtersInfo" [screenLangInfo]="screenLangInfo" [propPriceFilter]="propPriceFilter" [durationChecked]="durationChecked"
+    (Changefilters)="ChangefiltersData($event)"></app-search-filters>
+<!--Fin table MD-->
+
+
+<header *ngIf="getScreenWidth > 991" class="hero fixed">
+    <!-- <div *ngIf="!loadingLabels && !errorLoadingLabels" class="hero__message">
+    <h1>Lorem ipsum dolor</h1>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+  </div> -->
+
+    <!-- <div [ngClass]="(loadingData || loadingLabels) ? 'row-12 text-center w-100': 'row-12 text-center w-100 d-none'" style="margin: auto;">
+     <div class="spinner-border text-primary">
+
+    </div>
+    <img src="./assets/images/cargando.gif" style="width: 200px; height: 120px;">
+  </div> -->
+
+    <div *ngIf="!loadingLabels && !errorLoadingLabels" class="cruise_search" style="position: relative; background: white !important;">
+        <div class="searcher__container">
+
+            <!--<div class="powered-by mb-1 d-lg-inline-block text-white text-center text-md-left">-->
+            <!--<div class="powered-by mb-1 d-lg-inline-block text-center text-md-left fs-12">
+        {{screenLangInfo.lbl_Poweredby}}
+        <img class="d-inline-block" src="./assets/images/logo-blue.png" style="max-height: 30px;">
+      </div>-->
+            <!--Responsive css-->
+            <!--<div *ngFor="let s of sizes" class="{{s.css + ' ' + (prefix + s.id) }}">{{s.name}}</div>-->
+            <!--Fin responsive css-->
+
+            <div class="searcher__flex">
+                <div class="searcher__button custom-reset">
+                    <div class="row">
+                        <div class="col">
+                            <button class="btn btn-block btn-primary rounded-0 h-50" [disabled]="disabled()" style="padding-top: 0px;padding-bottom: 0px;border-top-width: 0px;border-bottom-width: 0px;" (click)="ResetCombos()" placement="bottom" ngbTooltip="{{screenLangInfo.lbl_tooltips_Reset}}">
+                <svg xmlns="http://www.w3.org/2000/svg" width="28.659" height="25" viewBox="0 0 36 37.5">
+                  <path
+                    d="M35.56,15.6l-2.62,2.62c0,.42.06.85.06,1.28a15,15,0,1,1-15-15,13.43,13.43,0,0,1,9,2.92L22.79,8A1.5,1.5,0,0,0,23,11h.21l7-1a1.52,1.52,0,0,0,1.28-1.7l-1-7a1.5,1.5,0,0,0-3,.42l.41,2.87A16,16,0,0,0,18,1.5,18.06,18.06,0,1,0,35.56,15.6Z"
+                    fill="#fff" />
+                </svg>
+              </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- destination -->
+                <div class="searcher__item searcher__item_custom">
+                    <div class="choices__list py-1 bg-white pr-4" type="button" data-toggle="dropdown" data-display="static" aria-haspopup="true" aria-expanded="false">
+                        <div class="choices__list--icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="15.705" height="20.217" viewBox="0 0 20.705 25.217">
+                <g transform="translate(0.2 0.2)">
+                  <path
+                    d="M65.753,6.84A10.417,10.417,0,0,0,55.6,16.993a11.28,11.28,0,0,0,1.325,4.687c.023.045.051.1.079.141,6.142,9.837,7.97,9.837,8.748,9.837,1.218,0,2.532-.857,5.663-5.229,1.63-2.279,3.029-4.518,3.085-4.614.028-.045.051-.09.079-.135A11.28,11.28,0,0,0,75.9,16.992,10.417,10.417,0,0,0,65.753,6.84Zm7.315,14.084s-5.629,9.041-7.315,9.041c-1.67,0-7.315-9.041-7.315-9.041a9.658,9.658,0,0,1-1.145-3.931,8.46,8.46,0,1,1,16.921,0A9.659,9.659,0,0,1,73.068,20.924Z"
+                    transform="translate(-55.6 -6.84)" fill="#166ab3" stroke="#176ab3" stroke-width="0.4" />
+                  <path
+                    d="M70.112,15.84a4.512,4.512,0,1,0,4.512,4.512A4.518,4.518,0,0,0,70.112,15.84Zm0,7.332a2.82,2.82,0,1,1,2.82-2.82A2.821,2.821,0,0,1,70.112,23.172Z"
+                    transform="translate(-59.96 -10.764)" fill="#166ab3" stroke="#176ab3" stroke-width="0.4" />
+                </g>
+              </svg>
+                        </div>
+                        <div class="choices__list--input">
+                            <p class="input-label">{{screenLangInfo.lbl_combo_Destino}}</p>
+                        </div>
+                        <div ngbDropdown class="d-block custom-dropdown" #dropDestCombo="ngbDropdown" (openChange)="navHaveChange?dropDestCombo.close(): null">
+                            <button class="btn btn-inline text-truncate w-100" id="dropdownDest" ngbDropdownToggle [disabled]="disabled()" style="padding-top: 0px;padding-bottom: 0px;border-top-width: 0px;border-bottom-width: 0px; text-align: left;   max-width: 150px;">{{dropDest}}</button>
+                            <div ngbDropdownMenu aria-labelledby="dropdownDest" style="padding-right: 10px;  overflow-y: auto; max-height: 250px; width: 250px;">
+                                <div *ngIf="!disabled()" style="padding-left: 10px;">
+                                    <div *ngFor="let destino of filtersInfo.destinos;let i=index">
+                                        <label *ngIf="!destino.hijos || destino.hijos.length == 0" (click)="changeDest(destino);" style="padding-left: 15px; cursor: pointer;">
+                      {{ destino.descripcion }}</label>
+                                        <div *ngIf="destino.hijos && destino.hijos.length > 0" style="padding-left: 0px; margin-bottom: 8px;" (click)="onSelect(i); $event.stopPropagation(); dropDestCombo.open();">
+                                            <label *ngIf="selectionDest[i]" style="cursor: pointer; ">
+                        - {{ destino.descripcion }}
+                      </label>
+                                            <label *ngIf="!selectionDest[i]" style="cursor: pointer; ">
+                        + {{ destino.descripcion }}
+                      </label>
+                                            <div class="col" *ngIf="selectionDest[i]" style="cursor: pointer; ">
+                                                <div class="row" style="padding-left: 30px;" *ngFor="let hijo of destino.hijos">
+                                                    <label (click)="changeDest(hijo); $event.stopPropagation(); dropDestCombo.close();" style="cursor: pointer; ">
+                            {{ hijo.descripcion }}</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- date -->
+                <div class="searcher__item searcher__item_custom">
+                    <div class="choices__list py-1 bg-white pr-4" type="button" data-toggle="datepicker">
+                        <div class="choices__list--icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20.527" height="20.527" viewBox="0 0 25.527 25.527">
+                <g transform="translate(0.2 0.2)">
+                  <path
+                    d="M186.949,9.7h-1.286V8.416a.846.846,0,1,0-1.692,0V9.7h-4.7V8.416a.846.846,0,1,0-1.692,0V9.7h-4.7V8.416a.846.846,0,0,0-1.692,0V9.7H169.9a4.051,4.051,0,0,0-4.044,4.044V28.653A4.051,4.051,0,0,0,169.9,32.7h17.045a4.046,4.046,0,0,0,4.038-4.044V13.74A4.046,4.046,0,0,0,186.949,9.7ZM189.3,28.653a2.353,2.353,0,0,1-2.346,2.352H169.9a2.354,2.354,0,0,1-2.352-2.352V17.785H189.3Zm0-12.561H167.552V13.74a2.354,2.354,0,0,1,2.352-2.352h1.286v1.286a.846.846,0,0,0,1.692,0V11.388h4.7v1.286a.846.846,0,1,0,1.692,0V11.388h4.7v1.286a.846.846,0,1,0,1.692,0V11.388h1.286A2.353,2.353,0,0,1,189.3,13.74Z"
+                    transform="translate(-165.86 -7.57)" fill="#166ab3" stroke="#176ab3" stroke-width="0.4" />
+                  <g transform="translate(4.264 13.847)">
+                    <path
+                      d="M177.238,32.966a.845.845,0,0,1-.846.846h-2.126a.846.846,0,1,1,0-1.692h2.126A.845.845,0,0,1,177.238,32.966Z"
+                      transform="translate(-173.42 -32.12)" fill="#166ab3" stroke="#176ab3" stroke-width="0.4" />
+                  </g>
+                  <g transform="translate(10.654 13.847)">
+                    <path
+                      d="M188.574,32.966a.849.849,0,0,1-.846.846H185.6a.846.846,0,0,1,0-1.692h2.132A.849.849,0,0,1,188.574,32.966Z"
+                      transform="translate(-184.75 -32.12)" fill="#166ab3" stroke="#176ab3" stroke-width="0.4" />
+                  </g>
+                  <g transform="translate(17.045 13.847)">
+                    <path
+                      d="M199.9,32.966a.845.845,0,0,1-.846.846h-2.132a.846.846,0,0,1,0-1.692h2.132A.845.845,0,0,1,199.9,32.966Z"
+                      transform="translate(-196.08 -32.12)" fill="#166ab3" stroke="#176ab3" stroke-width="0.4" />
+                  </g>
+                  <g transform="translate(4.264 18.105)">
+                    <path
+                      d="M177.238,40.516a.845.845,0,0,1-.846.846h-2.126a.846.846,0,1,1,0-1.692h2.126A.849.849,0,0,1,177.238,40.516Z"
+                      transform="translate(-173.42 -39.67)" fill="#166ab3" stroke="#176ab3" stroke-width="0.4" />
+                  </g>
+                  <g transform="translate(10.654 18.105)">
+                    <path
+                      d="M188.574,40.516a.849.849,0,0,1-.846.846H185.6a.846.846,0,0,1,0-1.692h2.132A.852.852,0,0,1,188.574,40.516Z"
+                      transform="translate(-184.75 -39.67)" fill="#166ab3" stroke="#176ab3" stroke-width="0.4" />
+                  </g>
+                  <g transform="translate(17.045 18.105)">
+                    <path
+                      d="M199.9,40.516a.845.845,0,0,1-.846.846h-2.132a.846.846,0,0,1,0-1.692h2.132A.849.849,0,0,1,199.9,40.516Z"
+                      transform="translate(-196.08 -39.67)" fill="#166ab3" stroke="#176ab3" stroke-width="0.4" />
+                  </g>
+                </g>
+              </svg>
+                        </div>
+                        <div class="choices__list--input">
+                            <p class="input-label">{{screenLangInfo.lbl_combo_Fecha}}</p>
+                        </div>
+                        <div ngbDropdown class="d-block custom-dropdown" #dropDateCombo="ngbDropdown" (openChange)="navHaveChange?dropDateCombo.close(): null">
+                            <button class="btn btn-inline text-truncate w-100" id="dropdownDate" ngbDropdownToggle [disabled]="disabled()" style="padding-top: 0px;padding-bottom: 0px;border-top-width: 0px;border-bottom-width: 0px; text-align: left;   max-width: 150px;">{{dropDate}}</button>
+                            <div ngbDropdownMenu aria-labelledby="dropdownDate" style="padding-right: 10px;  overflow-y: auto; max-height: 250px;">
+                                <ul *ngIf="!disabled()" style="padding-left: 20px;">
+                                    <div *ngFor="let fecha of filtersInfo.fechas">
+                                        <label (click)="changeDate(fecha)" style="cursor: pointer; ">{{ fecha.descripcion }}</label>
+                                    </div>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- maritime line -->
+                <div class="searcher__item searcher__item_custom">
+                    <div class="choices__list py-1 bg-white pr-4" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <div class="choices__list--icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="21.151" height="21.274" viewBox="0 0 26.151 26.274">
+                <g transform="translate(0.311 0.253)">
+                  <g transform="translate(-0.003 -0.002)">
+                    <path
+                      d="M25.3,23.7a3.677,3.677,0,0,0-4.385,0,1.709,1.709,0,0,1-.54.287l2-4.992c0-.006.006-.011.006-.017s.006-.011.006-.017l1.287-3.216a.767.767,0,0,0-.011-.59.777.777,0,0,0-.439-.4l-3.216-1.169V8.027a2.621,2.621,0,0,0-2.62-2.614h-2.03V1.522a.753.753,0,0,0-.219-.534,3.39,3.39,0,0,0-4.79,0,.735.735,0,0,0-.225.534v3.89H8.1A2.621,2.621,0,0,0,5.48,8.027v5.554L2.264,14.751a.766.766,0,0,0-.433.4.743.743,0,0,0-.011.59l1.293,3.233L5.1,23.948A1.6,1.6,0,0,1,4.67,23.7a3.685,3.685,0,0,0-4.391,0,.76.76,0,1,0,.95,1.186,2.173,2.173,0,0,1,2.491,0,3.533,3.533,0,0,0,2.193.725,3.538,3.538,0,0,0,2.2-.725,2.173,2.173,0,0,1,2.491,0,3.677,3.677,0,0,0,4.385,0,2.183,2.183,0,0,1,2.491,0,3.685,3.685,0,0,0,4.391,0,2.173,2.173,0,0,1,2.491,0A.758.758,0,0,0,25.3,23.7ZM11.647,1.871a1.864,1.864,0,0,1,2.2,0V5.413h-2.2ZM7,8.027a1.1,1.1,0,0,1,1.1-1.1h9.293a1.1,1.1,0,0,1,1.1,1.1v5l-5.487-2H13a.236.236,0,0,0-.084-.022.575.575,0,0,0-.337,0,.236.236,0,0,0-.084.022h-.006L7,13.03v-5Zm-3.48,7.882,9.231-3.351,9.226,3.351-.736,1.844-8.23-3c-.006,0-.017-.006-.022-.006-.028-.011-.062-.017-.1-.028h-.034a.717.717,0,0,0-.219,0,.874.874,0,0,0-.129.028.021.021,0,0,1-.017.006l-8.236,3Zm15.258,8.006a1.651,1.651,0,0,1-.349-.214,3.685,3.685,0,0,0-4.391,0,2.173,2.173,0,0,1-2.491,0,3.677,3.677,0,0,0-4.385,0,1.6,1.6,0,0,1-.427.247L4.822,19.164l7.927-2.89,7.927,2.89Z"
+                      transform="translate(0.003 0.002)" fill="#166ab3" stroke="#166ab3" stroke-width="0.5" />
+                  </g>
+                  <g transform="translate(8.274 8.201)">
+                    <path d="M22.911,16.108H15.479a.759.759,0,1,1,0-1.518h7.438a.759.759,0,1,1-.006,1.518Z"
+                      transform="translate(-14.72 -14.59)" fill="#166ab3" stroke="#166ab3" stroke-width="0.5" />
+                  </g>
+                </g>
+              </svg>
+                        </div>
+                        <div class="choices__list--input">
+                            <p class="input-label">{{screenLangInfo.lbl_combo_Compania}}</p>
+                        </div>
+                        <div ngbDropdown class="d-block custom-dropdown" #dropNavCombo="ngbDropdown">
+                            <button class="btn btn-inline text-truncate w-100" id="dropdownNav" ngbDropdownToggle [disabled]="disabled()" style="padding-top: 0px;padding-bottom: 0px;border-top-width: 0px;border-bottom-width: 0px; text-align: left;   max-width: 150px;">{{dropNav}}</button>
+                            <div ngbDropdownMenu aria-labelledby="dropdownNav" (clickOutside)="clickOutsideMenu()" style="padding-right: 10px;  overflow-y: auto; max-height: 250px; width: 250px;">
+                                <ul *ngIf="!disabled()" style="padding-left: 20px;">
+                                    <div *ngFor="let compania of filtersInfo.companias">
+                                        <label style="cursor: pointer; ">
+                      <input type="checkbox" [checked]="isCheckNav(compania)"
+                        (change)="onCheckNav($event, compania); $event.stopPropagation(); dropNavCombo.open();"
+                        style="margin-right: 5px; cursor: pointer; " />
+                      <img src={{compania.image}} class="img-fluid">
+                      {{ compania.descripcion }}
+                    </label>
+                                    </div>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- port -->
+                <div class="searcher__item searcher__item_custom">
+                    <div class="choices__list py-1 bg-white pr-4" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <div class="choices__list--icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="22.349" height="19.095" viewBox="0 0 27.349 24.095">
+                <g transform="translate(0.2 0.2)">
+                  <path
+                    d="M132.5,17.329h-3.3a.846.846,0,1,0,0,1.692h.852a10.175,10.175,0,0,1-9.273,9.278V14.531a4.146,4.146,0,1,0-1.692,0V28.3a10.185,10.185,0,0,1-9.278-9.278h.739a.846.846,0,0,0,0-1.692h-3.305a.846.846,0,1,0,0,1.692h.874a11.843,11.843,0,0,0,23.627,0h.756a.846.846,0,0,0,0-1.692Zm-15.02-6.853a2.454,2.454,0,1,1,2.454,2.454A2.455,2.455,0,0,1,117.483,10.476Z"
+                    transform="translate(-106.4 -6.33)" fill="#166ab3" stroke="#176ab3" stroke-width="0.4" />
+                </g>
+              </svg>
+            </div>
+            <div class="choices__list--input">
+              <p class="input-label">{{screenLangInfo.lbl_combo_Puerto}}</p>
+            </div>
+            <div ngbDropdown class="d-block custom-dropdown" #dropPortCombo="ngbDropdown"
+              (openChange)="navHaveChange?dropPortCombo.close(): null">
+              <button class="btn btn-inline text-truncate w-100" id="dropdownPort" ngbDropdownToggle
+                [disabled]="disabled()"
+                style="padding-top: 0px;padding-bottom: 0px;border-top-width: 0px;border-bottom-width: 0px; text-align: left;   max-width: 150px;">{{dropPort}}</button>
+              <div ngbDropdownMenu aria-labelledby="dropdownPort"
+                style="padding-right: 10px;  overflow-y: auto; max-height: 250px;">
+                <ul *ngIf="!disabled()" style="padding-left: 20px;">
+                  <div *ngFor="let puerto of filtersInfo.puertos">
+                    <label (click)="changePort(puerto)" style="cursor: pointer; ">{{ puerto.descripcion }}</label>
+                  </div>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+                <!-- boat -->
+                <div *ngIf="showAdvSearch" class="searcher__item searcher__item_custom">
+                    <div class="choices__list py-1 bg-white pr-4" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <div class="choices__list--icon">
+                            <svg xmlns='http://www.w3.org/2000/svg' width='24.072' height='20.366' viewBox='0 0 24.072 25.366'>
+                <path
+                  d='M2.894,18.049H8.215a1.8,1.8,0,0,0,1.794-1.794V7.384A1.792,1.792,0,0,0,8.693,5.656a1.918,1.918,0,0,0-.478-.066,1.8,1.8,0,0,0-1.536.873L1.357,15.335a1.791,1.791,0,0,0,1.536,2.714ZM8.215,7.336v8.92H2.894Z'
+                  transform='translate(-0.446 -2.248)' fill="#166ab3" />
+                <path
+                  d='M23.9,18.007A1.8,1.8,0,0,0,22.284,17H12.557V15.8h7.772a1.8,1.8,0,0,0,1.572-.933,1.782,1.782,0,0,0-.06-1.823L14.07.831A1.792,1.792,0,0,0,12.557,0a1.82,1.82,0,0,0-.5.072,1.8,1.8,0,0,0-.963.688.908.908,0,0,0-.329.693V17H1.8a1.78,1.78,0,0,0-1.6.992,1.8,1.8,0,0,0,.167,1.877l3.587,4.783a1.792,1.792,0,0,0,1.435.717H18.535a1.787,1.787,0,0,0,1.411-.688L23.695,19.9A1.79,1.79,0,0,0,23.9,18.007ZM12.557,2.051V1.919L20.329,14H12.557Zm5.978,21.522H5.383L1.8,18.79h20.41Z'
+                  transform='translate(-0.006)' fill="#166ab3" />
+              </svg>
+                        </div>
+                        <div class="choices__list--input">
+                            <p class="input-label">{{screenLangInfo.lbl_combo_Barco}}</p>
+                        </div>
+                        <div ngbDropdown class="d-block custom-dropdown" #dropBoatCombo="ngbDropdown" (openChange)="navHaveChange?dropBoatCombo.close(): null">
+                            <button class="btn btn-inline text-truncate w-100" id="dropdownBoat" ngbDropdownToggle [disabled]="disabled()" style="padding-top: 0px;padding-bottom: 0px;border-top-width: 0px;border-bottom-width: 0px; text-align: left;   max-width: 150px;">{{dropBoat}}</button>
+                            <div ngbDropdownMenu aria-labelledby="dropdownBoat" style="padding-right: 10px;  overflow-y: auto; max-height: 250px; width: 250px;">
+                                <ul *ngIf="!disabled()" style="padding-left: 20px;">
+                                    <div *ngFor="let barco of filtersInfo.barcos">
+                                        <label (click)="changeBoat(barco)" style="cursor: pointer; ">{{ barco.descripcion }}</label>
+                                    </div>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- duration -->
+                <div *ngIf="showAdvSearch" class="searcher__item searcher__item_custom">
+                    <div class="choices__list py-1 bg-white pr-4" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <div class="choices__list--icon">
+                            <svg xmlns='http://www.w3.org/2000/svg' width='27.247' height='20.305' viewBox='0 0 27.247 26.305'>
+                <path
+                  d='M13.724,49.59a13.161,13.161,0,1,0,0,26.3,13.161,13.161,0,1,0,0-26.3Zm0,24.511a11.366,11.366,0,1,1,0-22.718,11.366,11.366,0,1,1,0,22.718Z'
+                  transform='translate(-0.1 -49.59)' fill="#166ab3" />
+                <path d='M27.531,65.563H21.958V58.987a.929.929,0,0,0-1.858,0v8.37h7.431a.9.9,0,1,0,0-1.794Z'
+                  transform='translate(-7.715 -53.008)' fill="#166ab3" />
+              </svg>
+                        </div>
+                        <div class="choices__list--input">
+                            <p class="input-label">{{screenLangInfo.lbl_combo_Duracion}}</p>
+                        </div>
+                        <div ngbDropdown class="d-block custom-dropdown" #dropDaysCombo="ngbDropdown" (openChange)="navHaveChange?dropDaysCombo.close(): null">
+                            <button class="btn btn-inline text-truncate w-100" id="dropdownDays" ngbDropdownToggle [disabled]="disabled()" style="padding-top: 0px;padding-bottom: 0px;border-top-width: 0px;border-bottom-width: 0px; text-align: left;   max-width: 150px;">{{dropDays}}</button>
+                            <div ngbDropdownMenu aria-labelledby="dropdownDays" style="padding-right: 10px;  overflow-y: auto; max-height: 250px;">
+                                <ul *ngIf="!disabled()" style="padding-left: 20px;">
+                                    <div *ngFor="let duracion of filtersInfo.duraciones">
+                                        <label (click)="changeDays(duracion)" style="cursor: pointer; ">{{ duracion.descripcion }}</label>
+                                    </div>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="searcher__button custom-reset search_avance">
+                    <a class="d-sm-block font-weight-light font-size-13 text-white text-wrap pb-1" (click)="changeAdvanceSearch()">
+                        <u *ngIf="showAdvSearch" style="cursor: pointer; color: #2a5c96;">{{screenLangInfo.lbl_BusquedaSimple}}</u>
+                        <u *ngIf="!showAdvSearch" style="cursor: pointer; color: #2a5c96;">{{screenLangInfo.lbl_button_BusquedaAvanzada}}</u>
+                    </a>
+                    <div class="row">
+                        <div class="col">
+                            <!--<button class="btn btn-block btn-primary rounded-0 h-50" [disabled]="disabled()"
+                style="padding-top: 0px;padding-bottom: 0px;border-top-width: 0px;border-bottom-width: 0px;"
+                (click)="SearchItinerary(true)" placement="bottom"
+                ngbTooltip="{{showAdvSearch ? screenLangInfo.lbl_button_BusquedaAvanzada : screenLangInfo.lbl_BusquedaSimple}}">
+                <svg xmlns="http://www.w3.org/2000/svg" width="28.659" height="25" viewBox="0 0 18.659 19.621">
+                  <path
+                    d="M18.446,18.388,14,13.939a8.235,8.235,0,1,0-1.107.934l4.536,4.536a.721.721,0,0,0,1.021,0A.718.718,0,0,0,18.446,18.388ZM8.185,14.926a6.741,6.741,0,1,1,6.741-6.741A6.742,6.742,0,0,1,8.185,14.926Z"
+                    fill="#fff" />
+                </svg>
+              </button>-->
+
+                            <button class="btn btn-block btn-primary rounded-0 h-50" [disabled]="disabled()" style="padding-top: 0px;padding-bottom: 0px;border-top-width: 0px;border-bottom-width: 0px;" (click)="SearchItineraryCopy(true)" placement="bottom" ngbTooltip="{{showAdvSearch ? screenLangInfo.lbl_button_BusquedaAvanzada : screenLangInfo.lbl_BusquedaSimple}}">
+                <svg xmlns="http://www.w3.org/2000/svg" width="28.659" height="25" viewBox="0 0 18.659 19.621">
+                  <path
+                    d="M18.446,18.388,14,13.939a8.235,8.235,0,1,0-1.107.934l4.536,4.536a.721.721,0,0,0,1.021,0A.718.718,0,0,0,18.446,18.388ZM8.185,14.926a6.741,6.741,0,1,1,6.741-6.741A6.742,6.742,0,0,1,8.185,14.926Z"
+                    fill="#fff" />
+                </svg>
+              </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--Ordenar-->
+            <!--<div *ngIf="!loadingLabels && !errorLoadingLabels" style="padding-top:20px;" class="d-none d-md-block">-->
+            <div *ngIf="!loadingLabels && !errorLoadingLabels" style="padding-top:20px;">
+
+                <div class="d-flex flex-column flex-sm-row justify-content-center justify-content-md-between align-items-center mb-3 pb-3 border-bottom mt-4 mt-sm-0">
+                    <p class="mb-3 mb-md-0 text-center text-sm-left">
+                        {{screenLangInfo.lbl_Pag_MostrandoDe}} {{elementIni}} {{screenLangInfo.lbl_Pag_Al}} {{elementFin}} {{screenLangInfo.lbl_Pag_DeUnTotal}}
+                        <span class="text-primary font-weight-bold">{{ itineraryTotalCount}}</span> {{screenLangInfo.lbl_Pag_Itinerarios}} {{screenLangInfo.lbl_Pag_Con}} <span class="text-primary font-weight-bold">{{ datesTotalCount}}</span> {{screenLangInfo.lbl_SalidasTotal}}
+                    </p>
+
+                    <!--<form *ngIf="filtersInfo" class="form-inline d-none d-md-block">-->
+                    <form *ngIf="filtersInfo" class="form-inline">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text bg-transparent">{{screenLangInfo.lbl_button_OrdenarPor}}</span>
+                            </div>
+
+
+                            <!--<div ngbDropdown class="d-none d-md-block" #dropOrderByCombo="ngbDropdown"-->
+                            <div ngbDropdown class="d-block" #dropOrderByCombo="ngbDropdown" (openChange)="navHaveChange?dropOrderByCombo.close(): null" style="border-top-width: 1px;border-top-style: solid;border-left-width: 1px;
+              border-left-style: solid;border-bottom-width: 1px;border-bottom-style: solid;
+              border-right-width: 1px;border-right-style: solid; border-color:#ced4da;
+              padding-left: 0px;margin-left: 0px;">
+                                <button class="btn btn-inline w-100" id="dropdownOrderBy" ngbDropdownToggle [disabled]="disabled()" style="padding-top: 4px;padding-bottom: 0px;border-top-width: 0px;border-bottom-width: 0px; text-align: left;
+                border-left-width: 0px;border-right-width: 0px;margin-top: 2px;padding-right: 2px;padding-left: 2px">{{orderByDesc}}</button>
+                                <div ngbDropdownMenu aria-labelledby="dropdownOrderBy" style="padding-left: 10px; padding-right: 10px; overflow-y: auto; max-height: 250px;">
+                                    <ul *ngIf="!disabled()" style="padding-left: 0px; margin-bottom: 0px;">
+                                        <div *ngFor="let orden of filtersInfo.orderBy">
+                                            <label (click)="ChangeOrderOption(orden)" style="justify-content: left; cursor: pointer;">{{
+                        orden.descripcion }}</label>
+                                        </div>
+                                    </ul>
+                                </div>
+                            </div>
+                            <!-- <select class="custom-select text-primary font-weight-bold form-control" [disabled]="disabled()">
+                <option *ngFor="let orden of filtersInfo.orderBy; let i=index" [selected]="orden.id == orderBy"
+                  value="{{orden.id}}" (click)="ChangeOrderOption(orden.id)">
+                  {{orden.descripcion}}</option>
+              </select> -->
+                        </div>
+                    </form>
+
+                </div>
+                <div class="fs-12" style="margin-top: -47px;">
+                    <!--<img class="d-inline-block" src="./assets/images/logo-blue.png" style="max-height: 30px;">-->
+                    <img class="d-inline-block" src="./assets/images/logo-blue.png" style="max-height: 25px;">
+                </div>
+            </div>
+            <!--Fin ordenar-->
+
+            <!--Paginado superior-->
+            <!--Se visualiza para md-->
+            <div *ngIf="itineraryTotalCount > 0" class="py-3 d-none d-md-block border-bottom">
+                <nav aria-label="Page navigation">
+                    <ngb-pagination class="pagination justify-content-center" [collectionSize]="itineraryTotalCount" [(page)]="page" [maxSize]="5" [pageSize]="itemsPerPage" [rotate]="true" [boundaryLinks]="true" (pageChange)="PageChange()" [disabled]="disabled()">
+                    </ngb-pagination>
+                </nav>
+            </div>
+            <!--Se visualiza para xs y sm-->
+            <!--<div *ngIf="itineraryTotalCount > 0" class="py-3 d-block d-md-none border-bottom">
+        <nav aria-label="Page navigation">
+          <ngb-pagination class="pagination justify-content-center" [collectionSize]="itineraryTotalCount" [(page)]="page"
+            [maxSize]="2" [pageSize]="itemsPerPage" [rotate]="true" [boundaryLinks]="true" (pageChange)="PageChange()"
+            [disabled]="disabled()">
+          </ngb-pagination>
+        </nav>
+      </div>-->
+            <!--Fin paginado superior-->
+        </div>
+    </div>
+
+
+</header>
+
+
+<!-- Resultados -->
+<main *ngIf="getScreenWidth > 991" class="container pt-2 pb-2 pt-sm-4 pt-sm-4" [ngClass]="{
+    'main-list-element': !showAdvSearch,
+    'main_search_avance': showAdvSearch
+  }" style="padding-left:14px !important;z-index: 0px; position: relative; width: 100% !important;">
+    <!--<main class="container pt-2 pb-2 pt-sm-4 pt-sm-4 " style="padding-left:14px !important;margin-top: 350px !important;z-index: 0px; position: relative; width: 100% !important;">-->
+
+
+    <!-- Paginado -->
+
+
+
+
+    <ul class="cruise__lists list-unstyled">
+        <!-- Result 1 -->
+        <li *ngFor="let itinerary of ItineraryList; let i=index" class="cruise__card pt-5 pb-5 border-bottom">
+            <!--<li *ngFor="let itinerary of ItineraryList; let i=index" class="cruise__card pt-5 pb-5" [ngClass]="{
+      'border-bottom': i > 0,
+      'border-none': i === 0
+    }">-->
+            <!--{{itinerary.shipName | json}} {{i}}-->
+            <app-itinerary-element [itinerary]="itinerary" [screenLangInfo]="screenLangInfo"></app-itinerary-element>
+        </li>
+        <!--// End Result -->
+    </ul>
+    <!--Mas paginacion-->
+    <!--Ultima pie de pagina para md-->
+    <div *ngIf="itineraryTotalCount > 0" class="py-3 d-none d-md-block border-bottom">
+        <nav aria-label="Page navigation">
+            <ngb-pagination class="pagination justify-content-center" [collectionSize]="itineraryTotalCount" [(page)]="page" [maxSize]="5" [pageSize]="itemsPerPage" [rotate]="true" [boundaryLinks]="true" (pageChange)="PageChange()" [disabled]="disabled()"></ngb-pagination>
+        </nav>
+    </div>
+
+    <!--Ultima pie de pagina para xs, sm-->
+    <div *ngIf="itineraryTotalCount > 0" class="py-3 d-block d-md-none border-bottom">
+        <nav aria-label="Page navigation">
+            <ngb-pagination class="pagination justify-content-center" [collectionSize]="itineraryTotalCount" [(page)]="page" [maxSize]="2" [pageSize]="itemsPerPage" [rotate]="true" [boundaryLinks]="true" (pageChange)="PageChange()" [disabled]="disabled()"></ngb-pagination>
+        </nav>
+    </div>
+
+    <!--Fin mas paginacion-->
+
+</main>
+
+<app-search-filters *ngIf="filtersInfo && !loadingData && !errorLoadingData && ItineraryList && getScreenWidth > 991" [filtersInfo]="filtersInfo" [screenLangInfo]="screenLangInfo" [propPriceFilter]="propPriceFilter" [durationChecked]="durationChecked"
+    (Changefilters)="ChangefiltersData($event)"></app-search-filters>
+  <app-bt-gototop></app-bt-gototop>
+
+
+

@@ -1,0 +1,385 @@
+header.fixed {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 0px;
+    margin: 0px;
+    z-index: 10;
+  }
+  
+  html {
+    --top-spacing: 100px;
+    scroll-padding-top: var(--top-spacing);
+  }
+  
+  body {
+    margin: var(--top-spacing) auto;
+    
+    max-width: 400px;
+    padding: 0 20px;
+    font: 18px/1.4 system-ui;
+  }
+
+
+  /*Responsive desing*/
+.custom-reset {
+  margin-top: 30px;
+}
+
+.search_avance {
+  margin-top: 5px;
+}
+
+/*.main-list-element {
+  margin-top: 350px !important;
+  //margin-top: 600px !important
+}*/
+
+//XS Extra small devices (portrait phones, less than 576px)
+@media screen and (max-width: 360px) {
+  .choise-list {
+    //margin-left: 11px;
+    border: 1px solid #2a5c96;
+   // width: 98%;
+  }
+  
+  .custom-dropdown {
+    padding-left: 8%;
+  }
+
+  .custom-reset {
+    margin-top: 0px;
+    flex-direction: column !important;
+    padding-bottom: 5px;
+    //margin-left: -5px;
+    margin-left: -15px;
+    align-items: normal !important;
+  }
+  .search_avance {
+    margin-top: 0;
+  }
+  .desktop {
+    display: none !important;
+  }
+
+  .sidenav-width {
+    width: 85%;
+  }
+
+  .main-list-element {
+    margin-top: 566px !important
+  }
+
+  .main-list-element-mobil {
+    margin-top: 691px !important
+  }
+  
+}
+
+//Fin XS
+
+
+
+//XS Extra small devices (portrait phones, less than 576px)
+    @media (min-width: 360px) and (max-width: 576px){
+      .choise-list {
+        //margin-left: 11px;
+        border: 1px solid #2a5c96;
+       // width: 98%;
+      }
+      
+      .custom-dropdown {
+        padding-left: 8%;
+      }
+
+      .custom-reset {
+        margin-top: 0px;
+        flex-direction: column !important;
+        padding-bottom: 5px;
+        //margin-left: -5px;
+        margin-left: -15px;
+        align-items: normal !important;
+      }
+      .search_avance {
+        margin-top: 0;
+      }
+      .desktop {
+        display: none !important;
+      }
+
+      .sidenav-width {
+        width: 85%;
+      }
+
+      .main-list-element {
+        margin-top: 553px !important
+      }
+
+      .main-list-element-mobil {
+        margin-top: 643px !important
+      }
+      
+    }
+
+    //Fin XS
+
+    //SM Small devices (landscape phones, less than 768px)
+    @media (min-width: 576px) and (max-width: 768px) { 
+      .choise-list {
+       //margin-left: 11px;
+        border: 1px solid #2a5c96;
+       // width: 98%;
+      }
+      
+      .custom-dropdown {
+        padding-left: 8%;
+      }
+    
+      .custom-reset {
+        /*margin-top: 0px;     
+        flex-direction: column !important;
+        padding-bottom: 5px;    
+        margin-left: -15px;*/
+        align-items: normal !important;
+      }
+      .searcher__item_custom {
+        flex-basis: 19em !important;
+      }
+       .search_avance {
+        margin-top: 0;
+      }
+
+      .desktop {
+        display: none !important;
+      }
+
+      .sidenav-width {
+        width: 50%;
+      }
+
+      .main-list-element {
+        margin-top: 486px !important
+      }
+
+      .main-list-element-mobil {
+        margin-top: 589px !important
+      }
+      
+    }
+    
+//MD Medium devices (tablets, 768px and up)
+@media (min-width: 768px) and (max-width: 992px) {
+  .choise-list {
+    margin-left: 0;
+    border: none;
+   // width: 98%;
+  }
+  
+  .custom-dropdown {
+    padding-left: 0;
+  }
+
+  .searcher__item_custom {
+    flex-basis: 0 !important;
+  }
+
+  .mobil {
+    display: none !important;
+  }
+
+  .desktop {
+    display: flex !important;
+  }
+  
+  /*.custom-reset {
+    margin-top: 46px;
+  }*/
+
+  .main-list-element {
+    margin-top: 280px !important;
+    //margin-top: 356px !important;
+  }
+
+  .main_search_avance {
+    margin-top: 350px !important;
+  } 
+  
+}
+
+// Large devices (desktops, 992px and up)
+@media (min-width: 992px) and (max-width: 1200px) { 
+  .mobil {
+    display: none !important;
+  }
+
+  .main-list-element {
+    //margin-top: 223px !important;
+    margin-top: 260px !important;
+  }
+
+  .main_search_avance {
+    margin-top: 350px !important;
+  } 
+  
+}
+
+// Extra large devices (large desktops, 1200px and up)
+@media (min-width: 1200px) {
+  .mobil {
+    display: none !important;
+  }
+
+  .main-list-element {
+    margin-top: 260px !important;
+  }
+
+  .main_search_avance {
+    margin-top: 260px !important;
+  } 
+}
+
+/*Example one*/
+
+/*
+.example-container {
+  height: 500px;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+}
+.example-sidenav-content {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+}
+.example-sidenav {
+   user-select: none;
+}
+.full-width {
+  width: 100%;
+}
+.menu-button {
+  transition: 300ms ease-in-out;
+  transform: rotate(0deg);
+}
+.menu-button.rotated {
+  transform: rotate(180deg);
+}
+.submenu {
+  overflow-y: hidden;
+  transition: transform 300ms ease;
+  transform: scaleY(0);
+  transform-origin: top;
+  padding-left: 30px;
+}
+.submenu.expanded {
+  transform: scaleY(1);
+}*/
+
+/*Example two*/
+.example-container {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.example-is-mobile .example-toolbar {
+  position: fixed;
+  /* Make sure the toolbar will stay on top of the content as it scrolls past. */
+  z-index: 2;
+}
+
+h1.example-app-name {
+  margin-left: 8px;
+}
+
+.example-sidenav-container {
+  /* When the sidenav is not fixed, stretch the sidenav container to fill the available space. This
+     causes `<mat-sidenav-content>` to act as our scrolling element for desktop layouts. */
+  flex: 1;
+}
+
+.example-is-mobile .example-sidenav-container {
+  /* When the sidenav is fixed, don't constrain the height of the sidenav container. This allows the
+     `<body>` to be our scrolling element for mobile layouts. */
+  flex: 1 0 auto;
+}
+
+
+
+
+
+.selectdiv {
+  position: relative;
+  /*Don't really need this just for demo styling*/
+  
+  float: left;
+  min-width: 200px;
+  margin: 50px 33%;
+}
+
+.selectdiv:after {
+    content: '\f078';
+    font: normal normal normal 17px/1 FontAwesome;
+    color: #0ebeff;
+    right: 11px;
+    top: 6px;
+    height: 34px;
+    padding: 15px 0px 0px 8px;
+    border-left: 1px solid #0ebeff;
+    position: absolute;
+    pointer-events: none;
+}
+
+/* IE11 hide native button (thanks Matt!) */
+select::-ms-expand {
+display: none;
+}
+
+.selectdiv select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  /* Add some styling */
+  
+  display: block;
+  width: 100%;
+  max-width: 320px;
+  height: 50px;
+  float: right;
+  margin: 5px 0px;
+  padding: 0px 24px;
+  font-size: 16px;
+  line-height: 1.75;
+  color: #333;
+  background-color: #ffffff;
+  background-image: none;
+  border: 1px solid #0ebeff;
+  -ms-word-break: normal;
+  word-break: normal;
+}
+
+.border-none {
+  display: none !important;
+}
+
+
+//Booton up
+.simplescrollup__button {
+	position: fixed;
+	bottom: 3rem;
+	right: 3rem;
+	transition: 1s all;
+	z-index: 10000;
+}
+.simplescrollup__button--show {
+	transform: translateX(0);
+}
+.simplescrollup__button--hide {
+	transform: translateX(100px);
+}
+

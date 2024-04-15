@@ -1,0 +1,16 @@
+.scroll-to-top {
+    position: fixed;
+    bottom: 15px;
+    right: 100px;
+    bottom: 85px;
+    z-index:1000;
+    opacity: 0;
+    transition: all .2s ease-in-out;
+   }
+   .show-scrollTop {
+    opacity: 1;
+    transition: all .2s ease-in-out;
+    border-radius: 50%;
+    background-color: rgb(105, 133, 255);
+    text-decoration-color: rgb(250, 248, 248);
+   }

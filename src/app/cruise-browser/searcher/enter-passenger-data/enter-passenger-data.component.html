@@ -1,0 +1,187 @@
+<div class="row mt-2 pt-1">
+    <main class="container container pb-5">
+
+
+        <div *ngFor="let pasajero of pasajeros; let i=index" class="row mt-4 pt-4 border-top">
+            <div class="col-sm-12 text-sm-left text-center mb-3">
+                <h2 class="text-primary text-uppercase font-weight-bold fs-24">{{screenLangInfo.lbl_PasajeroAdulto}} {{i + 1}}</h2>
+            </div>
+            <div class="col-sm-4 mb-3">
+                <label for="title">{{screenLangInfo.lbl_Titulo}}</label>
+                <select class="form-control" name="title {{i + 1}}" id="title {{i + 1}}" (change)="ChangeSelectValue($event,'Titulo', i)">
+                    <option value="{{screenLangInfo.comboTitulo[0].id}}" [selected]="screenLangInfo.comboTitulo[0].id == pasajeros[i].titulo">
+                        {{screenLangInfo.comboTitulo[0].descripcion}}</option>
+                    <option value="{{screenLangInfo.comboTitulo[1].id}" [selected]="screenLangInfo.comboTitulo[1].id == pasajeros[i].titulo">
+                        {{screenLangInfo.comboTitulo[1].descripcion}}</option>
+                </select>
+            </div>
+            <div class="col-sm-4 mb-3">
+                <label for="first_name">{{screenLangInfo.lbl_Default_Nombre + VerifyMandatoryField(i, 'nombre')}}</label>
+                <input [ngClass]="{'field_invalid': requiredField(i,'name') || validMin(i,'name') || validLetter(i,'name')}" type="text" class="form-control" id="first_name {{i + 1}}" placeholder="{{screenLangInfo.lbl_Default_Nombre}}" (change)="ChangePassData($event,'Nombres',i)"
+                    value="{{pasajeros[i].nombre}}">
+            </div>
+            <div class="col-sm-4 mb-3">
+                <label for="last_name">{{ screenLangInfo.lbl_Default_Apellido + VerifyMandatoryField(i, 'apellido')}}</label>
+                <input [ngClass]="{'field_invalid': requiredField(i,'surname') || validMin(i,'surname') || validLetter(i,'surname')}" type="text" class="form-control" id="last_name {{i + 1}}" placeholder="{{screenLangInfo.lbl_Default_Apellido}}" (change)="ChangePassData($event,'Apellidos',i)"
+                    value="{{pasajeros[i].apellido}}">
+            </div>
+            <div class="col-sm-4 mb-3">
+                <label for="birthdate">{{screenLangInfo.lbl_Fechanacimiento + VerifyMandatoryField(i, 'fnac')}}</label>
+                <input [ngClass]="{'field_invalid': requiredField(i,'date') || validDate(i,'date') || validMin(i,'date') || DateMinMax(pasajeros[i].fechaNacimiento)}" type="date" class="form-control" id="birthdate {{i + 1}}" (change)="ChangePassData($event,'FechaNac',i)"
+                    value="{{pasajeros[i].fechaNacimiento}}" [min]="minDate" [max]="maxDate">
+                <div *ngIf="validDate(i,'date') || DateMinMax(pasajeros[i].fechaNacimiento)" style="color: red;">
+                    {{dateReplace(i)}}
+                </div>
+            </div>
+            <div class="col-sm-4 mb-3">
+                <label for="document">{{screenLangInfo.lbl_Documento}}</label>
+                <select class="form-control" name="document {{i + 1}}" id="document {{i + 1}}" (change)="ChangeSelectValue($event,'TipoDoc', i)">
+                                <option value="{{screenLangInfo.comboDocumento[0].descripcion}}" [selected]="screenLangInfo.comboDocumento[0].descripcion == pasajeros[i].tipoDocumento">
+                        {{screenLangInfo.comboDocumento[0].descripcion}}
+                                </option>
+                                <option value="{{screenLangInfo.comboDocumento[1].descripcion}}" [selected]="screenLangInfo.comboDocumento[1].descripcion == pasajeros[i].tipoDocumento">
+                        {{screenLangInfo.comboDocumento[1].descripcion}}
+                                </option>
+                            </select>
+            </div>
+            <div class="col-sm-4 mb-3">
+                <label for="number">{{screenLangInfo.lbl_Numero  + VerifyMandatoryField(i, 'numeroDocumento')}}</label>
+                <input type="text" class="form-control" id="number {{i + 1}}" placeholder="{{screenLangInfo.lbl_Default_Numero}}" (change)="ChangePassData($event,'NumDoc',i)" value="{{pasajeros[i].numeroDocumento}}">
+            </div>
+            <div class="col-sm-4 mb-3">
+                <label for="nationality">{{screenLangInfo.lbl_Nacionalidad  + VerifyMandatoryField(i, 'nacionalidad')}}</label>
+                <select class="form-control" name="nationality {{i + 1}}" id="nationality {{i + 1}}" (change)="ChangeSelectValue($event,'Nacionalidad', i)">
+                                    <option *ngFor="let nationality of nationalityInfo" value="{{nationality.descripcion}}" [selected]="nationality.descripcion.toUpperCase() == pasajeros[i].nacionalidad.toUpperCase()">
+                        {{nationality.descripcion}}</option>
+                                </select>
+            </div>
+            <div class="col-sm-4 mb-3">
+                <label for="correo">{{screenLangInfo.lbl_Correo  + VerifyMandatoryField(i, 'correo')}}</label>
+                <input [ngClass]="{'field_invalid': requiredField(i,'email') || validEmail(i,'email')}" type="text" class="form-control" id="correo {{i + 1}}" placeholder="{{screenLangInfo.lbl_Correo}}" (change)="ChangePassData($event,'Correo',i)" value="{{pasajeros[i].correo}}">
+                <div *ngIf="validEmail(i,'email')" style="color: red;">
+                    {{emailReplace(i)}}
+                </div>
+            </div>
+            <div class="col-sm-4 mb-3">
+                <label for="telefono">{{screenLangInfo.lbl_Telefono + VerifyMandatoryField(i, 'telefono')}}</label>
+                <input [ngClass]="{'field_invalid': requiredField(i,'phone') || validPhone(i,'phone')}" class="form-control" id="telefono {{i + 1}}" type="tel" required pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" placeholder="{{ i == 0 ? screenLangInfo.lbl_Telefono + ''  : screenLangInfo.lbl_Telefono +'' }}"
+                    (change)="ChangePassData($event,'Telefono',i)" value="{{pasajeros[i].telefono}}">
+                <div *ngIf="validPhone(i,'phone')" style="color: red;">
+                    {{phoneReplace(i)}}
+                </div>
+            </div>
+        </div>
+
+
+        <div *ngIf="ModoReservacion=='Online' && !loadingLabels && cotizaronline=='false' && turnoscomida && turnos?.length > 0" class="row mt-4 pt-4 border-top">
+            <div class="col-sm-12 text-sm-left text-center mb-3">
+                <h2 class="text-primary text-uppercase font-weight-bold fs-24">{{screenLangInfo.lbl_Title_DiningTurn}}
+                </h2>
+            </div>
+            <div class="col-sm-4 mb-3">
+
+                <select class="form-control" name="foodtime" id="foodtime" (change)="ChangeSelectComidaValue($event)">
+                                            <option *ngFor="let tc of turnos" value="{{tc.diningId}}" [selected]="">
+                        {{tc.diningName}}</option>
+                                        </select>
+            </div>
+        </div>
+
+        <div class="border-top mb-3 mt-2" *ngIf="mostrarpropinas ||  mostrarSeguro || (!loadingLabels)"></div>
+
+        <div class="flex d-flex flex-row pl-6 pt-2" *ngIf="mostraragentesviajes && MostrarElemtent() && !loadingLabels">
+            <div class="col-sm-12 col-md-12 text-sm-left mb-3">
+                <div class="pt-3 form-check">
+                    <input class="form-check-input" type="checkbox" [checked]="chequeadoTravel" id="flexCheckChecked0" (change)=ShowAgencyTravelData($event) [ngClass]=" {'hiddenInput': !mostraragentesviajes}" />
+                    <label class="form-check-label text-primary  font-weight-bold fs-16" for="flexCheckChecked0">{{screenLangCotizacion?.lbl_TengoAgenteViaje}}</label>
+                    <div *ngIf="chequeadoTravel" class="row pt-2">
+                        <div class="col-sm-3 mb-3">
+                            <label for="nametravelagent">{{screenLangInfo.lbl_title_NombreAgente}}</label>
+                            <input type="text" class="form-control" id="nametravelagent" [ngClass]="{'field_invalid': ValidateAgenciaViajesData('nombreagente')}" value="{{ this.datosagentesviaje.NombreAgente}}" placeholder="{{screenLangInfo.lbl_title_NombreAgente}}" (change)="ChangeAgencyData($event,'nombreagente')">
+                            <div *ngIf="ValidateAgenciaViajesData('nombreagente')" style="color: red;"> {{messageValidate.err_campoObligatorioStandar}} </div>
+                        </div>
+                        <div class="col-sm-3 mb-3">
+                            <label for="travelagent">{{screenLangInfo.lbl_title_NombreAgenciaAgente}}</label>
+                            <input type="text" class="form-control" id="travelagent" [ngClass]="{'field_invalid':ValidateAgenciaViajesData('nombreagencia')}" placeholder="{{screenLangInfo?.lbl_title_NombreAgenciaAgente}}" value="{{ this.datosagentesviaje.NombreAgencia}}" (change)="ChangeAgencyData($event,'nombreagencia')">
+                            <div *ngIf="ValidateAgenciaViajesData('nombreagencia')" style="color: red;"> {{messageValidate.err_campoObligatorioStandar}} </div>
+                        </div>
+                        <div class="col-sm-3 mb-3">
+                            <label for="teleftravelagent">{{screenLangInfo?.lbl_title_TelefonoAgente}} </label>
+                            <input class="form-control" id="teleftravelagent" type="text" [ngClass]="{'field_invalid': ValidateAgenciaViajesData('telefonoagencia') || ValidateAgenciaViajesData('formato_telefonoagencia')}" value="{{ this.datosagentesviaje.TelefonoAgencia}}" placeholder="{{screenLangInfo?.lbl_title_TelefonoAgente}}"
+                                (change)="ChangeAgencyData($event,'telefonoagencia')">
+                            <div *ngIf="ValidateAgenciaViajesData('telefonoagencia')" style="color: red;"> {{messageValidate.err_campoObligatorioStandar}} </div>
+                            <div *ngIf="ValidateAgenciaViajesData('formato_telefonoagencia')" style="color: red;"> {{messageValidate.err_formatotelefonoInvalido}} </div>
+                        </div>
+                        <div class="col-sm-3 mb-3">
+                            <label for="emailtravelagent">{{screenLangInfo?.lbl_title_DireccionAgente}}</label>
+                            <input type="text" class="form-control" id="emailtravelagent" [ngClass]="{'field_invalid': ValidateAgenciaViajesData('direccionagencia') || ValidateAgenciaViajesData('formato_direccionagencia') }" value="{{this.datosagentesviaje.DireccionAgencia}}" placeholder="{{screenLangInfo.lbl_title_DireccionAgente}}"
+                                (change)="ChangeAgencyData($event,'direccionagencia')">
+                            <div *ngIf="ValidateAgenciaViajesData('direccionagencia')" style="color: red;"> {{messageValidate.err_campoObligatorioStandar}} </div>
+                            <div *ngIf="ValidateAgenciaViajesData('formato_direccionagencia')" style="color: red;"> {{messageValidate.err_EmailInvalido}} </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="mostrarpropinas && !loadingLabels && MostrarElemtent()" class="flex d-flex flex-row pl-6 pt-2">
+            <div class="col-sm-12 col-md-12 text-sm-left text-left mb-3">
+                <div class="form-check">
+                    <input [(ngModel)]="pagarPropinas" class="form-check-input" type="checkbox" value="" id="flexCheckChecked2" (change)=ChangePropina($event) />
+                    <label class="form-check-label text-primary  font-weight-bold fs-16 pl-10" for="flexCheckChecked1">
+                        {{screenLangCotizacion?.lbl_PagarPropinas}}
+                                                            </label>
+
+                </div>
+
+            </div>
+        </div>
+        <!--¿Quiere pagar seguros? -->
+        <div *ngIf="mostrarSeguro && !loadingLabels && MostrarElemtent()" class="flex d-flex flex-row pl-6 pt-2">
+            <div class="col-sm-12 col-md-12 text-sm-left text-center mb-3">
+                <div class="form-check">
+                    <input [(ngModel)]="pagarImpuestos" class="form-check-input" type="checkbox" value="" id="flexCheckChecked3" (change)=ChangeSeguro($event) />
+                    <label class="form-check-label text-primary  font-weight-bold fs-16 pl-10" for="flexCheckChecked1">
+                        {{screenLangCotizacion?.lbl_PagarImpuestos}}
+                                                            </label>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="mostrarenews && MostrarElemtent() && !loadingLabels" class="flex d-flex flex-row pl-6 pt-2 mb-2">
+            <div class="col-sm-12 col-md-12 text-sm-left text-left mb-3">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" [checked]="enews" value="" (change)="ChangeENews($event)" id="flexCheckChecked" />
+                    <label class="form-check-label text-primary  font-weight-bold fs-16" for="flexCheckChecked">
+                        {{screenLangInfo.lbl_SubcripcionENews}}</label>
+                </div>
+
+            </div>
+        </div>
+        <div *ngIf="MostrarElemtent() && !loadingLabels " class="flex d-flex flex-row pl-6 pt-1 mb-2">
+            <div class="col-sm-12 col-md-12 text-sm-left text-left mb-3">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked1" (change)="ChangeTermAndConditions($event)" />
+                    <label *ngIf="terminoscondiciones" [innerHtml]="screenLangCotizacion.lbl_TerminosyCondiciones" class="form-check-label text-primary  font-weight-bold fs-16" for="flexCheckChecked1"></label>
+                    <label *ngIf="!terminoscondiciones" [innerHtml]="screenLangCotizacion.lbl_TerminosyCondiciones" class="form-check-label text-primary  font-weight-bold fs-16" for="flexCheckChecked1"> </label>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <ng-template #myTemplate let-modal>
+        <div class="modal-header">
+            <h5 style="color: #2a5c96 !important;">{{lbl_l_ValidacionFNac_Error}}</h5>
+
+
+        </div>
+        <div class="modal-body">
+            <h6 class="modal-title">{{lbl_l_ValidacionFNac_Pregunta}}</h6>
+            <p>{{lbl_l_ValidacionFNac_Comentario}}</p>
+        </div>
+        <div class="modal-footer">
+
+            <button type="button" class="btn btn-primary" (click)="modal.close('Close')">{{lbl_button_Cancelar}}</button>
+            <button type="button" class="btn btn-primary" (click)="modal.close('Ok')">{{lbl_button_Continuar}}</button>
+        </div>
+    </ng-template>
+</div>

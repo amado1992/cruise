@@ -1,0 +1,409 @@
+<!--Para mobil o celular-->
+<div class="modal-content" *ngIf="getScreenWidth < 768">
+    <div *ngIf="loadingLabels" class="text-center" style="margin: auto;">
+        <!-- <div class="spinner-border text-primary"></div> -->
+        <img src="./assets/images/cargando.gif" style="width: 200px; height: 120px;">
+    </div>
+    <div *ngIf="!loadingLabels" class="modal-header border-0 align-items-start justify-content-start">
+        <h5 class="modal-title text-primary m-auto border-bottom p-4 text-uppercase font-weight-bold">
+            {{screenLangInfo.lbl_Title_Page}}
+        </h5>
+        <button type="button" class="close m-sm-0" data-dismiss="modal" aria-label="Close" (click)="close()">
+          <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div *ngIf="!loadingLabels" class="modal-body p-2 w-90">
+
+        <div class="row justify-content-around">
+            <div class="col-12 col-sm-12 col-md-12">
+                <div class="d-flex flex-column h-100 w-100">
+                    <h3>{{screenLangInfo.lbl_ComentarioLateral1}}</h3>
+                    <br>
+                    <p>
+                        {{screenLangInfo.lbl_ComentarioLateral2}}<br><br> {{screenLangInfo.lbl_ComentarioLateral3}}
+                        <br><br> {{screenLangInfo.lbl_ComentarioLateral4}}
+                        <br><br> {{screenLangInfo.lbl_ComentarioLateral5}}
+                        <br>
+                    </p>
+                    <p *ngIf="activeAgencia.telefonocallcenter">
+                        {{screenLangInfo.lbl_ComentarioTelefono}}&nbsp;{{activeAgencia.telefonocallcenter}}
+                    </p>
+                    <img src="{{activeAgencia.IconsCallCenter}}" style="max-height: 80px; min-width: 50px;max-width: 180px;">
+
+
+
+                </div>
+            </div>
+            <div class="col-12 col-sm-12 text-center">
+                <div class="d-flex flex-column justify-content-between h-100 w-100">
+
+                    <!--    <p class="h-100">
+                      Le ofrecemos la posibilidad de comunicarse con la naviera v&iacute;a correo electr&oacute;nico. Escriba su mensaje a continuaci&oacute;n.
+                  </p> -->
+                    <div class="d-flex flex-row" style="margin-bottom: 10px !important;">
+                        <div class="d-flex flex-column justify-content-center align-items-center w-20">
+                            {{screenLangInfo.lbl_NombreCliente}}(*)&nbsp;
+                        </div>
+                        <div class="d-flex flex-column justify-content-center align-items-center w-80" style="flex-grow: 1;">
+                            <!--<input required id="nombre" placeholder="{{screenLangInfo.lbl_toolstipNombre}}"  [ngModel]="thecontents.nombre"  (input)="ChangeName($event.target.value)"    type="text"  style="width: 100%;">-->
+                            <input id="nombre" [ngModel]="thecontents.nombre" (input)="ChangeName($event.target.value)" type="text" style="width: 100%;">
+
+                        </div>
+                    </div>
+                    <div class="d-flex flex-row" style="margin-bottom: 10px !important;">
+                        <div class="d-flex flex-column justify-content-center align-items-center w-20">
+                            {{screenLangInfo.lbl_Telefono}}(*)&nbsp;
+                        </div>
+                        <div class="d-flex flex-column justify-content-center align-items-center w-80" style="flex-grow: 1;">
+                            <!--<input required id="telefono" placeholder="{{screenLangInfo.lbl_toolstipTelefono}}"  [ngModel]="thecontents.telefono"  (input)="ChangeTelef($event.target.value)"    type="text"  style="width: 100%;"> -->
+                            <input pattern="[0-9]{3}-[0-9]{3}-[0-9]{3,4}" placeholder="" id="telefono" [ngModel]="thecontents.telefono" (input)="ChangeTelef($event.target.value)" style="width: 100%;">
+                        </div>
+                    </div>
+                    <div class="d-flex flex-row" style="margin-bottom: 10px !important;">
+                        <div class="d-flex flex-column justify-content-center align-items-center w-20">
+                            {{screenLangInfo.lbl_Email}}(*)&nbsp;
+                        </div>
+                        <div class="d-flex flex-column justify-content-center align-items-center w-80" style="flex-grow: 1;">
+                            <!--<input required id="email" placeholder=" {{screenLangInfo.lbl_toolstipCorreo}}"  [ngModel]="thecontents.address"  (input)="ChangeEmail($event.target.value)"    type="text"  style="width: 100%;"> -->
+                            <input id="email" [ngModel]="thecontents.address" (input)="ChangeEmail($event.target.value)" type="text" style="width: 100%;">
+                        </div>
+                    </div>
+                    <div class="d-flex flex-column justify-content-start align-items-start w-100">
+                        {{screenLangInfo.lbl_Mensaje}}(*)
+                    </div>
+                    <div class="d-flex flex-column  h-80 mb-10">
+                        <!--<textarea #content   (input)="EmailText($event.target.value)"  placeholder=" {{screenLangInfo.lbl_toolstiPregunta}}"   rows="10" cols="180"></textarea>-->
+                        <textarea #content (input)="EmailText($event.target.value)" rows="10" cols="180"></textarea>
+
+                    </div>
+
+
+
+                    <div class=" captcha-area d-flex flex-row" style="margin-bottom: 20px !important;">
+                        <div class="d-flex flex-column justify-content-center align-items-center w-40" style="height: 50px;">
+                            <div class="captcha-img" style="height: 40px;">
+                                <span class="captcha" [innerHTML]="randomCaptchaString"></span>
+
+
+                            </div>
+                        </div>
+
+
+                        <div class="d-flex flex-column justify-content-center align-items-center w-50 " style="height: 50px; padding-left: 10px !important;">
+
+                            <input id="captchavaluetext" [ngModel]="captchavalue" (input)="ChangeCaptcha($event.target.value)" type="text" style="width: 100%;">
+                        </div>
+                        <div class="d-flex flex-column justify-content-center align-items-center w-10" style="flex-grow: 1;">
+                            <button (click)="reloadCaptcha()" style="background-color: white !important; border-color: white !important; border-width: 0px !important;">
+                            <img src="./assets/images/refresh.svg" width="40px" height="40px">
+                        </button>
+                        </div>
+                    </div>
+
+                    <div class="d-flex flex-column  h-80 mb-10 justify-content-start align-items-start">
+
+
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked1" (change)="ChangeTermAndConditions($event)" />
+                            <label [innerHTML]="screenLangInfo.lbl_TerminosConmetarios" class="form-check-label text-primary  font-weight-bold fs-16" for="flexCheckChecked1">
+      
+              </label>
+
+                        </div>
+
+
+
+
+                    </div>
+
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div *ngIf="!loadingLabels" class="modal-footer border-0 align-items-center justify-content-center">
+
+        <div *ngIf="enableSend==false || acceptTermConditions==false" style="margin-top: 10px !important;">
+            <a (click)="SendEmailSupport()" class="btn btn-primary text-white text-uppercase font-weight-bold rounded-0 pr-3 pl-3 pr-sm-4 pl-sm-4 disabled">{{lbl_buttonEnviar}}</a>
+        </div>
+
+        <div *ngIf="enableSend!=false && acceptTermConditions!=false" style="margin-top: 10px !important;">
+            <a (click)="SendEmailSupport()" class="btn btn-primary text-white text-uppercase font-weight-bold rounded-0 pr-3 pl-3 pr-sm-4 pl-sm-4">{{lbl_buttonEnviar}}</a>
+        </div>
+    </div>
+</div>
+<!--Fin para mobil o celular-->
+
+<!--Table md-->
+<div class="modal-content" *ngIf="getScreenWidth > 767 && getScreenWidth < 992">
+    <div *ngIf="loadingLabels" class="text-center" style="margin: auto;">
+        <!-- <div class="spinner-border text-primary"></div> -->
+        <img src="./assets/images/cargando.gif" style="width: 200px; height: 120px;">
+    </div>
+    <div *ngIf="!loadingLabels" class="modal-header border-0 align-items-start justify-content-start">
+        <h5 class="modal-title text-primary m-auto border-bottom p-4 text-uppercase font-weight-bold">
+            {{screenLangInfo.lbl_Title_Page}}
+        </h5>
+        <button type="button" class="close m-sm-0" data-dismiss="modal" aria-label="Close" (click)="close()">
+          <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div *ngIf="!loadingLabels" class="modal-body p-2 w-90">
+
+        <div class="row justify-content-around">
+            <div class="col-12 col-sm-12 col-md-12">
+                <div class="d-flex flex-column h-100 w-100">
+                    <h3>{{screenLangInfo.lbl_ComentarioLateral1}}</h3>
+                    <br>
+                    <p>
+                        {{screenLangInfo.lbl_ComentarioLateral2}}<br><br> {{screenLangInfo.lbl_ComentarioLateral3}}
+                        <br><br> {{screenLangInfo.lbl_ComentarioLateral4}}
+                        <br><br> {{screenLangInfo.lbl_ComentarioLateral5}}
+                        <br>
+                    </p>
+                    <p *ngIf="activeAgencia.telefonocallcenter">
+                        {{screenLangInfo.lbl_ComentarioTelefono}}&nbsp;{{activeAgencia.telefonocallcenter}}
+                    </p>
+                    <img src="{{activeAgencia.IconsCallCenter}}" style="max-height: 80px; min-width: 50px;max-width: 180px;">
+
+
+
+                </div>
+            </div>
+            <div class="col-12 col-sm-12 text-center">
+                <div class="d-flex flex-column justify-content-between h-100 w-100">
+
+                    <!--    <p class="h-100">
+                      Le ofrecemos la posibilidad de comunicarse con la naviera v&iacute;a correo electr&oacute;nico. Escriba su mensaje a continuaci&oacute;n.
+                  </p> -->
+                    <div class="d-flex flex-row" style="margin-bottom: 10px !important;">
+                        <div class="d-flex flex-column justify-content-center align-items-center w-20">
+                            {{screenLangInfo.lbl_NombreCliente}}(*)&nbsp;
+                        </div>
+                        <div class="d-flex flex-column justify-content-center align-items-center w-80" style="flex-grow: 1;">
+                            <!--<input required id="nombre" placeholder="{{screenLangInfo.lbl_toolstipNombre}}"  [ngModel]="thecontents.nombre"  (input)="ChangeName($event.target.value)"    type="text"  style="width: 100%;">-->
+                            <input id="nombre" [ngModel]="thecontents.nombre" (input)="ChangeName($event.target.value)" type="text" style="width: 100%;">
+
+                        </div>
+                    </div>
+                    <div class="d-flex flex-row" style="margin-bottom: 10px !important;">
+                        <div class="d-flex flex-column justify-content-center align-items-center w-20">
+                            {{screenLangInfo.lbl_Telefono}}(*)&nbsp;
+                        </div>
+                        <div class="d-flex flex-column justify-content-center align-items-center w-80" style="flex-grow: 1;">
+                            <!--<input required id="telefono" placeholder="{{screenLangInfo.lbl_toolstipTelefono}}"  [ngModel]="thecontents.telefono"  (input)="ChangeTelef($event.target.value)"    type="text"  style="width: 100%;"> -->
+                            <input pattern="[0-9]{3}-[0-9]{3}-[0-9]{3,4}" placeholder="" id="telefono" [ngModel]="thecontents.telefono" (input)="ChangeTelef($event.target.value)" style="width: 100%;">
+                        </div>
+                    </div>
+                    <div class="d-flex flex-row" style="margin-bottom: 10px !important;">
+                        <div class="d-flex flex-column justify-content-center align-items-center w-20">
+                            {{screenLangInfo.lbl_Email}}(*)&nbsp;
+                        </div>
+                        <div class="d-flex flex-column justify-content-center align-items-center w-80" style="flex-grow: 1;">
+                            <!--<input required id="email" placeholder=" {{screenLangInfo.lbl_toolstipCorreo}}"  [ngModel]="thecontents.address"  (input)="ChangeEmail($event.target.value)"    type="text"  style="width: 100%;"> -->
+                            <input id="email" [ngModel]="thecontents.address" (input)="ChangeEmail($event.target.value)" type="text" style="width: 100%;">
+                        </div>
+                    </div>
+                    <div class="d-flex flex-column justify-content-start align-items-start w-100">
+                        {{screenLangInfo.lbl_Mensaje}}(*)
+                    </div>
+                    <div class="d-flex flex-column  h-80 mb-10">
+                        <!--<textarea #content   (input)="EmailText($event.target.value)"  placeholder=" {{screenLangInfo.lbl_toolstiPregunta}}"   rows="10" cols="180"></textarea>-->
+                        <textarea #content (input)="EmailText($event.target.value)" rows="10" cols="180"></textarea>
+
+                    </div>
+
+
+
+                    <div class=" captcha-area d-flex flex-row" style="margin-bottom: 20px !important;">
+                        <div class="d-flex flex-column justify-content-center align-items-center w-40" style="height: 50px;">
+                            <div class="captcha-img" style="height: 40px;">
+                                <span class="captcha" [innerHTML]="randomCaptchaString"></span>
+
+
+                            </div>
+                        </div>
+
+
+                        <div class="d-flex flex-column justify-content-center align-items-center w-50 " style="height: 50px; padding-left: 10px !important;">
+
+                            <input id="captchavaluetext" [ngModel]="captchavalue" (input)="ChangeCaptcha($event.target.value)" type="text" style="width: 100%;">
+                        </div>
+                        <div class="d-flex flex-column justify-content-center align-items-center w-10" style="flex-grow: 1;">
+                            <button (click)="reloadCaptcha()" style="background-color: white !important; border-color: white !important; border-width: 0px !important;">
+                            <img src="./assets/images/refresh.svg" width="40px" height="40px">
+                        </button>
+                        </div>
+                    </div>
+
+                    <div class="d-flex flex-column  h-80 mb-10 justify-content-start align-items-start">
+
+
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked1" (change)="ChangeTermAndConditions($event)" />
+                            <label [innerHTML]="screenLangInfo.lbl_TerminosConmetarios" class="form-check-label text-primary  font-weight-bold fs-16" for="flexCheckChecked1">
+      
+              </label>
+
+                        </div>
+
+
+
+
+                    </div>
+
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div *ngIf="!loadingLabels" class="modal-footer border-0 align-items-center justify-content-center">
+
+        <div *ngIf="enableSend==false || acceptTermConditions==false" style="margin-top: 10px !important;">
+            <a (click)="SendEmailSupport()" class="btn btn-primary text-white text-uppercase font-weight-bold rounded-0 pr-3 pl-3 pr-sm-4 pl-sm-4 disabled">{{lbl_buttonEnviar}}</a>
+        </div>
+
+        <div *ngIf="enableSend!=false && acceptTermConditions!=false" style="margin-top: 10px !important;">
+            <a (click)="SendEmailSupport()" class="btn btn-primary text-white text-uppercase font-weight-bold rounded-0 pr-3 pl-3 pr-sm-4 pl-sm-4">{{lbl_buttonEnviar}}</a>
+        </div>
+    </div>
+</div>
+
+<!--Fin table md-->
+
+<div class="modal-content" *ngIf="getScreenWidth > 991">
+    <div *ngIf="loadingLabels" class="text-center" style="margin: auto;">
+        <!-- <div class="spinner-border text-primary"></div> -->
+        <img src="./assets/images/cargando.gif" style="width: 200px; height: 120px;">
+    </div>
+    <div *ngIf="!loadingLabels" class="modal-header border-0 align-items-start justify-content-start">
+        <h5 class="modal-title text-primary m-auto border-bottom p-4 text-uppercase font-weight-bold">
+            {{screenLangInfo.lbl_Title_Page}}
+        </h5>
+        <button type="button" class="close m-sm-0" data-dismiss="modal" aria-label="Close" (click)="close()">
+          <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div *ngIf="!loadingLabels" class="modal-body p-2 w-90">
+
+        <div class="row justify-content-around">
+            <div class="col-4 col-sm-4 col-md-4">
+                <div class="d-flex flex-column h-100 w-100">
+                    <h3>{{screenLangInfo.lbl_ComentarioLateral1}}</h3>
+                    <br>
+                    <p>
+                        {{screenLangInfo.lbl_ComentarioLateral2}}<br><br> {{screenLangInfo.lbl_ComentarioLateral3}}
+                        <br><br> {{screenLangInfo.lbl_ComentarioLateral4}}
+                        <br><br> {{screenLangInfo.lbl_ComentarioLateral5}}
+                        <br>
+                    </p>
+                    <p *ngIf="activeAgencia.telefonocallcenter">
+                        {{screenLangInfo.lbl_ComentarioTelefono}}&nbsp;{{activeAgencia.telefonocallcenter}}
+                    </p>
+                    <img src="{{activeAgencia.IconsCallCenter}}" style="max-height: 80px; min-width: 50px;max-width: 180px;">
+
+
+
+                </div>
+            </div>
+            <div class="col-6 col-sm-6 text-center">
+                <div class="d-flex flex-column justify-content-between h-100 w-100">
+
+                    <!--    <p class="h-100">
+                      Le ofrecemos la posibilidad de comunicarse con la naviera v&iacute;a correo electr&oacute;nico. Escriba su mensaje a continuaci&oacute;n.
+                  </p> -->
+                    <div class="d-flex flex-row" style="margin-bottom: 10px !important;">
+                        <div class="d-flex flex-column justify-content-center align-items-center w-20">
+                            {{screenLangInfo.lbl_NombreCliente}}(*)&nbsp;
+                        </div>
+                        <div class="d-flex flex-column justify-content-center align-items-center w-80" style="flex-grow: 1;">
+                            <!--<input required id="nombre" placeholder="{{screenLangInfo.lbl_toolstipNombre}}"  [ngModel]="thecontents.nombre"  (input)="ChangeName($event.target.value)"    type="text"  style="width: 100%;">-->
+                            <input id="nombre" [ngModel]="thecontents.nombre" (input)="ChangeName($event.target.value)" type="text" style="width: 100%;">
+
+                        </div>
+                    </div>
+                    <div class="d-flex flex-row" style="margin-bottom: 10px !important;">
+                        <div class="d-flex flex-column justify-content-center align-items-center w-20">
+                            {{screenLangInfo.lbl_Telefono}}(*)&nbsp;
+                        </div>
+                        <div class="d-flex flex-column justify-content-center align-items-center w-80" style="flex-grow: 1;">
+                            <!--<input required id="telefono" placeholder="{{screenLangInfo.lbl_toolstipTelefono}}"  [ngModel]="thecontents.telefono"  (input)="ChangeTelef($event.target.value)"    type="text"  style="width: 100%;"> -->
+                            <input pattern="[0-9]{3}-[0-9]{3}-[0-9]{3,4}" placeholder="" id="telefono" [ngModel]="thecontents.telefono" (input)="ChangeTelef($event.target.value)" style="width: 100%;">
+                        </div>
+                    </div>
+                    <div class="d-flex flex-row" style="margin-bottom: 10px !important;">
+                        <div class="d-flex flex-column justify-content-center align-items-center w-20">
+                            {{screenLangInfo.lbl_Email}}(*)&nbsp;
+                        </div>
+                        <div class="d-flex flex-column justify-content-center align-items-center w-80" style="flex-grow: 1;">
+                            <!--<input required id="email" placeholder=" {{screenLangInfo.lbl_toolstipCorreo}}"  [ngModel]="thecontents.address"  (input)="ChangeEmail($event.target.value)"    type="text"  style="width: 100%;"> -->
+                            <input id="email" [ngModel]="thecontents.address" (input)="ChangeEmail($event.target.value)" type="text" style="width: 100%;">
+                        </div>
+                    </div>
+                    <div class="d-flex flex-column justify-content-start align-items-start w-100">
+                        {{screenLangInfo.lbl_Mensaje}}(*)
+                    </div>
+                    <div class="d-flex flex-column  h-80 mb-10">
+                        <!--<textarea #content   (input)="EmailText($event.target.value)"  placeholder=" {{screenLangInfo.lbl_toolstiPregunta}}"   rows="10" cols="180"></textarea>-->
+                        <textarea #content (input)="EmailText($event.target.value)" rows="10" cols="180"></textarea>
+
+                    </div>
+
+
+
+                    <div class=" captcha-area d-flex flex-row" style="margin-bottom: 20px !important;">
+                        <div class="d-flex flex-column justify-content-center align-items-center w-40" style="height: 50px;">
+                            <div class="captcha-img" style="height: 40px;">
+                                <span class="captcha" [innerHTML]="randomCaptchaString"></span>
+
+
+                            </div>
+                        </div>
+
+
+                        <div class="d-flex flex-column justify-content-center align-items-center w-50 " style="height: 50px; padding-left: 10px !important;">
+
+                            <input id="captchavaluetext" [ngModel]="captchavalue" (input)="ChangeCaptcha($event.target.value)" type="text" style="width: 100%;">
+                        </div>
+                        <div class="d-flex flex-column justify-content-center align-items-center w-10" style="flex-grow: 1;">
+                            <button (click)="reloadCaptcha()" style="background-color: white !important; border-color: white !important; border-width: 0px !important;">
+                            <img src="./assets/images/refresh.svg" width="40px" height="40px">
+                        </button>
+                        </div>
+                    </div>
+
+                    <div class="d-flex flex-column  h-80 mb-10 justify-content-start align-items-start">
+
+
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked1" (change)="ChangeTermAndConditions($event)" />
+                            <label [innerHTML]="screenLangInfo.lbl_TerminosConmetarios" class="form-check-label text-primary  font-weight-bold fs-16" for="flexCheckChecked1">
+      
+              </label>
+
+                        </div>
+
+
+
+
+                    </div>
+
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div *ngIf="!loadingLabels" class="modal-footer border-0 align-items-center justify-content-center">
+
+        <div *ngIf="enableSend==false || acceptTermConditions==false" style="margin-top: 10px !important;">
+            <a (click)="SendEmailSupport()" class="btn btn-primary text-white text-uppercase font-weight-bold rounded-0 pr-3 pl-3 pr-sm-4 pl-sm-4 disabled">{{lbl_buttonEnviar}}</a>
+        </div>
+
+        <div *ngIf="enableSend!=false && acceptTermConditions!=false" style="margin-top: 10px !important;">
+            <a (click)="SendEmailSupport()" class="btn btn-primary text-white text-uppercase font-weight-bold rounded-0 pr-3 pl-3 pr-sm-4 pl-sm-4">{{lbl_buttonEnviar}}</a>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,48 @@
+text-right{
+    align-items: right;
+    text-align: right;
+}
+
+header.fixed {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 0px;
+    margin: 0px;
+    z-index: 10;
+  }
+  
+  html {
+    --top-spacing: 100px;
+    scroll-padding-top: var(--top-spacing);
+  }
+  
+  body {
+    margin: var(--top-spacing) auto;
+    
+    max-width: 400px;
+    padding: 0 20px;
+    font: 18px/1.4 system-ui;
+  }
+
+  .float{
+    position:fixed;
+    width:60px;
+    height:60px;
+    bottom:40px;
+    right:40px;
+    background-color:#fff;
+    color:#2a5c96;
+    border-radius:50px;
+    text-align:center;
+    box-shadow: 2px 2px 2px 3px #2a5c96;
+  }
+  
+  .my-float{
+    margin-top:10px;
+    width:40px;
+    height:40px;
+ 
+    
+  }
